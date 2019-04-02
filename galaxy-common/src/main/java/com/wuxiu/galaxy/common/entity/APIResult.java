@@ -1,10 +1,8 @@
-package com.shi.lissandra.common.entity;
+package com.wuxiu.galaxy.common.entity;
 
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.shi.lissandra.common.enums.ErrorCode;
-import com.shi.lissandra.common.enums.GlobalErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

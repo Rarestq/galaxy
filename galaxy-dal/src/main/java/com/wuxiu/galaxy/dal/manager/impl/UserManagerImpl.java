@@ -9,16 +9,16 @@
  */
 package com.wuxiu.galaxy.dal.manager.impl;
 
-import com.wuxiu.galaxy.dal.domain.User;
+import com.wuxiu.galaxy.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.dal.dao.UserDao;
+import com.wuxiu.galaxy.dal.domain.User;
 import com.wuxiu.galaxy.dal.manager.UserManager;
-import com.mhc.framework.common.base.dal.BaseManagerImpl;
 import org.springframework.stereotype.Component;
 
 /**
  * <p>UserManager</p>
  * <p>
- * 
+ *
  * </p>
  * @author: MHC_Generater（duanzhang@maihaoche.com）
  * @since 2019-04-01

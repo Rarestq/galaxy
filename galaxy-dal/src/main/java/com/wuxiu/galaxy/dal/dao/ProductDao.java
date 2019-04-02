@@ -9,15 +9,9 @@
  */
 package com.wuxiu.galaxy.dal.dao;
 
+import com.wuxiu.galaxy.common.base.BaseDao;
 import com.wuxiu.galaxy.dal.domain.Product;
-import com.mhc.framework.common.base.dal.BaseDao;
 
-/**  
- * <p>ProductDao接口</p>
- * 
- * @author: MHC_Generater（duanzhang@maihaoche.com）
- * @since 2019-04-01
- */
 public interface ProductDao extends BaseDao<Product> {
 
 }

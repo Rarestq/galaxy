@@ -9,6 +9,7 @@
  */
 package com.wuxiu.galaxy.dal.dao;
 
+import com.wuxiu.galaxy.common.base.BaseDao;
 import com.wuxiu.galaxy.dal.domain.ProductOrder;
 
 /**  

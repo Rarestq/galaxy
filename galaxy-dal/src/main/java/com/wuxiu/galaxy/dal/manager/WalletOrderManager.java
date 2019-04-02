@@ -9,12 +9,12 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.common.base.BaseManager;
 import com.wuxiu.galaxy.dal.domain.WalletOrder;
-import com.mhc.framework.common.base.dal.BaseManager;
 
 /**  
  * WalletOrderManager
- * 
+ *
  * 
  * @author: MHC_Generater（duanzhang@maihaoche.com）
  * @since 2019-04-01

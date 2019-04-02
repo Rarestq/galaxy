@@ -13,27 +13,22 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.mhc.framework.common.base.dal.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>ProductOrderDomian实体对象</p>
- *
- * 
- *
- * @author: MHC_Generater（MHC@maihaoche.com）
- * @since 2019-04-01
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.util.Date;
+
+/**
+ *   
+ *  * <p>ProductOrderDomian实体对象</p>
+ * <p>
+ *  
+ * <p>
+ *  * @author: MHC_Generater（MHC@maihaoche.com）
+ *  * @since 2019-04-01
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("product_order")

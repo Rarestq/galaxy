@@ -9,16 +9,16 @@
  */
 package com.wuxiu.galaxy.dal.manager.impl;
 
-import com.wuxiu.galaxy.dal.domain.Wallet;
+import com.wuxiu.galaxy.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.dal.dao.WalletDao;
+import com.wuxiu.galaxy.dal.domain.Wallet;
 import com.wuxiu.galaxy.dal.manager.WalletManager;
-import com.mhc.framework.common.base.dal.BaseManagerImpl;
 import org.springframework.stereotype.Component;
 
 /**
  * <p>WalletManager</p>
  * <p>
- * 
+ *
  * </p>
  * @author: MHC_Generater（duanzhang@maihaoche.com）
  * @since 2019-04-01

@@ -9,12 +9,12 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.common.base.BaseManager;
 import com.wuxiu.galaxy.dal.domain.Product;
-import com.mhc.framework.common.base.dal.BaseManager;
 
 /**  
  * ProductManager
- * 
+ *
  * 
  * @author: MHC_Generater（duanzhang@maihaoche.com）
  * @since 2019-04-01
