@@ -9,8 +9,8 @@
  */
 package com.wuxiu.galaxy.dal.dao;
 
+import com.wuxiu.galaxy.common.base.BaseDao;
 import com.wuxiu.galaxy.dal.domain.WalletOrder;
-import com.mhc.framework.common.base.dal.BaseDao;
 
 /**  
  * <p>WalletOrderDao接口</p>

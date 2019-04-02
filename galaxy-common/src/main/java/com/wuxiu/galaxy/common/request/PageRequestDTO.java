@@ -1,4 +1,4 @@
-package com.shi.lissandra.common.request;
+package com.wuxiu.galaxy.common.request;
 
 import lombok.Data;
 

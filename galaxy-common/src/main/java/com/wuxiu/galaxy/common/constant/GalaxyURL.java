@@ -1,7 +1,9 @@
-package com.shi.lissandra.common.constant;
+package com.wuxiu.galaxy.common.constant;
 
-
-public class LissandraURL {
+/**
+ * api 常量
+ */
+public class GalaxyURL {
 
     public static final String LISSANDRA_LOGIN = "/api/login.json";
     public static final String LISSANDRA_LOGOUT = "/api/logout.json";

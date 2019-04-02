@@ -1,39 +1,37 @@
-/** 
- * All rights Reserved, Designed By www.maihaoche.com
- *
- * @Package com.wuxiu.galaxy.dal.domain
- * @author: MHC_Generater（duanzhang@maihaoche.com）
- * @date: 2018-04-16 20:35:12
- * @Copyright: 2017-2020 www.maihaoche.com Inc. All rights reserved.
- * 注意：本内容仅限于卖好车内部传阅，禁止外泄以及用于其他的商业目
- */
+/**
+ *  
+ *  * All rights Reserved, Designed By www.maihaoche.com
+ * <p>
+ *  * @Package com.wuxiu.galaxy.dal.domain
+ *  * @author: MHC_Generater（duanzhang@maihaoche.com）
+ *  * @date: 2018-04-16 20:35:12
+ *  * @Copyright: 2017-2020 www.maihaoche.com Inc. All rights reserved.
+ *  * 注意：本内容仅限于卖好车内部传阅，禁止外泄以及用于其他的商业目
+ *  
+ */
 package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.mhc.framework.common.base.dal.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>WalletDomian实体对象</p>
- *
- * 
- *
- * @author: MHC_Generater（MHC@maihaoche.com）
- * @since 2019-04-01
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ *   
+ *  * <p>WalletDomian实体对象</p>
+ * <p>
+ *  
+ * <p>
+ *  * @author: MHC_Generater（MHC@maihaoche.com）
+ *  * @since 2019-04-01
+ *  
+ */
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Wallet extends BaseModel {

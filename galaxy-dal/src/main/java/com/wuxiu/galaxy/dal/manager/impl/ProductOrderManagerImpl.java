@@ -9,8 +9,9 @@
  */
 package com.wuxiu.galaxy.dal.manager.impl;
 
-import com.wuxiu.galaxy.dal.domain.ProductOrder;
+import com.wuxiu.galaxy.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.dal.dao.ProductOrderDao;
+import com.wuxiu.galaxy.dal.domain.ProductOrder;
 import com.wuxiu.galaxy.dal.manager.ProductOrderManager;
 import org.springframework.stereotype.Component;
 

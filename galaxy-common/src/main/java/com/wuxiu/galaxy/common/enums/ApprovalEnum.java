@@ -1,6 +1,4 @@
-package com.shi.lissandra.common.enums;
-
-import lombok.Data;
+package com.wuxiu.galaxy.common.enums;
 
 /**
  * All rights Reserved, Designed By www.maihaoche.com
