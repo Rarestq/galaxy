@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 /**
+ * MP基础类
+ *
  * @author: wuxiu
  * @date: 2019/4/2 14:26
  */

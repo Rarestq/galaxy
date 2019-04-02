@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Data
 public class PageRequestDTO implements Serializable {
 
-
     /**
      * 店铺名称查询
      */

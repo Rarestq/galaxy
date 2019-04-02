@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 /**
+ * MP 公共类
  *
  * @author: wuxiu
  * @date: 2019/4/2 14:26

@@ -1,12 +1,15 @@
 package com.wuxiu.galaxy.common.enums;
 
 /**
- * @author Shihaahs
+ * @author wuxiu
  */
 
 @SuppressWarnings("ALL")
 public enum GlobalErrorCode implements ErrorCode{
 
+    /**
+     * 全局异常错误码
+     */
     SUCCESS("200", "OK"),
     FAILURE("-1", "Operation Failed"),
     INVALID_PARAM("100", "Parameter Error"),

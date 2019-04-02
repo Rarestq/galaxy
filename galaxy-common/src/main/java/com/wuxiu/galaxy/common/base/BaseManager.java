@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * MP 的 baseManager
+ *
  * @author: wuxiu
  * @date: 2019/4/2 14:23
  */
