@@ -1,0 +1,77 @@
+#port
+server:
+  port: 8099
+
+#spring
+spring:
+  application:
+    name: galaxy
+
+  session:
+    store-type: none
+
+  # MySQL
+  # 这个是我自己的服务器，要是你也想把数据库放在我服务器里，就和说一声哟！
+  datasource:
+    url: jdbc:mysql://106.13.87.50:3306/db_lissandra?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 922900
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 5
+      max-active: 20
+
+#  # Redis
+#  redis:
+#    # Redis数据库索引（默认为0）
+#    #database: 0
+#    # Redis服务器地址
+#    host: 127.0.0.1
+#    # Redis服务器连接端口
+#    port: 6399
+#    # Redis服务器连接密码（默认为空）
+#    password: 9229
+#    pool:
+#      # 连接池最大连接数（使用负值表示没有限制）
+#      max-active: 20
+#      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#      max-wait: 10000
+#      # 连接池中的最大空闲连接
+#      max-idle: 10
+#      # 连接池中的最小空闲连接
+#      min-idle: 0
+#      # 连接超时时间（毫秒）
+#    timeout: 5000
+
+#Mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.wuxiu.galaxy.dal.domain
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: false
+    #逻辑删除配置
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+swagger:
+  title: Shale-Web 网关应用接口
+  version: V1.0.0
+  base-package: com.wuxiu
+  exclude-path:
+  - /dubbo/*
+  - /online/*
+  - /offline/*
+  contact:
+    name: 石傻傻
+    email: 1419903014@qq.com

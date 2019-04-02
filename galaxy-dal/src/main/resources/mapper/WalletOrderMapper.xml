@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxiu.galaxy.dal.dao.WalletOrderDao">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.WalletOrder">
+                    <id column="wallet_order_id" property="walletOrderId"/>
+                    <result column="wallet_id" property="walletId"/>
+                    <result column="wallet_order_state" property="walletOrderState"/>
+                    <result column="recharge" property="recharge"/>
+                    <result column="withdraw" property="withdraw"/>
+                    <result column="user_id" property="userId"/>
+                    <result column="user_name" property="userName"/>
+                    <result column="is_delete" property="isDelete"/>
+                    <result column="gmt_create" property="gmtCreate"/>
+                    <result column="gmt_modified" property="gmtModified"/>
+                    <result column="wallet_order_no" property="walletOrderNo"/>
+        </resultMap>
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+       wallet_order_id,wallet_id,wallet_order_state,recharge,withdraw,user_id,user_name,is_delete,gmt_create,gmt_modified,wallet_order_no
+        </sql>
+</mapper>
