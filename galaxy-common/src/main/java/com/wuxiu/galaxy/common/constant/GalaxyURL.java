@@ -1,7 +1,7 @@
 package com.wuxiu.galaxy.common.constant;
 
 /**
- * api 常量
+ * api 接口常量
  */
 public class GalaxyURL {
 

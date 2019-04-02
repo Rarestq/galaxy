@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * MP 的 baseManagerImpl
+ *
  * @author: wuxiu
  * @date: 2019/4/2 14:24
  */
