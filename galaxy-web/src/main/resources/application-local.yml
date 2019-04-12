@@ -11,11 +11,10 @@ spring:
     store-type: none
 
   # MySQL
-  # 这个是我自己的服务器，要是你也想把数据库放在我服务器里，就和说一声哟！
   datasource:
-    url: jdbc:mysql://106.13.87.50:3306/db_lissandra?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: 922900
+    password: 123123
     driver-class-name: com.mysql.jdbc.Driver
     druid:
       initial-size: 5
@@ -58,14 +57,14 @@ mybatis-plus:
     #刷新mapper 调试神器
     refresh-mapper: false
     #逻辑删除配置
-    logic-delete-value: 1
-    logic-not-delete-value: 0
+    logic-delete-value: 0
+    logic-not-delete-value: 1
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
 swagger:
-  title: Shale-Web 网关应用接口
+  title: Galaxy-Web 网关应用接口
   version: V1.0.0
   base-package: com.wuxiu
   exclude-path:
