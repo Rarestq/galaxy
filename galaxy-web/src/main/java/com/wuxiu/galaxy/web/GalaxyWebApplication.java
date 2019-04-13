@@ -4,11 +4,12 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
+
 @ComponentScan(basePackages = {
         "com.wuxiu.galaxy.dal",
         "com.wuxiu.galaxy.service",
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableTransactionManagement
 @EnableSwagger2Doc
 @RestController
+@SpringBootApplication(exclude = {HibernateJpaAutoConfiguration.class },
+        scanBasePackages = "com.wuxiu.galaxy")
 public class GalaxyWebApplication {
 
     public static void main(String[] args) {

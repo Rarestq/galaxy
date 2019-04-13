@@ -1,7 +1,5 @@
 package com.wuxiu.galaxy.service.core;
 
-import com.wuxiu.galaxy.dal.domain.User;
-
 /**
  * 登录服务
  *
@@ -16,7 +14,7 @@ public interface LoginRegisterService {
      * @param user
      * @return
      */
-    User checkLogin(User user);
+    //User checkLogin(User user);
 
     /**
      * 注册用户
@@ -24,7 +22,7 @@ public interface LoginRegisterService {
      * @param user
      * @return
      */
-    Integer registerUser(User user);
+    //Integer registerUser(User user);
 
     /**
      * 注册校验，根据手机号去查是否有已经存在的用户
