@@ -5,14 +5,14 @@ package com.wuxiu.galaxy.common.enums;
  */
 
 @SuppressWarnings("ALL")
-public enum GlobalErrorCode implements ErrorCode{
+public enum GlobalErrorCode implements ErrorCode {
 
     /**
      * 全局异常错误码
      */
     SUCCESS("200", "OK"),
     FAILURE("-1", "Operation Failed"),
-    INVALID_PARAM("100", "Parameter Error"),
+    INVALID_PARAM("100", "parameter Error"),
     BAD_REQUEST("400", "Bad Request"),
     UNAUTHORIZED("401", "Unauthorized"),
     FORBIDDEN("403", "Forbidden"),
@@ -21,17 +21,14 @@ public enum GlobalErrorCode implements ErrorCode{
     INTERNAL_SERVER_ERROR("500", "Internal Server Error"),
 
 
-
-    LOGIN_FAILURE("1000","Login Failure!"),
-    LOGOUT_FAILURE("1001","Logout Failure!"),
-    REGISTER_FAILURE("1002","Register Failure!"),
-    REGISTER_FAILURE_PHONE_REPEAT("1003","Phone has been existed!"),
+    LOGIN_FAILURE("1000", "Login Failure!"),
+    LOGOUT_FAILURE("1001", "Logout Failure!"),
+    REGISTER_FAILURE("1002", "Register Failure!"),
+    REGISTER_FAILURE_PHONE_REPEAT("1003", "Phone has been existed!"),
 
     WITHDRAW_ERROR("5000", "Account balance is not enough!"),
 
-
-    SYSTEM_EXCEPTION("9999","System Exception!");
-
+    SYSTEM_EXCEPTION("9999", "System Exception!");
 
 
     private final String code;

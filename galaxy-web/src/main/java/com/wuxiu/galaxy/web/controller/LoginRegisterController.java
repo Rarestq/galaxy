@@ -7,10 +7,7 @@ import com.wuxiu.galaxy.service.core.LoginRegisterService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +25,7 @@ import static com.wuxiu.galaxy.common.enums.GlobalErrorCode.*;
  * @date: 2019/4/2 14:51
  */
 @Slf4j
+@RequestMapping("/login")
 @RestController
 public class LoginRegisterController {
 
@@ -38,7 +36,7 @@ public class LoginRegisterController {
 
 
     @ApiOperation(value = "登录", notes = "登录")
-    @RequestMapping(value = LISSANDRA_LOGIN, method = RequestMethod.POST)
+    @PostMapping(value = LISSANDRA_LOGIN)
     public APIResult login(@RequestBody User user, HttpServletRequest request) {
         user = loginRegisterService.checkLogin(user);
         if (null != user){
@@ -50,7 +48,7 @@ public class LoginRegisterController {
     }
 
     @ApiOperation(value = "登出", notes = "登出")
-    @RequestMapping(value = LISSANDRA_LOGOUT,method = RequestMethod.POST)
+    @PostMapping(value = LISSANDRA_LOGOUT)
     public APIResult logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.removeAttribute("user");
@@ -63,13 +61,13 @@ public class LoginRegisterController {
 
 
     @ApiOperation(value = "注册", notes = "注册")
-    @RequestMapping(value = LISSANDRA_REGISTRE,method = RequestMethod.POST)
+    @PostMapping(value = LISSANDRA_REGISTRE)
     public APIResult register(@RequestBody User user){
         if (null == user.getPhone() || user.getPhone().isEmpty()) {
             log.info("register -> 用户注册失败，未检测到手机号 ");
             return APIResult.error(REGISTER_FAILURE.getCode(), REGISTER_FAILURE.getMessage());
         }
-        //后期需要对手机号进行参数校验
+        //todo:后期需要对手机号进行参数校验
 
         if (loginRegisterService.checkRegister(user.getPhone())) {
             return APIResult.ok(loginRegisterService.registerUser(user));

@@ -3,6 +3,7 @@ package com.wuxiu.galaxy.common.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.wuxiu.galaxy.common.enums.GlobalErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -56,7 +57,13 @@ public class APIResult<T> implements Serializable {
     }
 
     public static <T> APIResult<T> error(String code, String message) {
-        return builder().success(false).code(code).message(message).data((Object) null).build();
+        return builder().success(false).code(code)
+                .message(message).data((Object) null).build();
+    }
+
+    public static <T> APIResult<T> error(String message) {
+        return builder().success(false).code(GlobalErrorCode.INTERNAL_SERVER_ERROR.getCode())
+                .message(message).data((Object) null).build();
     }
 
     @Override
@@ -181,7 +188,7 @@ public class APIResult<T> implements Serializable {
         }
 
         public APIResult<T> build() {
-            return new APIResult<T> (this.success$set ? this.success : APIResult.$default$success(), this.code$set ? this.code : APIResult.$default$code(), this.message$set ? this.message : APIResult.$default$message(), this.data, this.timestamp$set ? this.timestamp : APIResult.$default$timestamp());
+            return new APIResult<T>(this.success$set ? this.success : APIResult.$default$success(), this.code$set ? this.code : APIResult.$default$code(), this.message$set ? this.message : APIResult.$default$message(), this.data, this.timestamp$set ? this.timestamp : APIResult.$default$timestamp());
         }
 
         @Override
