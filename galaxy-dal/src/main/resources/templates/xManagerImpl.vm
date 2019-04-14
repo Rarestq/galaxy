@@ -1,18 +1,17 @@
 /** 
- * All rights Reserved, Designed By www.maihaoche.com
+ * All rights Reserved, Designed By wuxiu
  *
- * @Package ${package.ServiceImpl}
- * @author: MHC_Generater（duanzhang@maihaoche.com）
+ * @Package ${package.Mapper}
+ * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @date: 2018-04-16 20:35:12
- * @Copyright: 2017-2020 www.maihaoche.com Inc. All rights reserved.
- * 注意：本内容仅限于卖好车内部传阅，禁止外泄以及用于其他的商业目
+ * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
  */
 package ${package.ServiceImpl};
 
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import com.mhc.framework.common.base.dal.BaseManagerImpl;
+import com.wuxiu.galaxy.common.base.BaseManagerImpl;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
  * <p>
  * $!{table.comment}
  * </p>
- * @author: MHC_Generater（duanzhang@maihaoche.com）
+ * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @since ${date}
  */
 @Component

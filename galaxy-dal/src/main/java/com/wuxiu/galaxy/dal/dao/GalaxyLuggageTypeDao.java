@@ -1,22 +1,22 @@
 /** 
  * All rights Reserved, Designed By wuxiu
  *
- * @Package ${package.Mapper}
+ * @Package com.wuxiu.galaxy.dal.dao
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @date: 2018-04-16 20:35:12
  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
  */
-package ${package.Mapper};
+package com.wuxiu.galaxy.dal.dao;
 
-import ${package.Entity}.${entity};
+import com.wuxiu.galaxy.dal.domain.GalaxyLuggageType;
 import com.wuxiu.galaxy.common.base.BaseDao;
 
 /**  
- * <p>${entity}Dao接口</p>
- * $!{table.comment}
+ * <p>GalaxyLuggageTypeDao接口</p>
+ * 行李类型表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since ${date}
+ * @since 2019-04-14
  */
-public interface ${entity}Dao extends BaseDao<${entity}> {
+public interface GalaxyLuggageTypeDao extends BaseDao<GalaxyLuggageType> {
 
 }

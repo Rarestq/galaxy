@@ -12,16 +12,25 @@ import java.util.List;
 
 public class Generator {
 
-    public static final String LINK = "jdbc:mysql://106.13.87.50:3306/db_lissandra?useUnicode=true&characterEncoding=utf-8";
+    public static final String LINK = "jdbc:mysql://localhost:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8";
     public static final String ACCOUNT = "root";
-    public static final String PASSWORD = "922900";
+    public static final String PASSWORD = "123123";
 
     public static String[] tables = {
-            "product",
-            "product_order",
-            "user",
-            "wallet",
-            "wallet_order",
+            "galaxy_admin",
+            "galaxy_charge_calculation_rules",
+            "galaxy_charge_rules",
+            "galaxy_charge_template",
+            "galaxy_charge_type",
+            "galaxy_charge_type_template_relation",
+            "galaxy_cycle_charge_calculation_detail",
+            "galaxy_fixed_charge_calculation_detail",
+            "galaxy_luggage_lost_compensation_record",
+            "galaxy_luggage_lost_registr_compensation_relation",
+            "galaxy_luggage_lost_registration_record",
+            "galaxy_luggage_overdue_record",
+            "galaxy_luggage_storage_record",
+            "galaxy_luggage_type"
     };
 
     public static void main(String[] args) {
