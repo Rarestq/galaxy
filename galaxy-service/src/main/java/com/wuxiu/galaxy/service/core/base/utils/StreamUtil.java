@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * @date: 2019/4/13 11:30
  */
 @NoArgsConstructor
-public class StreamUtils {
+public class StreamUtil {
 
     /**
      * 集合过滤
@@ -243,7 +243,7 @@ public class StreamUtils {
      * @return
      */
     public static <S, T> List<S> convertBeanCopy(Collection<T> collection, Class<S> targetClass) {
-        Function<T, S> convertFunction = item -> BeanCopierUtils.convert(item, targetClass);
+        Function<T, S> convertFunction = item -> BeanCopierUtil.convert(item, targetClass);
         return convert(collection, convertFunction);
     }
 

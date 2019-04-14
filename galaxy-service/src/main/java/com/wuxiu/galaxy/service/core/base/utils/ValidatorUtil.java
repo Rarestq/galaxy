@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Set;
  * @date: 2019/4/13 11:26
  */
 @NoArgsConstructor
-public final class ValidatorUtils {
+public final class ValidatorUtil {
     private static final ValidatorFactory VALIDATOR_FACTORY =
             Validation.buildDefaultValidatorFactory();
     private static final Validator VALIDATOR = VALIDATOR_FACTORY.getValidator();
