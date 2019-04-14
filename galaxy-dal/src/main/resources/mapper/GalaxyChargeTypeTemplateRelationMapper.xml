@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxiu.galaxy.dal.dao.GalaxyChargeTypeTemplateRelationDao">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.GalaxyChargeTypeTemplateRelation">
+                    <id column="charge_template_type_relation_id" property="chargeTemplateTypeRelationId"/>
+                    <result column="charge_template_id" property="chargeTemplateId"/>
+                    <result column="charge_type_id" property="chargeTypeId"/>
+                    <result column="deleted" property="deleted"/>
+                    <result column="gmt_create" property="gmtCreate"/>
+                    <result column="gmt_modified" property="gmtModified"/>
+        </resultMap>
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+       charge_template_type_relation_id,charge_template_id,charge_type_id,deleted,gmt_create,gmt_modified
+        </sql>
+</mapper>
