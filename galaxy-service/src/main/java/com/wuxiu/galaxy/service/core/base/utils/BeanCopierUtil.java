@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date: 2019/4/13 11:30
  */
 @Slf4j
-public class BeanCopierUtils {
+public class BeanCopierUtil {
 
     /**
      * beanCopier缓存

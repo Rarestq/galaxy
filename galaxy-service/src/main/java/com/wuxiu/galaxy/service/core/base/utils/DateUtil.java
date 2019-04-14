@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 
 import lombok.extern.slf4j.Slf4j;

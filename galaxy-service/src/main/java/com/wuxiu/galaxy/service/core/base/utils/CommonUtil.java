@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.wuxiu.galaxy.common.entity.APIResult;
 import com.wuxiu.galaxy.common.enums.GlobalErrorCode;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  */
 @Slf4j
 @NoArgsConstructor
-public class CommonUtils {
+public class CommonUtil {
 
     public static boolean anyIsNull(Object... objects) {
         if (Objects.isNull(objects)) {

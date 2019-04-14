@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.util;
+package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.common.page.PageInfo;
@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2019/4/13 11:27
  */
 @NoArgsConstructor
-public class PageInfoUtils {
+public class PageInfoUtil {
 
     /**
      * 构建空页

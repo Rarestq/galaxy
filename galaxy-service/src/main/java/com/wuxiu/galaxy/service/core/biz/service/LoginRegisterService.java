@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core;
+package com.wuxiu.galaxy.service.core.biz.service;
 
 /**
  * 登录服务
