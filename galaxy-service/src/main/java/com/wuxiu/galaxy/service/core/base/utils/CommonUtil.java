@@ -1,14 +1,16 @@
 package com.wuxiu.galaxy.service.core.base.utils;
 
-import com.wuxiu.galaxy.common.entity.APIResult;
-import com.wuxiu.galaxy.common.enums.GlobalErrorCode;
-import com.wuxiu.galaxy.common.expection.BizException;
+import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.GlobalErrorCode;
+import com.wuxiu.galaxy.api.common.page.PageInfo;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -20,6 +22,59 @@ import java.util.function.Supplier;
 @Slf4j
 @NoArgsConstructor
 public class CommonUtil {
+
+    public static <T, R> APIResult<R> errorAPIResult(APIResult<T> apiResult) {
+        if (apiResult.isSuccess()) {
+            throw new IllegalStateException("状态非法");
+        }
+
+        return APIResult.error(apiResult.getCode(), apiResult.getMessage());
+    }
+
+    public static <T, R> APIResult<R> okBeanCopy(APIResult<T> apiResult, Class<R> clazz) {
+        if (!apiResult.isSuccess()) {
+            throw new IllegalStateException("状态非法");
+        }
+        if (Objects.isNull(apiResult.getData())) {
+            return APIResult.ok();
+        }
+
+        return APIResult.ok(BeanCopierUtil.convert(apiResult.getData(), clazz));
+    }
+
+    public static <T, R> APIResult<List<R>> okListBeanCopy(APIResult<List<T>> apiResult, Class<R> clazz) {
+        if (!apiResult.isSuccess()) {
+            throw new IllegalStateException("状态非法");
+        }
+
+        return APIResult.ok(StreamUtil.convertBeanCopy(apiResult.getData(), clazz));
+    }
+
+    public static <T, R> APIResult<PageInfo<R>> okPageBeanCopy(APIResult<PageInfo<T>> apiResult, Class<R> clazz) {
+        if (!apiResult.isSuccess()) {
+            throw new IllegalStateException("状态非法");
+        }
+
+        return APIResult.ok(convertPageInfoBeanCopy(apiResult.getData(), clazz));
+    }
+
+    public static <T, R> PageInfo<R> convertPageInfo(PageInfo<T> sourcePageInfo, Function<T, R> convert) {
+        PageInfo<R> resultPage = new PageInfo<>();
+        resultPage.setCondition(sourcePageInfo.getCondition())
+                .setAscs(sourcePageInfo.getAscs())
+                .setCurrent(sourcePageInfo.getCurrent())
+                .setDescs(sourcePageInfo.getDescs())
+                .setSize(sourcePageInfo.getSize())
+                .setTotal(sourcePageInfo.getTotal());
+
+        List<R> resultDataList = StreamUtil.convert(sourcePageInfo.getRecords(), convert);
+
+        return resultPage.setRecords(resultDataList);
+    }
+
+    public static <T, R> PageInfo<R> convertPageInfoBeanCopy(PageInfo<T> sourcePageInfo, Class<R> clazz) {
+        return convertPageInfo(sourcePageInfo, t -> BeanCopierUtil.convert(t, clazz));
+    }
 
     public static boolean anyIsNull(Object... objects) {
         if (Objects.isNull(objects)) {
@@ -51,23 +106,17 @@ public class CommonUtil {
         return Arrays.stream(objects).allMatch(Objects::nonNull);
     }
 
+
     public static <T> APIResult<T> paramErrorResult(String message) {
         return APIResult.error(GlobalErrorCode.INVALID_PARAM.getCode(), message);
     }
 
     public static <T> APIResult<T> bizErrorResult(String message) {
-        return APIResult.error(GlobalErrorCode.INTERNAL_SERVER_ERROR.getCode(), message);
+        return APIResult.error(message);
     }
 
     public static <T> APIResult<T> systemErrorResult(String message) {
         return APIResult.error(GlobalErrorCode.FAILURE.getCode(), message);
-    }
-
-    public static <T> void checkSuccess(APIResult<T> apiResult, Consumer<String> failedLog) {
-        if (!apiResult.isSuccess()) {
-            failedLog.accept(apiResult.getMessage());
-            throw new BizException(apiResult.getMessage());
-        }
     }
 
     /**
@@ -98,5 +147,16 @@ public class CommonUtil {
     public static <T> T catchException(Supplier<T> supplierMethod, T defaultValue) {
         return catchExceptionCore(supplierMethod, () -> defaultValue, e -> log.warn("抓取到异常,执行默认方法", e));
     }
-}
 
+    /**
+     * 如果出现异常返回Null
+     *
+     * @param supplierMethod
+     * @param <T>
+     * @return
+     */
+    public static <T> T catchException(Supplier<T> supplierMethod) {
+        return catchExceptionCore(supplierMethod, () -> null, e -> log.warn("抓取到异常,执行默认方法", e));
+    }
+
+}

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan(basePackages = {
         "com.wuxiu.galaxy.dal",
         "com.wuxiu.galaxy.service",
-        "com.wuxiu.galaxy.common",
+        "com.wuxiu.galaxy.integration",
         "com.wuxiu.galaxy.web"})
 @MapperScan("com.wuxiu.galaxy.dal.dao")
 @EnableTransactionManagement

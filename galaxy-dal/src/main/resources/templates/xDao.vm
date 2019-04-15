@@ -9,7 +9,7 @@
 package ${package.Mapper};
 
 import ${package.Entity}.${entity};
-import com.wuxiu.galaxy.common.base.BaseDao;
+import com.wuxiu.galaxy.api.common.base.BaseDao;
 
 /**  
  * <p>${entity}Dao接口</p>

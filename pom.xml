@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>galaxy-common</module>
+        <module>galaxy-api</module>
         <module>galaxy-dal</module>
         <module>galaxy-service</module>
         <module>galaxy-web</module>
@@ -62,16 +62,16 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>1.7.1.RELEASE</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-swagger2</artifactId>-->
-            <!--<version>2.9.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-swagger-ui</artifactId>-->
-            <!--<version>2.9.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.0</version>
+        </dependency>
 
         <!-- JSON支持 -->
         <dependency>

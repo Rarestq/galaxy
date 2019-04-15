@@ -43,7 +43,7 @@ public class Generator {
         String projectPath = System.getProperty("user.dir");
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(projectPath + "/galaxy-dal/src/main/java/")
+        gc.setOutputDir(projectPath + "/controller-dal/src/main/java/")
                 .setAuthor("Generator")
                 .setOpen(false)
                 .setFileOverride(true)
@@ -70,7 +70,7 @@ public class Generator {
 
         // 包配置
         PackageConfig packageConfig = new PackageConfig()
-                .setParent("com.wuxiu.galaxy.dal")
+                .setParent("com.wuxiu.controller.dal")
                 .setEntity("domain")
                 .setMapper("dao")
                 .setService("manager")
@@ -89,7 +89,7 @@ public class Generator {
         focList.add(new FileOutConfig("/templates/xDaoMapper.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/galaxy-dal/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+                return projectPath + "/controller-dal/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
 

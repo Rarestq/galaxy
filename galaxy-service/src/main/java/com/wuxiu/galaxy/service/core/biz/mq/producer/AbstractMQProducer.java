@@ -1,6 +1,6 @@
 package com.wuxiu.galaxy.service.core.biz.mq.producer;
 
-import com.wuxiu.galaxy.common.expection.MQException;
+import com.wuxiu.galaxy.api.common.expection.MQException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;

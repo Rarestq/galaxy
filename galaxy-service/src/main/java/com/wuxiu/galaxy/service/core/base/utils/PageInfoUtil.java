@@ -1,7 +1,7 @@
 package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.wuxiu.galaxy.common.page.PageInfo;
+import com.wuxiu.galaxy.api.common.page.PageInfo;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -108,6 +108,21 @@ public class PageInfoUtil {
     public static <T> PageInfo<T> of(PageInfo pageInfo, List<T> record) {
         PageInfo<T> resultPageInfo = ofEmptyPage(pageInfo);
         return resultPageInfo.setRecords(record);
+    }
+
+    /**
+     * 拷贝分页参数
+     *
+     * @param source
+     * @param target
+     */
+    public static void copy(PageInfo source, PageInfo target) {
+        target.setCondition(source.getCondition())
+                .setAscs(source.getAscs())
+                .setCurrent(source.getCurrent())
+                .setDescs(source.getDescs())
+                .setSize(source.getSize())
+                .setTotal(source.getTotal());
     }
 }
 

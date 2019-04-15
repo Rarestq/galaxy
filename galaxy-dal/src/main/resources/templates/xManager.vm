@@ -9,7 +9,7 @@
 package ${package.Service};
 
 import ${package.Entity}.${entity};
-import com.wuxiu.galaxy.common.base.BaseManager;
+import com.wuxiu.galaxy.api.common.base.BaseManager;
 
 /**  
  * ${entity}Manager

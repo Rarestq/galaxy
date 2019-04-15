@@ -1,5 +1,10 @@
 package com.wuxiu.galaxy.service.core.biz.service;
 
+import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminDTO;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
+import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
+
 /**
  * 管理员服务接口
  *
@@ -8,5 +13,19 @@ package com.wuxiu.galaxy.service.core.biz.service;
  */
 public interface AdminService {
 
-    Long saveAdminInfo();
+    /**
+     * 新增/编辑管理员信息
+     *
+     * @param adminInfoDTO
+     * @return
+     */
+    Long saveAdminInfo(AdminInfoDTO adminInfoDTO);
+
+    /**
+     * 查询管理员信息
+     *
+     * @param queryDTO
+     * @return
+     */
+    PageInfo<AdminDTO> queryAdminInfoList(AdminInfoQueryDTO queryDTO);
 }

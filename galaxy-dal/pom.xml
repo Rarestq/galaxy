@@ -21,8 +21,8 @@
     <dependencies>
         <!-- ===== 一方包 BEGIN ===== -->
         <dependency>
-            <groupId>com.wuxiu</groupId>
-            <artifactId>galaxy-common</artifactId>
+            <groupId>com.wuxiu.galaxy</groupId>
+            <artifactId>galaxy-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- ===== 一方包 END ===== -->
