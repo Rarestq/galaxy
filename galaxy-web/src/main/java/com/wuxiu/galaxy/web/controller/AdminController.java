@@ -5,7 +5,7 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoForm;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
-import com.wuxiu.galaxy.web.biz.service.galaxy.GwAdminService;
+import com.wuxiu.galaxy.web.biz.service.GwAdminService;
 import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

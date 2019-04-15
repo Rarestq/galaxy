@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.service.galaxy.impl;
+package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
@@ -12,7 +12,7 @@ import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoForm;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
-import com.wuxiu.galaxy.web.biz.service.galaxy.GwAdminService;
+import com.wuxiu.galaxy.web.biz.service.GwAdminService;
 import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

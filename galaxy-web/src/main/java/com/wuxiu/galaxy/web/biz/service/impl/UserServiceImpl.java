@@ -1,7 +1,7 @@
-package com.wuxiu.galaxy.web.biz.service.galaxy.impl;
+package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
-import com.wuxiu.galaxy.web.biz.service.galaxy.UserService;
+import com.wuxiu.galaxy.web.biz.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
