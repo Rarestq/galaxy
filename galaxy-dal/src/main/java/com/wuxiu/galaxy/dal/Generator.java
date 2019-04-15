@@ -12,6 +12,10 @@ import java.util.List;
 
 public class Generator {
 
+    /**
+     * 表前缀过滤
+     */
+    public static String tablePrefix = "galaxy_";
     public static final String LINK = "jdbc:mysql://localhost:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8";
     public static final String ACCOUNT = "root";
     public static final String PASSWORD = "123123";
@@ -104,13 +108,14 @@ public class Generator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
-        strategy.setEntityLombokModel(true);
-        strategy.setInclude(tables);
-        strategy.setSuperEntityColumns("id");
-        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
+        strategy.setNaming(NamingStrategy.underline_to_camel)
+                .setColumnNaming(NamingStrategy.underline_to_camel)
+                .setSuperEntityClass("com.baomidou.ant.common.BaseEntity")
+                .setEntityLombokModel(true)
+                .setInclude(tables)
+                .setSuperEntityColumns("id")
+                .setTablePrefix(tablePrefix)
+                .setLogicDeleteFieldName("deleted");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new VelocityTemplateEngine());
         mpg.execute();
