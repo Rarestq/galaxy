@@ -7,6 +7,7 @@
                     <id column="lost_registration_record_id" property="lostRegistrationRecordId"/>
                     <result column="admin_id" property="adminId"/>
                     <result column="luggage_id" property="luggageId"/>
+                    <result column="luggage_record_code" property="luggageRecordCode"/>
                     <result column="luggage_type_id" property="luggageTypeId"/>
                     <result column="admin_name" property="adminName"/>
                     <result column="depositor_name" property="depositorName"/>
@@ -19,6 +20,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       lost_registration_record_id,admin_id,luggage_id,luggage_type_id,admin_name,depositor_name,depositor_phone,remark,registration_time,deleted,gmt_create,gmt_modified
+       lost_registration_record_id,admin_id,luggage_id,luggage_record_code,luggage_type_id,admin_name,depositor_name,depositor_phone,remark,registration_time,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

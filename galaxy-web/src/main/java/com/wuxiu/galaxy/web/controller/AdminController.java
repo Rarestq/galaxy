@@ -35,20 +35,20 @@ public class AdminController {
     @PostMapping(value = "/save")
     public APIResult<AdminInfoVO> saveTaskTemplate(@RequestBody @Valid AdminInfoForm form) {
         // 参数校验
-        String templateCheck = ValidatorUtil.returnAnyMessageIfError(form);
-        if (StringUtils.isNotEmpty(templateCheck)) {
-            return APIResult.error(templateCheck);
+        String adminInfoCheck = ValidatorUtil.returnAnyMessageIfError(form);
+        if (StringUtils.isNotEmpty(adminInfoCheck)) {
+            return APIResult.error(adminInfoCheck);
         }
         return adminService.saveAdminInfo(form);
     }
 
-    @ApiOperation(value = "查询任务管理员信息列表", notes = "查询任务管理员信息列表")
+    @ApiOperation(value = "查询管理员信息列表", notes = "查询管理员信息列表")
     @GetMapping("")
     public APIResult<PageInfo<AdminInfoVO>> queryTaskTemplateList(AdminInfoQueryForm form) {
         // 参数校验
-        String templateItemCheck = ValidatorUtil.returnAnyMessageIfError(form);
-        if (StringUtils.isNotEmpty(templateItemCheck)) {
-            return APIResult.error(templateItemCheck);
+        String adminInfoQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
+        if (StringUtils.isNotEmpty(adminInfoQueryCheck)) {
+            return APIResult.error(adminInfoQueryCheck);
         }
         return adminService.queryAdminInfoList(form);
     }

@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Generator {
+public class MPGenerator {
 
     /**
      * 表前缀过滤
@@ -43,8 +43,8 @@ public class Generator {
         String projectPath = System.getProperty("user.dir");
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(projectPath + "/controller-dal/src/main/java/")
-                .setAuthor("Generator")
+        gc.setOutputDir(projectPath + "/galaxy-dal/src/main/java/")
+                .setAuthor("MPGenerator")
                 .setOpen(false)
                 .setFileOverride(true)
                 // 不需要ActiveRecord特性的请改为false
@@ -70,7 +70,7 @@ public class Generator {
 
         // 包配置
         PackageConfig packageConfig = new PackageConfig()
-                .setParent("com.wuxiu.controller.dal")
+                .setParent("com.wuxiu.galaxy.dal")
                 .setEntity("domain")
                 .setMapper("dao")
                 .setService("manager")
@@ -89,7 +89,7 @@ public class Generator {
         focList.add(new FileOutConfig("/templates/xDaoMapper.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/controller-dal/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+                return projectPath + "/galaxy-dal/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
 

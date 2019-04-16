@@ -2,7 +2,6 @@ package com.wuxiu.galaxy.dal.common.dto;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.dal.domain.Admin;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +12,6 @@ import java.io.Serializable;
  * @author: wuxiu
  * @date: 2019/4/15 20:17
  */
-@ApiModel(description = "管理员信息查询对象")
 @Data
 public class AdminInfoQueryDTO implements Serializable {
 

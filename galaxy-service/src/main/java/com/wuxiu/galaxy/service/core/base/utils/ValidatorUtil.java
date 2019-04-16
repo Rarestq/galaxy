@@ -34,7 +34,8 @@ public final class ValidatorUtil {
      * @return
      */
     public static <T> String returnAnyMessageIfError(T object, Class... groups) {
-        Set<ConstraintViolation<T>> constraintViolationSet = VALIDATOR.validate(object, groups);
+        Set<ConstraintViolation<T>> constraintViolationSet =
+                VALIDATOR.validate(object, groups);
         if (CollectionUtils.isEmpty(constraintViolationSet)) {
             return EMPTY_STRING;
         }

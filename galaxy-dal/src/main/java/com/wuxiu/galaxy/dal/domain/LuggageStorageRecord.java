@@ -1,7 +1,7 @@
 /** 
  * All rights Reserved, Designed By wuxiu
  *
- * @Package com.wuxiu.controller.dal.dao
+ * @Package com.wuxiu.galaxy.dal.dao
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @date: 2018-04-16 20:35:12
  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
@@ -26,10 +26,9 @@ import java.time.LocalDateTime;
  *  行李寄存-取件表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-15
+ *  * @since 2019-04-16
  *  
  */
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_storage_record")
@@ -41,6 +40,11 @@ public class LuggageStorageRecord extends BaseModel {
      */
     @TableId(value = "luggage_id", type = IdType.AUTO)
     private Long luggageId;
+    /**
+     * 行李寄存记录编号
+     */
+    @TableField("luggage_record_code")
+    private String luggageRecordCode;
     /**
      * 行李类型主键id
      */
@@ -96,8 +100,7 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("luggage_pick_up_time")
     private LocalDateTime luggagePickUpTime;
     /**
-     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期，3-已作废）
-，3-已逾期，4-已作废)
+     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */
     private Integer status;
     /**

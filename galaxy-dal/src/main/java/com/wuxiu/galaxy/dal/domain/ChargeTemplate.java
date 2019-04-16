@@ -1,7 +1,7 @@
 /** 
  * All rights Reserved, Designed By wuxiu
  *
- * @Package com.wuxiu.controller.dal.dao
+ * @Package com.wuxiu.galaxy.dal.dao
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @date: 2018-04-16 20:35:12
  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
@@ -15,7 +15,9 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
 import com.baomidou.mybatisplus.annotations.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**  
  * <p>ChargeTemplateDomian实体对象</p>
@@ -23,12 +25,14 @@ import java.time.LocalDateTime;
  * 计费模板表
  *
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
+ * @since 2019-04-16
  */
+
+import com.baomidou.mybatisplus.annotations.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_charge_template")

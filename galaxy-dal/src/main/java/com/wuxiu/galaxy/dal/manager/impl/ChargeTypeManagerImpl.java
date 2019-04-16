@@ -1,7 +1,7 @@
 /** 
  * All rights Reserved, Designed By wuxiu
  *
- * @Package com.wuxiu.controller.dal.dao
+ * @Package com.wuxiu.galaxy.dal.dao
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @date: 2018-04-16 20:35:12
  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
@@ -11,11 +11,11 @@ package com.wuxiu.galaxy.dal.manager.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.collect.Lists;
-import com.wuxiu.galaxy.api.dto.PairDTO;
-import com.wuxiu.galaxy.dal.domain.ChargeType;
-import com.wuxiu.galaxy.dal.dao.ChargeTypeDao;
-import com.wuxiu.galaxy.dal.manager.ChargeTypeManager;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.dal.dao.ChargeTypeDao;
+import com.wuxiu.galaxy.dal.domain.ChargeType;
+import com.wuxiu.galaxy.dal.manager.ChargeTypeManager;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * 费用类型表
  * </p>
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
+ * @since 2019-04-16
  */
 @Component
 public class ChargeTypeManagerImpl extends BaseManagerImpl<ChargeTypeDao, ChargeType> implements ChargeTypeManager{

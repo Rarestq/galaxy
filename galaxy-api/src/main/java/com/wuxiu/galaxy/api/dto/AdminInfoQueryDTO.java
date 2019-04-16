@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.api.dto;
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -19,6 +20,25 @@ public class AdminInfoQueryDTO extends PageInfo {
     /**
      * 管理员id
      */
+    @ApiModelProperty(value = "管理员id", required = false)
     private Long adminId;
+
+    /**
+     * 管理员编号
+     */
+    @ApiModelProperty(value = "管理员编号", required = false)
+    private String adminNo;
+
+    /**
+     * 管理员姓名
+     */
+    @ApiModelProperty(value = "管理员姓名", required = false)
+    private String adminName;
+
+    /**
+     * 管理员性别(0-男，1-女)
+     */
+    @ApiModelProperty(value = "管理员性别(0-男，1-女)", required = false)
+    private Integer gender;
 
 }

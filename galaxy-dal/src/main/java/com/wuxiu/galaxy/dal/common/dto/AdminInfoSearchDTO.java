@@ -1,7 +1,8 @@
-package com.wuxiu.galaxy.api.dto;
+package com.wuxiu.galaxy.dal.common.dto;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import io.swagger.annotations.ApiModel;
+import com.wuxiu.galaxy.dal.domain.Admin;
 import lombok.Data;
 
 /**
@@ -10,12 +11,15 @@ import lombok.Data;
  * @author: wuxiu
  * @date: 2019/4/15 15:53
  */
-@ApiModel(description = "管理员信息搜索对象")
 @Data
 public class AdminInfoSearchDTO extends PageInfo {
 
     private static final long serialVersionUID = -209331198404294812L;
 
+    /**
+     * 分页条件
+     */
+    Page<Admin> page;
     /**
      * 管理员id
      */
