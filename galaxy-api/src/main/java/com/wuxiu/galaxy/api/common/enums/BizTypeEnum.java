@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public enum BizTypeEnum {
 
-    // 默认大区目前采用和金融一致，预先占坑，防止以后会变
+    // todo:业务类型枚举值
     DEFAULT(1, "默认"),
     FINANCE(1, "金融"),
     LOGISTICS(2, "物流"),
@@ -35,6 +35,22 @@ public enum BizTypeEnum {
         for (BizTypeEnum bizTypeEnum : BizTypeEnum.values()) {
             if (bizTypeEnum.getCode().equals(code)) {
                 return bizTypeEnum;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 通过 code 得到枚举描述
+     *
+     * @param code 枚举的 code
+     * @return
+     */
+    public static String getDescByCode(Integer code) {
+        BizTypeEnum[] arr = values();
+        for (BizTypeEnum bizTypeEnum : arr) {
+            if (bizTypeEnum.getCode().equals(code)) {
+                return bizTypeEnum.getDesc();
             }
         }
         return null;

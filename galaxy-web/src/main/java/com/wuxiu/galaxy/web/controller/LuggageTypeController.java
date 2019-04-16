@@ -1,17 +1,17 @@
 package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
-import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
-import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
-import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
+import com.wuxiu.galaxy.web.biz.service.GwLuggageTypeService;
+import com.wuxiu.galaxy.web.biz.vo.Pair;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 行李类型相关接口
@@ -25,14 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LuggageTypeController {
 
-    @ApiOperation(value = "查询任务管理员信息列表", notes = "查询任务管理员信息列表")
+    @Autowired
+    private GwLuggageTypeService luggageTypeService;
+
+    @ApiOperation(value = "获取行李类型列表", notes = "寄存行李时，需要选择行李类型，是一个下拉框")
     @GetMapping("")
-    public APIResult<PageInfo<AdminInfoVO>> queryTaskTemplateList(AdminInfoQueryForm form) {
-        // 参数校验
-        String templateItemCheck = ValidatorUtil.returnAnyMessageIfError(form);
-        if (StringUtils.isNotEmpty(templateItemCheck)) {
-            return APIResult.error(templateItemCheck);
-        }
-        return null;
+    public APIResult<List<Pair<Long,String>>> getLuggageTypeList() {
+        return luggageTypeService.getLuggageTypeList();
     }
 }

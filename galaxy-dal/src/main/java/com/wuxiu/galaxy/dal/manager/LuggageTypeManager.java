@@ -8,8 +8,11 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
+
+import java.util.List;
 
 /**  
  * LuggageTypeManager
@@ -20,4 +23,10 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  */
 public interface LuggageTypeManager extends BaseManager<LuggageType> {
 
+    /**
+     * 获取行李类型列表
+     *
+     * @return key-value 类型
+     */
+    List<PairDTO<Long, String>> getLuggageTypeList();
 }

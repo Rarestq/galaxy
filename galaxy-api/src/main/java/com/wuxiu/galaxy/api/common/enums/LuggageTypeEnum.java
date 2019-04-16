@@ -5,19 +5,18 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * 用户类型枚举
+ * 行李类型枚举
  *
  * @author: wuxiu
- * @date: 2019/4/15 15:47
+ * @date: 2019/4/16 09:37
  */
 @Getter
 @AllArgsConstructor
 @ToString
-public enum UserTypeEnum {
+public enum LuggageTypeEnum {
 
-    // 管理员类型
-    ADMIN(1, "普通管理员"),
-    SUPER_ADMIN(2, "超级管理员"),
+    // todo:行李类型
+
     ;
 
     private Integer code;
@@ -29,10 +28,10 @@ public enum UserTypeEnum {
      * @param code
      * @return
      */
-    public static UserTypeEnum valueOf(Integer code) {
-        for (UserTypeEnum userTypeEnum : UserTypeEnum.values()) {
-            if (userTypeEnum.getCode().equals(code)) {
-                return userTypeEnum;
+    public static LuggageTypeEnum valueOf(Integer code) {
+        for (LuggageTypeEnum luggageTypeEnum : LuggageTypeEnum.values()) {
+            if (luggageTypeEnum.getCode().equals(code)) {
+                return luggageTypeEnum;
             }
         }
         return null;
@@ -45,10 +44,10 @@ public enum UserTypeEnum {
      * @return
      */
     public static String getDescByCode(Integer code) {
-        UserTypeEnum[] arr = values();
-        for (UserTypeEnum userTypeEnum : arr) {
-            if (userTypeEnum.getCode().equals(code)) {
-                return userTypeEnum.getDesc();
+        LuggageTypeEnum[] arr = values();
+        for (LuggageTypeEnum luggageTypeEnum : arr) {
+            if (luggageTypeEnum.getCode().equals(code)) {
+                return luggageTypeEnum.getDesc();
             }
         }
         return null;

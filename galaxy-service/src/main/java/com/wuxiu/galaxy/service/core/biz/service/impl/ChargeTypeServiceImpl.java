@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.biz.service.impl;
 
 import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.dal.domain.ChargeType;
 import com.wuxiu.galaxy.dal.manager.ChargeTypeManager;
 import com.wuxiu.galaxy.service.core.biz.service.ChargeTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +38,16 @@ public class ChargeTypeServiceImpl implements ChargeTypeService {
         }
 
         return chargeTypesPairDTO;
+    }
+
+    /**
+     * 根据费用类型id获取费用类型
+     *
+     * @param chargeTypeId
+     * @return ChargeType
+     */
+    @Override
+    public ChargeType getChargeTypeById(Long chargeTypeId) {
+        return chargeTypeManager.selectById(chargeTypeId);
     }
 }

@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.biz.service;
 
 import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.dal.domain.ChargeType;
 
 import java.util.List;
 
@@ -18,4 +19,12 @@ public interface ChargeTypeService {
      * @return
      */
     List<PairDTO<Long, String>> getChargeTypeList();
+
+    /**
+     * 根据费用类型id获取费用类型
+     *
+     * @param chargeTypeId
+     * @return ChargeType
+     */
+    ChargeType getChargeTypeById(Long chargeTypeId);
 }

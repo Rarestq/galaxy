@@ -48,7 +48,8 @@ public class GwChargeTypeServiceImpl implements GwChargeTypeService {
             return APIResult.ok(Collections.emptyList());
         }
         // 将 PairDTO 转化为 Pair
-        List<Pair<Long, String>> chargeTypeListPair = ObjectConvertUtil.convertDTO2Domain(data);
+        List<Pair<Long, String>> chargeTypeListPair =
+                ObjectConvertUtil.convertDTO2Domain(data);
 
         return APIResult.ok(chargeTypeListPair);
     }

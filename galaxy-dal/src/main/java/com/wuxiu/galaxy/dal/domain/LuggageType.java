@@ -10,24 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
-/**  
- * <p>LuggageTypeDomian实体对象</p>
- *
- * 行李类型表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+/**
+ *   
+ *  * <p>LuggageTypeDomian实体对象</p>
+ * <p>
+ *  行李类型表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-15
+ *  
+ */
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -39,7 +40,7 @@ public class LuggageType extends BaseModel {
      * 行李类型主键id
      */
     @TableId(value = "luggage_type_id", type = IdType.AUTO)
-    private Integer luggageTypeId;
+    private Long luggageTypeId;
     /**
      * 行李类型(0-、1-、2、)
      */

@@ -10,24 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
-/**  
- * <p>LuggageLostRegistrationRecordDomian实体对象</p>
- *
- * 行李遗失登记记录表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+/**
+ *   
+ *  * <p>LuggageLostRegistrationRecordDomian实体对象</p>
+ * <p>
+ *  行李遗失登记记录表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-15
+ *  
+ */
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -54,7 +55,7 @@ public class LuggageLostRegistrationRecord extends BaseModel {
      * 行李类型主键id(冗余)
      */
     @TableField("luggage_type_id")
-    private Integer luggageTypeId;
+    private Long luggageTypeId;
     /**
      * 管理员姓名(冗余)
      */
