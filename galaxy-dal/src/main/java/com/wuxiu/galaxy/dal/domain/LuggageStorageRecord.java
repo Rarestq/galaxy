@@ -100,7 +100,8 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("luggage_pick_up_time")
     private LocalDateTime luggagePickUpTime;
     /**
-     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
+     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期）
+，3-已逾期，4-已作废)
      */
     private Integer status;
     /**

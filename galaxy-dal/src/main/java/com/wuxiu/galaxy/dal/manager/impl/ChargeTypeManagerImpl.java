@@ -60,4 +60,5 @@ public class ChargeTypeManagerImpl extends BaseManagerImpl<ChargeTypeDao, Charge
 
         return pairDTOList;
     }
+
 }

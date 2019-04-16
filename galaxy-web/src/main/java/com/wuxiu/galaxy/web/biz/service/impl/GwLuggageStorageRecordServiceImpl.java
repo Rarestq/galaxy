@@ -2,12 +2,10 @@ package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.integration.LuggageStorageRecordClient;
 import com.wuxiu.galaxy.web.biz.form.LuggageStorageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.form.NewLuggageStorageRecordForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageStorageRecordService;
 import com.wuxiu.galaxy.web.biz.vo.LuggageStorageRecordVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,9 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecordService {
-
-    @Autowired
-    private LuggageStorageRecordClient storageRecordClient;
+//
+//    @Autowired
+//    private LuggageStorageRecordClient storageRecordClient;
 
     /**
      * 新增行李寄存记录

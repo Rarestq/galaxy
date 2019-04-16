@@ -8,9 +8,9 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.api.common.base.BaseManager;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.ChargeType;
-import com.wuxiu.galaxy.api.common.base.BaseManager;
 
 import java.util.List;
 
@@ -30,4 +30,3 @@ public interface ChargeTypeManager extends BaseManager<ChargeType> {
      */
     List<PairDTO<Long, String>> getChargeTypeList();
 }
-

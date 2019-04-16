@@ -4,6 +4,7 @@ import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.service.LuggageTypeFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author: wuxiu
  * @date: 2019/4/16 09:23
  */
+@Service
 public class LuggageTypeClient {
 
     @Autowired

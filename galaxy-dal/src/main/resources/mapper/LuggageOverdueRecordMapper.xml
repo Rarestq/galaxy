@@ -16,7 +16,7 @@
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
                     <result column="gmt_modified" property="gmtModified"/>
-        </resultMap>v
+        </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
        luggage_overdue_record_id,admin_id,luggage_id,luggage_record_code,admin_name,depositor_name,depositor_phone,remark,status,deleted,gmt_create,gmt_modified

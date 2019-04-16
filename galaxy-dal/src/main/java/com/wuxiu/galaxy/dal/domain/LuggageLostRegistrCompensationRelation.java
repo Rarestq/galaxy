@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>LuggageLostRegistrCompensationRelationDomian实体对象</p>
- *
- * 行李遗失登记记录-赔偿关联表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>LuggageLostRegistrCompensationRelationDomian实体对象</p>
+ * <p>
+ *  行李遗失登记记录-赔偿关联表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-16
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_lost_registr_compensation_relation")

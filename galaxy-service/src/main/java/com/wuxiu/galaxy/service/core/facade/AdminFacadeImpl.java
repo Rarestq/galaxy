@@ -41,6 +41,6 @@ public class AdminFacadeImpl implements AdminFacade {
      */
     @Override
     public APIResult<PageInfo<AdminDTO>> queryAdminInfoList(AdminInfoQueryDTO queryDTO) {
-        return null;
+        return APIResult.ok(adminService.queryAdminInfoList(queryDTO));
     }
 }

@@ -10,29 +10,26 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-/**  
- * <p>ChargeTypeDomian实体对象</p>
- *
- * 费用类型表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+/**
+ *   
+ *  * <p>ChargeTypeDomian实体对象</p>
+ * <p>
+ *  费用类型表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-16
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_charge_type")
@@ -58,7 +55,7 @@ public class ChargeType extends BaseModel {
      * 创建时间
      */
     @TableField("gmt_create")
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
     /**
      * 修改时间
      */

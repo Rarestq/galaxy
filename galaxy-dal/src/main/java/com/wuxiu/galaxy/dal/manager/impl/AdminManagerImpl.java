@@ -86,6 +86,19 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         if (Objects.nonNull(queryDTO.getAdminId())) {
             wrapper.eq("admin_id", queryDTO.getAdminId());
         }
+
+        if (Objects.nonNull(queryDTO.getAdminNo())) {
+            wrapper.eq("admin_no", queryDTO.getAdminNo());
+        }
+
+        if (Objects.nonNull(queryDTO.getAdminName())) {
+            wrapper.eq("admin_name", queryDTO.getAdminName());
+        }
+
+        if (Objects.nonNull(queryDTO.getGender())) {
+            wrapper.eq("gender", queryDTO.getGender());
+        }
+
         wrapper.orderBy("gmt_create", false)
                 .orderBy("admin_id", false);
 
@@ -113,6 +126,7 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             adminDTO.setAdminNo(admin.getAdminNo());
             adminDTO.setAdminName(admin.getAdminName());
             adminDTO.setAdminPhone(admin.getAdminPhone());
+            adminDTO.setGender(admin.getGender());
             adminDTOS.add(adminDTO);
         });
 

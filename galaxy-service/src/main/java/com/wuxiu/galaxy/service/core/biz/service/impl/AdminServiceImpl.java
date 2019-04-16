@@ -50,10 +50,10 @@ public class AdminServiceImpl implements AdminService {
             throw new ParamException(adminInfoCheck);
         }
 
-        // 构造 AdminDTO 对象
-        AdminDTO adminDTO = buildAdminDTO(adminInfoDTO);
+        // 构造 AdminInfoDTO 对象
+        AdminInfoDTO saveAdminInfoDTO = buildAdminDTO(adminInfoDTO);
 
-        return adminDTO.getAdminId();
+        return adminManager.saveAdminInfo(saveAdminInfoDTO);
     }
 
     /**
@@ -62,32 +62,32 @@ public class AdminServiceImpl implements AdminService {
      * @param adminInfoDTO
      * @return
      */
-    private AdminDTO buildAdminDTO(AdminInfoDTO adminInfoDTO) {
+    private AdminInfoDTO buildAdminDTO(AdminInfoDTO adminInfoDTO) {
 
         if (Objects.nonNull(adminInfoDTO.getAdminId())) {
             // 编辑管理员信息
-            AdminDTO editAdminDTO = new AdminDTO();
-            editAdminDTO.setAdminId(adminInfoDTO.getAdminId());
-            editAdminDTO.setAdminName(adminInfoDTO.getAdminName());
-            editAdminDTO.setAdminNo(adminInfoDTO.getAdminNo());
-            editAdminDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
-            editAdminDTO.setGender(adminInfoDTO.getGender());
-            editAdminDTO.setGmtModified(LocalDateTime.now());
+            AdminInfoDTO editAdminInfoDTO = new AdminInfoDTO();
+            editAdminInfoDTO.setAdminId(adminInfoDTO.getAdminId());
+            editAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
+            editAdminInfoDTO.setAdminNo(adminInfoDTO.getAdminNo());
+            editAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
+            editAdminInfoDTO.setGender(adminInfoDTO.getGender());
+            editAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
-            return editAdminDTO;
+            return editAdminInfoDTO;
         }
 
         // 新增管理员信息
-        AdminDTO newAdminDTO = new AdminDTO();
-        newAdminDTO.setAdminName(adminInfoDTO.getAdminName());
+        AdminInfoDTO newAdminInfoDTO = new AdminInfoDTO();
+        newAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
         // TODO：随机生成 adminNo
-        newAdminDTO.setAdminNo(UUIDGenerator.getUUID());
-        newAdminDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
-        newAdminDTO.setGender(adminInfoDTO.getGender());
-        newAdminDTO.setGmtCreate(LocalDateTime.now());
-        newAdminDTO.setGmtModified(LocalDateTime.now());
+        newAdminInfoDTO.setAdminNo(UUIDGenerator.getUUID());
+        newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
+        newAdminInfoDTO.setGender(adminInfoDTO.getGender());
+        newAdminInfoDTO.setGmtCreate(LocalDateTime.now());
+        newAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
-        return newAdminDTO;
+        return newAdminInfoDTO;
     }
 
     /**

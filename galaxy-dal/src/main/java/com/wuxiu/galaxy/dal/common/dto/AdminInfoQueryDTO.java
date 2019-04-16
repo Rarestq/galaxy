@@ -21,10 +21,24 @@ public class AdminInfoQueryDTO implements Serializable {
      * 分页条件
      */
     Page<Admin> page;
-
     /**
      * 管理员id
      */
     private Long adminId;
+
+    /**
+     * 管理员编号
+     */
+    private String adminNo;
+
+    /**
+     * 管理员姓名
+     */
+    private String adminName;
+
+    /**
+     * 管理员性别(0-男，1-女)
+     */
+    private Integer gender;
 
 }
