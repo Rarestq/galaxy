@@ -8,12 +8,15 @@
                     <result column="charge_rule_id" property="chargeRuleId"/>
                     <result column="charge_type_id" property="chargeTypeId"/>
                     <result column="charge_template_name" property="chargeTemplateName"/>
+                    <result column="min_fee" property="minFee"/>
+                    <result column="max_fee" property="maxFee"/>
+                    <result column="charge_template_status" property="chargeTemplateStatus"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
                     <result column="gmt_modified" property="gmtModified"/>
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       charge_template_id,charge_rule_id,charge_type_id,charge_template_name,deleted,gmt_create,gmt_modified
+       charge_template_id,charge_rule_id,charge_type_id,charge_template_name,min_fee,max_fee,charge_template_status,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

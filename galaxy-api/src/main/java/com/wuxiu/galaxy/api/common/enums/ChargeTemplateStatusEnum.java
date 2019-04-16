@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * 行李逾期未取清理状态
+ * 计费模板状态枚举
  *
  * @author: wuxiu
  * @date: 2019/4/16 10:28
@@ -13,12 +13,11 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public enum LuggageOverdueStatusEnum {
+public enum ChargeTemplateStatusEnum {
 
-    // 行李逾期未取清理状态
-    OVERDUE(1, "已逾期"),
-    CLEARED_UP(2, "已清理作废"),
-    ;
+    // 计费模板状态枚举
+    DISABLE(0, "开启"),
+    ENABLE(1, "禁用");
 
     private Integer code;
     private String desc;
@@ -29,8 +28,8 @@ public enum LuggageOverdueStatusEnum {
      * @param code
      * @return
      */
-    public static LuggageOverdueStatusEnum valueOf(Integer code) {
-        for (LuggageOverdueStatusEnum statusEnum : LuggageOverdueStatusEnum.values()) {
+    public static ChargeTemplateStatusEnum valueOf(Integer code) {
+        for (ChargeTemplateStatusEnum statusEnum : ChargeTemplateStatusEnum.values()) {
             if (statusEnum.getCode().equals(code)) {
                 return statusEnum;
             }
@@ -45,8 +44,8 @@ public enum LuggageOverdueStatusEnum {
      * @return
      */
     public static String getDescByCode(Integer code) {
-        LuggageOverdueStatusEnum[] arr = values();
-        for (LuggageOverdueStatusEnum statusEnum : arr) {
+        ChargeTemplateStatusEnum[] arr = values();
+        for (ChargeTemplateStatusEnum statusEnum : arr) {
             if (statusEnum.getCode().equals(code)) {
                 return statusEnum.getDesc();
             }

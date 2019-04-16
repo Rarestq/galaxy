@@ -56,6 +56,21 @@ public class ChargeTemplate extends BaseModel {
     @TableField("charge_template_name")
     private String chargeTemplateName;
     /**
+     * 最低金额,单位元
+     */
+    @TableField("min_fee")
+    private String minFee;
+    /**
+     * 最高金额,单位元
+     */
+    @TableField("max_fee")
+    private String maxFee;
+    /**
+     * 计费模板状态(0-开启，1-禁用)
+     */
+    @TableField("charge_template_status")
+    private Integer chargeTemplateStatus;
+    /**
      * 记录状态(1-删除、0-正常)
      */
     @TableLogic

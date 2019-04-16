@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public enum PickUpLuggageTypeEnum {
 
-    // 寄存行李状态类型
+    // 取件类型状态枚举
     NORMAL(0, "正常取件"),
     LUGGAGE_HAVE_LOST(1, "行李有遗失"),
     OVERDUE_PICK_UP(2, "逾期取件"),

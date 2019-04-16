@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 管理员信息 VO
+ * 管理员信息页面展示对象
  *
  * @author: wuxiu
  * @date: 2019/4/15 11:39
  */
-@ApiModel("管理员信息 VO")
+@ApiModel("管理员信息页面展示对象")
 @Data
 public class AdminInfoVO implements Serializable {
 
