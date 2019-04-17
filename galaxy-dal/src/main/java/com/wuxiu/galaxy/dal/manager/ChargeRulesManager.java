@@ -8,9 +8,12 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
-import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
-import com.wuxiu.galaxy.dal.domain.ChargeRules;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
+import com.wuxiu.galaxy.api.dto.ChargeRuleDTO;
+import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
+import com.wuxiu.galaxy.dal.common.dto.ChargeRuleQueryDTO;
+import com.wuxiu.galaxy.dal.domain.ChargeRules;
 
 /**  
  * ChargeRulesManager
@@ -28,4 +31,20 @@ public interface ChargeRulesManager extends BaseManager<ChargeRules> {
      * @return 计费规则主键id
      */
     Long saveChargeRule(SaveChargeRuleDTO chargeRuleDTO);
+
+    /**
+     * 获取计费规则列表
+     *
+     * @param queryDTO
+     * @return
+     */
+    Page<ChargeRuleDTO> getChargeRuleList(ChargeRuleQueryDTO queryDTO);
+
+    /**
+     * 根据计费规则名称查询计费规则信息
+     *
+     * @param chargeRuleName
+     * @return
+     */
+    ChargeRules getChargeRuleByName(String chargeRuleName);
 }

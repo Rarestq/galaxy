@@ -8,8 +8,13 @@
  */
 package com.wuxiu.galaxy.dal.manager.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.dto.ChargeRuleDTO;
 import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
+import com.wuxiu.galaxy.dal.common.dto.ChargeRuleQueryDTO;
 import com.wuxiu.galaxy.dal.dao.ChargeRulesDao;
 import com.wuxiu.galaxy.dal.domain.ChargeRules;
 import com.wuxiu.galaxy.dal.manager.ChargeRulesManager;
@@ -17,7 +22,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * <p>ChargeRulesManager</p>
@@ -39,7 +47,7 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Long saveChargeRule(SaveChargeRuleDTO chargeRuleDTO) {
-        //todo:新增/编辑计费规则信息时，还应当同步更新「计费模板」和「计算规则表的信息」
+
         if (Objects.nonNull(chargeRuleDTO.getChargeRuleId())) {
             // 编辑计费规则信息
             ChargeRules updateChargeRule = new ChargeRules();
@@ -61,5 +69,77 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
         insert(insertChargeRule);
 
         return insertChargeRule.getChargeRuleId();
+    }
+
+    /**
+     * 获取计费规则列表
+     *
+     * @param queryDTO
+     * @return
+     */
+    @Override
+    public Page<ChargeRuleDTO> getChargeRuleList(ChargeRuleQueryDTO queryDTO) {
+        // 构造查询参数
+        EntityWrapper<ChargeRules> wrapper = new EntityWrapper<>();
+        if (Objects.nonNull(queryDTO.getChargeRuleId())) {
+            wrapper.eq("charge_rule_id", queryDTO.getChargeRuleId());
+        }
+
+        if (Objects.nonNull(queryDTO.getChargeRuleName())) {
+            wrapper.eq("charge_rule_name", queryDTO.getChargeRuleName());
+        }
+
+        if (Objects.nonNull(queryDTO.getChargeRuleType())) {
+            wrapper.eq("charge_rule_type", queryDTO.getChargeRuleType());
+        }
+
+        wrapper.orderBy("gmt_create", false)
+                .orderBy("charge_rule_id", false);
+
+        // 获取计费规则列表信息
+        Page<ChargeRules> chargeRulesPage = selectPage(queryDTO.getPage(), wrapper);
+
+        return buildChargeRuleDTOS(chargeRulesPage);
+    }
+
+    /**
+     * 构造 ChargeRules 列表信息
+     *
+     * @param chargeRulesPage
+     * @return
+     */
+    private Page<ChargeRuleDTO> buildChargeRuleDTOS(Page<ChargeRules> chargeRulesPage) {
+
+        List<ChargeRuleDTO> ruleDTOS = newArrayList();
+        List<ChargeRules> chargeRules = chargeRulesPage.getRecords();
+
+        // 将 ChargeRules 对象转化为 ChargeRuleDTO 对象
+        chargeRules.forEach(rule -> {
+            ChargeRuleDTO ruleDTO = new ChargeRuleDTO();
+            ruleDTO.setChargeRuleId(rule.getChargeRuleId());
+            ruleDTO.setChargeRuleName(rule.getChargeRuleName());
+
+            ruleDTOS.add(ruleDTO);
+        });
+
+        Page<ChargeRuleDTO> page = new Page<>();
+        page.setRecords(ruleDTOS);
+        page.setTotal(chargeRulesPage.getTotal());
+
+        return page;
+    }
+
+    /**
+     * 根据计费规则名称查询计费规则信息
+     *
+     * @param chargeRuleName
+     * @return
+     */
+    @Override
+    public ChargeRules getChargeRuleByName(String chargeRuleName) {
+        Wrapper<ChargeRules> wrapper = new EntityWrapper<>();
+        wrapper.eq("charge_template_name", chargeRuleName);
+
+        return selectOne(wrapper);
     }
 }

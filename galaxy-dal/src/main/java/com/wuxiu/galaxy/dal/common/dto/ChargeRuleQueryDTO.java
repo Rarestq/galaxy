@@ -25,6 +25,11 @@ public class ChargeRuleQueryDTO implements Serializable {
     Page<ChargeRules> page;
 
     /**
+     * 计费规则主键id
+     */
+    private Long chargeRuleId;
+
+    /**
      * 计费规则名称
      */
     private String chargeRuleName;

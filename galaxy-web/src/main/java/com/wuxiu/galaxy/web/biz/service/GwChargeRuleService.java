@@ -37,5 +37,5 @@ public interface GwChargeRuleService {
      * @param form
      * @return
      */
-    APIResult<ChargeRuleVO> deleteChargeRule(ChargeRuleDeleteForm form);
+    APIResult<Void> deleteChargeRule(ChargeRuleDeleteForm form);
 }

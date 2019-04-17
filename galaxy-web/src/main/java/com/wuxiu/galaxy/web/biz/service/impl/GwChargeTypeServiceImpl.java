@@ -39,7 +39,7 @@ public class GwChargeTypeServiceImpl implements GwChargeTypeService {
                 chargeTypeClient.getChargeTypeList();
 
         if (!chargeTypeListAPIResult.isSuccess()) {
-            log.warn("获取费用类型列表，result:{}", chargeTypeListAPIResult);
+            log.warn("获取费用类型列表失败，result:{}", chargeTypeListAPIResult);
             return CommonUtil.errorAPIResult(chargeTypeListAPIResult);
         }
 

@@ -105,7 +105,7 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         // 获取管理员信息
         Page<Admin> adminPage = selectPage(queryDTO.getPage(), wrapper);
 
-        return buildAdminDTO(adminPage);
+        return buildAdminDTOS(adminPage);
     }
 
     /**
@@ -114,7 +114,7 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
      * @param adminPage
      * @return
      */
-    private Page<AdminDTO> buildAdminDTO(Page<Admin> adminPage) {
+    private Page<AdminDTO> buildAdminDTOS(Page<Admin> adminPage) {
 
         List<AdminDTO> adminDTOS = newArrayList();
         List<Admin> adminList = adminPage.getRecords();

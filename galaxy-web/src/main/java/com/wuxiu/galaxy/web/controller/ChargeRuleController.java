@@ -84,7 +84,7 @@ public class ChargeRuleController {
      */
     @ApiOperation(value = "删除计费规则", notes = "删除计费规则")
     @PostMapping(value = "/delete_rule")
-    public APIResult<ChargeRuleVO> deleteChargeRule(
+    public APIResult<Void> deleteChargeRule(
             @RequestBody @Valid ChargeRuleDeleteForm form) {
 
         // 参数校验

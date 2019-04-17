@@ -45,7 +45,7 @@ public class GwAdminServiceImpl implements GwAdminService {
         AdminInfoDTO adminInfoDTO = BeanCopierUtil.convert(form, AdminInfoDTO.class);
         APIResult<Long> result = adminClient.saveAdminInfo(adminInfoDTO);
         if (!result.isSuccess()) {
-            log.warn("新增/编辑管理员信息，result:{}, form:{}", result, form);
+            log.warn("新增/编辑管理员信息失败，result:{}, form:{}", result, form);
             return CommonUtil.errorAPIResult(result);
         }
 

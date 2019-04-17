@@ -39,7 +39,7 @@ public class GwLuggageTypeServiceImpl implements GwLuggageTypeService {
                 luggageTypeClient.getLuggageTypeList();
 
         if (!luggageTypeListAPIResult.isSuccess()) {
-            log.warn("获取行李类型列表，result:{}", luggageTypeListAPIResult);
+            log.warn("获取行李类型列表失败，result:{}", luggageTypeListAPIResult);
             return CommonUtil.errorAPIResult(luggageTypeListAPIResult);
         }
 

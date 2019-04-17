@@ -41,15 +41,10 @@ public class LuggageLostCompensationRecord extends BaseModel {
     @TableId(value = "luggage_lost_compensation_record_id", type = IdType.AUTO)
     private Long luggageLostCompensationRecordId;
     /**
-     * 赔偿方式（1-现金，2-微信，3-支付宝
-     */
-    @TableField("compensation_method")
-    private Integer compensationMethod;
-    /**
      * 赔偿金额
      */
-    @TableField("compensation_amount")
-    private String compensationAmount;
+    @TableField("compensation_fee")
+    private String compensationFee;
     /**
      * 备注
      */

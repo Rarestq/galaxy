@@ -1,10 +1,9 @@
 package com.wuxiu.galaxy.api.dto;
 
+import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 计费规则查询对象
@@ -14,9 +13,12 @@ import java.io.Serializable;
  */
 @ApiModel("计费规则查询对象")
 @Data
-public class ChargeRuleQueryDTO implements Serializable {
+public class ChargeRuleQueryDTO extends PageInfo {
 
     private static final long serialVersionUID = 6736554433098662964L;
+
+    @ApiModelProperty(value = "计费规则主键id", required = false)
+    private Long chargeRuleId;
 
     @ApiModelProperty(value = "计费规则名称", required = false)
     private String chargeRuleName;
