@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * 管理员信息查询对象
  *
@@ -22,19 +20,18 @@ public class AdminInfoQueryForm extends PageInfo {
     /**
      * 管理员编号
      */
-    @ApiModelProperty(value = "管理员编号",required = true)
+    @ApiModelProperty(value = "管理员编号", required = false)
     private String adminNo;
 
     /**
      * 管理员姓名
      */
-    @ApiModelProperty(value = "管理员姓名",required = true)
-    @NotNull(message = "管理员姓名不能为空")
+    @ApiModelProperty(value = "管理员姓名", required = false)
     private String adminName;
 
     /**
      * 管理员性别(0-男，1-女)
      */
-    @ApiModelProperty(value = "管理员性别",required = true)
+    @ApiModelProperty(value = "管理员性别", required = false)
     private Integer gender;
 }

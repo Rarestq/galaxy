@@ -51,6 +51,11 @@ public class ChargeTemplate extends BaseModel {
     @TableField("charge_type_id")
     private Long chargeTypeId;
     /**
+     * 计费模板编号
+     */
+    @TableField("charge_template_no")
+    private String chargeTemplateNo;
+    /**
      * 计费模板名称
      */
     @TableField("charge_template_name")

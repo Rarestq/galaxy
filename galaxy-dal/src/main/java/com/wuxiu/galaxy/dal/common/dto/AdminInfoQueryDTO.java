@@ -21,6 +21,7 @@ public class AdminInfoQueryDTO implements Serializable {
      * 分页条件
      */
     Page<Admin> page;
+
     /**
      * 管理员id
      */

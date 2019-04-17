@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.vo;
+package com.wuxiu.galaxy.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,14 +8,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 计费规则页面展示对象
+ * 计费规则对象
  *
  * @author: wuxiu
  * @date: 2019/4/16 22:37
  */
-@ApiModel("计费规则页面展示对象")
+@ApiModel("计费规则对象")
 @Data
-public class ChargeRuleVO implements Serializable {
+public class ChargeRuleDTO implements Serializable {
 
     private static final long serialVersionUID = -4545898179001725877L;
 
@@ -33,7 +33,7 @@ public class ChargeRuleVO implements Serializable {
      * 计费模板列表
      */
     @ApiModelProperty(value = "计费模板列表", required = true)
-    private List<ChargeTemplateVO> chargeTemplateVOList;
+    private List<ChargeTemplateDTO> chargeTemplateDTOS;
 
 
 }

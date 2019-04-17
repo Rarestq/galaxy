@@ -44,7 +44,7 @@ public class AdminController {
 
     @ApiOperation(value = "查询管理员信息列表", notes = "查询管理员信息列表")
     @GetMapping("")
-    public APIResult<PageInfo<AdminInfoVO>> queryTaskTemplateList(AdminInfoQueryForm form) {
+    public APIResult<PageInfo<AdminInfoVO>> queryTaskTemplateList(@RequestBody @Valid AdminInfoQueryForm form) {
         // 参数校验
         String adminInfoQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(adminInfoQueryCheck)) {

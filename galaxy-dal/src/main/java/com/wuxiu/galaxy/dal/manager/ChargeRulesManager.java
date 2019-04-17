@@ -8,6 +8,7 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
 import com.wuxiu.galaxy.dal.domain.ChargeRules;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
 
@@ -20,4 +21,11 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  */
 public interface ChargeRulesManager extends BaseManager<ChargeRules> {
 
+    /**
+     * 新增/编辑计费规则
+     *
+     * @param chargeRuleDTO
+     * @return 计费规则主键id
+     */
+    Long saveChargeRule(SaveChargeRuleDTO chargeRuleDTO);
 }

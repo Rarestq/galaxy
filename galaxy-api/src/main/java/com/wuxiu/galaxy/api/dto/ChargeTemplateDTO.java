@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.form;
+package com.wuxiu.galaxy.api.dto;
 
 import com.baidu.unbiz.fluentvalidator.annotation.FluentValid;
 import io.swagger.annotations.ApiModel;
@@ -10,18 +10,22 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 计费模板表单
+ * 计费模板对象
  *
  * @author: wuxiu
  * @date: 2019/4/16 22:40
  */
-@ApiModel("计费模板表单")
+@ApiModel("计费模板对象")
 @Data
-public class ChargeTemplateForm implements Serializable {
+public class ChargeTemplateDTO implements Serializable {
 
     private static final long serialVersionUID = -3221598513694571896L;
 
+    @NotNull(message = "计费模板主键id不能为空")
     private Long chargeTemplateId;
+
+    @NotNull(message = "计费模板编号不能为空")
+    private String chargeTemplateNo;
 
     @NotNull(message = "计费模板名称不能为空")
     private String chargeTemplateName;
@@ -33,8 +37,8 @@ public class ChargeTemplateForm implements Serializable {
 
     private String maxFee;
 
-    @NotNull(message = "chargeCalculationRuleFormList不能为空")
+    @NotNull(message = "计算规则不能为空")
     @FluentValid
     @Valid
-    private List<ChargeCalculationRuleForm> chargeCalculationRuleFormList;
+    private List<ChargeCalculationRuleDTO> chargeCalculationRuleDTOList;
 }
