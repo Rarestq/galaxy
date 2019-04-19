@@ -1,7 +1,7 @@
 package com.wuxiu.galaxy.service.core.base.utils;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
-import com.wuxiu.galaxy.api.common.enums.GlobalErrorCode;
+import com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -108,7 +108,7 @@ public class CommonUtil {
 
 
     public static <T> APIResult<T> paramErrorResult(String message) {
-        return APIResult.error(GlobalErrorCode.INVALID_PARAM.getCode(), message);
+        return APIResult.error(GlobalErrorCodeEnum.INVALID_PARAM.getCode(), message);
     }
 
     public static <T> APIResult<T> bizErrorResult(String message) {
@@ -116,7 +116,7 @@ public class CommonUtil {
     }
 
     public static <T> APIResult<T> systemErrorResult(String message) {
-        return APIResult.error(GlobalErrorCode.FAILURE.getCode(), message);
+        return APIResult.error(GlobalErrorCodeEnum.FAILURE.getCode(), message);
     }
 
     /**

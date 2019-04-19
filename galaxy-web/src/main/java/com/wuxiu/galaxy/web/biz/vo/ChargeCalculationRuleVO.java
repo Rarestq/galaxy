@@ -28,7 +28,7 @@ public class ChargeCalculationRuleVO implements Serializable {
     private String calculationTypeName;
 
     @ApiModelProperty(value = "计费单位ID", required = true)
-    private Long calculationUnitsId;
+    private Integer calculationUnitsId;
 
     @ApiModelProperty(value = "计费单位名称", required = true)
     private String calculationUnitsName;

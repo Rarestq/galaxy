@@ -13,13 +13,16 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.dto.ChargeRuleDTO;
+import com.wuxiu.galaxy.api.dto.ChargeTemplateDTO;
 import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.ChargeRuleQueryDTO;
+import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.ChargeRulesDao;
 import com.wuxiu.galaxy.dal.domain.ChargeRules;
+import com.wuxiu.galaxy.dal.manager.ChargeRuleTemplateRelationManager;
 import com.wuxiu.galaxy.dal.manager.ChargeRulesManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,15 +41,22 @@ import static com.google.common.collect.Lists.newArrayList;
 @Component
 public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, ChargeRules> implements ChargeRulesManager{
 
+    @Autowired
+    private ChargeRuleTemplateRelationManager relationManager;
+
     /**
      * 新增/编辑计费规则
      *
      * @param chargeRuleDTO
      * @return 计费规则主键id
      */
-    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Long saveChargeRule(SaveChargeRuleDTO chargeRuleDTO) {
+
+        List<ChargeTemplateDTO> chargeTemplateDTOS =
+                chargeRuleDTO.getChargeTemplateDTOList();
+        List<Long> chargeTemplateIds = StreamUtil.collectDistinctKeyProperty(
+                chargeTemplateDTOS, ChargeTemplateDTO::getChargeTemplateId);
 
         if (Objects.nonNull(chargeRuleDTO.getChargeRuleId())) {
             // 编辑计费规则信息
@@ -58,6 +68,9 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
 
             updateById(updateChargeRule);
 
+            // 同步更新计费规则-计费模板关联表的信息(先逻辑删除原来的，再添加)
+            relationManager.refreshAll(chargeRuleDTO.getChargeRuleId(), chargeTemplateIds);
+
             return chargeRuleDTO.getChargeRuleId();
         }
 
@@ -67,6 +80,9 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
         insertChargeRule.setChargeRuleType(chargeRuleDTO.getChargeRuleType());
 
         insert(insertChargeRule);
+
+        // 将计费规则对应的计费模板插入到计费规则-计费模板关联表中
+        relationManager.insertNew(chargeRuleDTO.getChargeRuleId(), chargeTemplateIds);
 
         return insertChargeRule.getChargeRuleId();
     }
@@ -138,7 +154,7 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
     @Override
     public ChargeRules getChargeRuleByName(String chargeRuleName) {
         Wrapper<ChargeRules> wrapper = new EntityWrapper<>();
-        wrapper.eq("charge_template_name", chargeRuleName);
+        wrapper.eq("charge_rule_name", chargeRuleName);
 
         return selectOne(wrapper);
     }

@@ -34,6 +34,7 @@ public interface ChargeRuleFacade {
     /**
      * 删除计费规则
      *
+     * @param deleteDTO
      * @return
      */
     APIResult<Void> deleteChargeRule(ChargeRuleDeleteDTO deleteDTO);

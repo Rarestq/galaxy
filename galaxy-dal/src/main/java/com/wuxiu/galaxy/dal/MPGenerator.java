@@ -10,6 +10,10 @@ import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * mybatis-plus 代码自动生成器
+ * @author wuxiu
+ */
 public class MPGenerator {
 
     /**
@@ -24,7 +28,9 @@ public class MPGenerator {
             "galaxy_admin",
             "galaxy_charge_calculation_rules",
             "galaxy_charge_rules",
+            "galaxy_charge_rule_template_relation",
             "galaxy_charge_template",
+            "galaxy_charge_template_calculation_relation",
             "galaxy_charge_type",
             "galaxy_charge_type_template_relation",
             "galaxy_cycle_charge_calculation_detail",
@@ -34,7 +40,8 @@ public class MPGenerator {
             "galaxy_luggage_lost_registration_record",
             "galaxy_luggage_overdue_record",
             "galaxy_luggage_storage_record",
-            "galaxy_luggage_type"
+            "galaxy_luggage_type",
+            "galaxy_turnover_record"
     };
 
     public static void main(String[] args) {

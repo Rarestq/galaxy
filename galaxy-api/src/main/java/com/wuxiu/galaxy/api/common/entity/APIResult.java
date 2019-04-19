@@ -3,7 +3,7 @@ package com.wuxiu.galaxy.api.common.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.wuxiu.galaxy.api.common.enums.GlobalErrorCode;
+import com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -62,7 +62,7 @@ public class APIResult<T> implements Serializable {
     }
 
     public static <T> APIResult<T> error(String message) {
-        return builder().success(false).code(GlobalErrorCode.INTERNAL_SERVER_ERROR.getCode())
+        return builder().success(false).code(GlobalErrorCodeEnum.INTERNAL_SERVER_ERROR.getCode())
                 .message(message).data((Object) null).build();
     }
 

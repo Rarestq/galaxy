@@ -1,7 +1,7 @@
 package com.wuxiu.galaxy.api.common.enums;
 
 @SuppressWarnings("ALL")
-public enum GlobalErrorCode implements ErrorCode {
+public enum GlobalErrorCodeEnum implements ErrorCode {
 
     /**
      * 全局异常错误码
@@ -19,10 +19,8 @@ public enum GlobalErrorCode implements ErrorCode {
 
     LOGIN_FAILURE("1000", "Login Failure!"),
     LOGOUT_FAILURE("1001", "Logout Failure!"),
-    REGISTER_FAILURE("1002", "Register Failure!"),
-    REGISTER_FAILURE_PHONE_REPEAT("1003", "Phone has been existed!"),
 
-    WITHDRAW_ERROR("5000", "Account balance is not enough!"),
+    DATA_ERROR("5000", "数据异常!"),
 
     SYSTEM_EXCEPTION("9999", "System Exception!");
 
@@ -30,7 +28,7 @@ public enum GlobalErrorCode implements ErrorCode {
     private final String code;
     private final String message;
 
-    private GlobalErrorCode(String code, String message) {
+    private GlobalErrorCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }

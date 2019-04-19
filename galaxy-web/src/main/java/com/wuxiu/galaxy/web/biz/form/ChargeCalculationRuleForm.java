@@ -18,11 +18,13 @@ public class ChargeCalculationRuleForm implements Serializable {
 
     private static final long serialVersionUID = -4463083838715541545L;
 
+    private Long calculationRuleId;
+
     @NotNull(message = "计费方式不能为空")
     private Long calculationType;
 
     @NotNull(message = "计费单位ID不能为空")
-    private Long calculationUnitsId;
+    private Integer calculationUnitsId;
 
     @NotNull(message = "每个计费单位的金额不能为空")
     private String feePerUnit;
