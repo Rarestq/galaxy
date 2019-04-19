@@ -12,22 +12,27 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.ChargeCalculationTypeEnum;
+import com.wuxiu.galaxy.api.common.enums.ChargeTemplateStatusEnum;
 import com.wuxiu.galaxy.api.dto.ChargeCalculationRuleDTO;
 import com.wuxiu.galaxy.api.dto.ChargeTemplateDTO;
 import com.wuxiu.galaxy.api.dto.SaveChargeTemplateDTO;
 import com.wuxiu.galaxy.dal.common.dto.ChargeTemplateQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.ChargeTemplateDao;
+import com.wuxiu.galaxy.dal.domain.ChargeCalculationRules;
 import com.wuxiu.galaxy.dal.domain.ChargeTemplate;
-import com.wuxiu.galaxy.dal.manager.ChargeTemplateCalculationRelationManager;
-import com.wuxiu.galaxy.dal.manager.ChargeTemplateManager;
+import com.wuxiu.galaxy.dal.domain.ChargeTemplateCalculationRelation;
+import com.wuxiu.galaxy.dal.manager.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -44,6 +49,15 @@ public class ChargeTemplateManagerImpl extends BaseManagerImpl<ChargeTemplateDao
 
     @Autowired
     private ChargeTemplateCalculationRelationManager relationManager;
+
+    @Autowired
+    private ChargeCalculationRulesManager calculationRulesManager;
+
+    @Autowired
+    private FixedChargeCalculationDetailManager fixedChargeCalculationDetailManager;
+
+    @Autowired
+    private CycleChargeCalculationDetailManager cycleChargeCalculationDetailManager;
 
     /**
      * 新增/编辑计费模板
@@ -139,6 +153,43 @@ public class ChargeTemplateManagerImpl extends BaseManagerImpl<ChargeTemplateDao
     }
 
     /**
+     * 禁用/启用计费模板
+     *
+     * @param chargeTemplateId
+     */
+    @Override
+    public void enableOrDisableTemplate(Long chargeTemplateId) {
+        if (Objects.isNull(chargeTemplateId)) {
+            return;
+        }
+
+        // 获取计费模板实例
+        ChargeTemplate template = selectById(chargeTemplateId);
+
+        ChargeTemplate chargeTemplate = new ChargeTemplate();
+
+        // 如果之前是启用，则改为禁用状态
+        if (Objects.equals(template.getChargeTemplateStatus(),
+                ChargeTemplateStatusEnum.ENABLE.getCode())) {
+            chargeTemplate.setGmtModified(LocalDateTime.now());
+            chargeTemplate.setChargeTemplateId(template.getChargeTemplateId());
+            chargeTemplate.setChargeTemplateStatus(
+                    ChargeTemplateStatusEnum.DISABLE.getCode());
+        }
+
+        // 如果之前是禁用，则改为启用状态
+        if (Objects.equals(template.getChargeTemplateStatus(),
+                ChargeTemplateStatusEnum.DISABLE.getCode())) {
+            chargeTemplate.setGmtModified(LocalDateTime.now());
+            chargeTemplate.setChargeTemplateId(template.getChargeTemplateId());
+            chargeTemplate.setChargeTemplateStatus(ChargeTemplateStatusEnum.ENABLE.getCode());
+        }
+
+        // 更新该计费模板状态信息
+        updateById(chargeTemplate);
+    }
+
+    /**
      * 构造 ChargeTemplateDTO 列表信息
      *
      * @param templatePage
@@ -149,13 +200,65 @@ public class ChargeTemplateManagerImpl extends BaseManagerImpl<ChargeTemplateDao
 
         List<ChargeTemplateDTO> templateDTOS = newArrayList();
         List<ChargeTemplate> chargeTemplates = templatePage.getRecords();
+        List<Long> chargeTemplateIds =
+                StreamUtil.convert(chargeTemplates, ChargeTemplate::getChargeTemplateId);
+
+        // 通过计费模板id从计费模板-计算规则关联表中查询其对应的计费规则信息
+        List<ChargeTemplateCalculationRelation> calculationRelations =
+                relationManager.selectCalculateRulesByTemplateIds(chargeTemplateIds);
+
+        // 将查询到的计算规则信息按照计费模板id进行分组
+        Map<Long, List<ChargeTemplateCalculationRelation>> templateCalcuRuleMap =
+                calculationRelations.stream().collect(Collectors.groupingBy
+                        (ChargeTemplateCalculationRelation::getChargeTemplateId));
+
+        List<Long> calculateRuleIds = StreamUtil.convert(calculationRelations,
+                ChargeTemplateCalculationRelation::getCalculationRuleId);
+        // 查询计算规则信息
+        List<ChargeCalculationRules> chargeCalculationRules =
+                calculationRulesManager.selectBatchIds(calculateRuleIds);
+
+
+        //todo: 将 ChargeCalculationRules 转化为 ChargeCalculationRuleDTO
+        List<ChargeCalculationRuleDTO> calculationRuleDTOS = newArrayList();
+        StreamUtil.convert(chargeCalculationRules, calculationRule -> {
+            ChargeCalculationRuleDTO calculationRuleDTO = new ChargeCalculationRuleDTO();
+            calculationRuleDTO.setCalculationRuleId(calculationRule.getCalculationRuleId());
+            if (Objects.equals(calculationRule.getCalculationType(),
+                    ChargeCalculationTypeEnum.FIXED_CHARGE_CALCULATION.getCode())) {
+                calculationRuleDTO.setCalculationType(
+                        ChargeCalculationTypeEnum.FIXED_CHARGE_CALCULATION.getCode());
+            }
+
+            if (Objects.equals(calculationRule.getCalculationType(),
+                    ChargeCalculationTypeEnum.CYCLE_CHARGE_CALCULATION.getCode())) {
+                calculationRuleDTO.setCalculationType(
+                        ChargeCalculationTypeEnum.CYCLE_CHARGE_CALCULATION.getCode());
+            }
+
+            calculationRuleDTOS.add(calculationRuleDTO);
+
+            return calculationRuleDTOS;
+        });
 
         // 将 ChargeTemplate 对象转化为 ChargeTemplateDTO 对象
         chargeTemplates.forEach(chargeTemplate -> {
             ChargeTemplateDTO templateDTO = new ChargeTemplateDTO();
             templateDTO.setChargeTemplateId(chargeTemplate.getChargeTemplateId());
+            templateDTO.setChargeTemplateNo(chargeTemplate.getChargeTemplateNo());
             templateDTO.setChargeTemplateName(chargeTemplate.getChargeTemplateName());
+            templateDTO.setChargeTypeId(chargeTemplate.getChargeTypeId());
+            templateDTO.setMaxFee(chargeTemplate.getMaxFee());
+            templateDTO.setMinFee(chargeTemplate.getMinFee());
 
+            List<ChargeTemplateCalculationRelation> calculationRelationList =
+                    templateCalcuRuleMap.get(chargeTemplate.getChargeTemplateId());
+
+
+
+            //todo: 将查询到的计算规则信息转化为 ChargeCalculationRuleDTO,并添加到 templateDTO 中
+
+            //templateDTO.setChargeCalculationRuleDTOList();
             templateDTOS.add(templateDTO);
         });
 

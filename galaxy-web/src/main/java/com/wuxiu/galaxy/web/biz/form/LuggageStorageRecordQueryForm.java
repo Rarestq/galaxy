@@ -1,11 +1,10 @@
 package com.wuxiu.galaxy.web.biz.form;
 
+import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @ApiModel("行李寄存记录表单")
 @Data
-public class LuggageStorageRecordQueryForm implements Serializable {
+public class LuggageStorageRecordQueryForm extends PageInfo {
 
     private static final long serialVersionUID = -3681674043002095978L;
 

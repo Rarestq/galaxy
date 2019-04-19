@@ -6,6 +6,7 @@ import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.dto.ChargeCalculationRuleDTO;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -84,7 +85,15 @@ public class CalculateRulesValidateUtil {
             throw new ParamException("单位金额输入错误");
         }
 
-        //todo:对最大最小金额、计费开始和结束天数进行校验
+        String maxFee = calculationRuleDTO.getMaxFee();
+        String minFee = calculationRuleDTO.getMinFee();
+
+        if (Objects.nonNull(maxFee) && Objects.nonNull(minFee)
+                && (new BigDecimal(maxFee).compareTo(new BigDecimal(minFee)) < 0)) {
+            throw new ParamException("最高收费应该大于等于最低收费");
+        }
+        //todo:对计费开始和结束天数进行校验
+
     }
 
 }

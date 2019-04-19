@@ -47,4 +47,11 @@ public interface ChargeTemplateManager extends BaseManager<ChargeTemplate> {
      * @return
      */
     Page<ChargeTemplateDTO> getChargeTemplates(ChargeTemplateQueryDTO templateQueryDTO);
+
+    /**
+     * 禁用/启用计费模板
+     *
+     * @param chargeTemplateId
+     */
+    void enableOrDisableTemplate(Long chargeTemplateId);
 }

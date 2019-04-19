@@ -18,6 +18,7 @@ import com.wuxiu.galaxy.dal.domain.ChargeRuleTemplateRelation;
 import com.wuxiu.galaxy.dal.manager.ChargeRuleTemplateRelationManager;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -78,5 +79,25 @@ public class ChargeRuleTemplateRelationManagerImpl extends BaseManagerImpl<Charg
                 });
 
         insertBatch(ruleTemplateRelations);
+    }
+
+    /**
+     * 通过计费规则id查询其对应的计费模板信息
+     *
+     * @param chargeRuleIds
+     * @return
+     */
+    @Override
+    public List<ChargeRuleTemplateRelation> selectTemplatesByChargeRuleIds(
+            List<Long> chargeRuleIds) {
+
+        if (CollectionUtils.isEmpty(chargeRuleIds)) {
+            log.info("查询计费模板信息失败，chargeRuleIds：{}", chargeRuleIds);
+            return Collections.emptyList();
+        }
+        Wrapper<ChargeRuleTemplateRelation> wrapper = new EntityWrapper<>();
+        wrapper.in("charge_rule_id", chargeRuleIds);
+
+        return selectList(wrapper);
     }
 }

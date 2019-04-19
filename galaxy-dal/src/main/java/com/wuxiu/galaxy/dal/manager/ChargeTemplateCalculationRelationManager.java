@@ -37,4 +37,12 @@ public interface ChargeTemplateCalculationRelationManager extends BaseManager<Ch
      * @param calculationRuleIds
      */
     void insertNew(Long chargeTemplateId, List<Long> calculationRuleIds);
+
+    /**
+     * 通过计费模板id查询其对应的计算规则信息
+     *
+     * @param chargeTemplateIds
+     * @return
+     */
+    List<ChargeTemplateCalculationRelation> selectCalculateRulesByTemplateIds(List<Long> chargeTemplateIds);
 }

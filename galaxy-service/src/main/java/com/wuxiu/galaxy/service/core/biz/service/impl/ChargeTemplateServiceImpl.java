@@ -48,7 +48,8 @@ public class ChargeTemplateServiceImpl implements ChargeTemplateService {
 
         validateRuleParams(templateDTO);
 
-        // 构造 ChargeTemplateDTO 对象
+        //todo: 构造 ChargeTemplateDTO 对象
+
 
         return templateManager.saveChargeTemplate(templateDTO);
     }
@@ -133,7 +134,8 @@ public class ChargeTemplateServiceImpl implements ChargeTemplateService {
      * @return
      */
     @Override
-    public PageInfo<ChargeTemplateDTO> getChargeTemplateList(ChargeTemplateQueryDTO queryDTO) {
+    public PageInfo<ChargeTemplateDTO> getChargeTemplateList(
+            ChargeTemplateQueryDTO queryDTO) {
         log.info("获取计费模板列表, queryDTO:{}", queryDTO);
 
         // 参数校验
@@ -153,8 +155,11 @@ public class ChargeTemplateServiceImpl implements ChargeTemplateService {
         // 查询计费模板列表
         Page<ChargeTemplateDTO> templateDTOPage =
                 templateManager.getChargeTemplates(templateQueryDTO);
+        if (PageInfoUtil.isEmpty(templateDTOPage)) {
+            return PageInfoUtil.ofEmptyPage(queryDTO);
+        }
 
-        return null;
+        return PageInfoUtil.of(templateDTOPage, templateDTOPage.getRecords());
     }
 
     /**
@@ -166,5 +171,11 @@ public class ChargeTemplateServiceImpl implements ChargeTemplateService {
     @Override
     public void enableOrDisableTemplate(Long chargeTemplateId) {
         log.info("启用/禁用计费模板, chargeTemplateId:{}", chargeTemplateId);
+        if (Objects.isNull(chargeTemplateId)) {
+            log.info("参数错误，计费模板 id 不能为空");
+            throw new ParamException("参数错误，计费模板 id 不能为空");
+        }
+
+        templateManager.enableOrDisableTemplate(chargeTemplateId);
     }
 }

@@ -1,10 +1,9 @@
 package com.wuxiu.galaxy.web.biz.form;
 
+import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 计费模板查询表单
@@ -14,7 +13,7 @@ import java.io.Serializable;
  */
 @ApiModel("计费模板查询表单")
 @Data
-public class ChargeTemplateQueryForm implements Serializable {
+public class ChargeTemplateQueryForm extends PageInfo {
 
     private static final long serialVersionUID = -3687841165272309877L;
 

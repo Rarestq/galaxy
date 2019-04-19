@@ -1,11 +1,13 @@
-/** 
- * All rights Reserved, Designed By wuxiu
- *
- * @Package com.wuxiu.galaxy.dal.dao
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @date: 2018-04-16 20:35:12
- * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
- */
+/**
+ *  
+ *  * All rights Reserved, Designed By wuxiu
+ * <p>
+ *  * @Package com.wuxiu.galaxy.dal.dao
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @date: 2018-04-16 20:35:12
+ *  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
+ *  
+ */
 package com.wuxiu.galaxy.dal.manager.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -18,6 +20,7 @@ import com.wuxiu.galaxy.api.dto.SaveChargeRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.ChargeRuleQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.ChargeRulesDao;
+import com.wuxiu.galaxy.dal.domain.ChargeRuleTemplateRelation;
 import com.wuxiu.galaxy.dal.domain.ChargeRules;
 import com.wuxiu.galaxy.dal.manager.ChargeRuleTemplateRelationManager;
 import com.wuxiu.galaxy.dal.manager.ChargeRulesManager;
@@ -26,7 +29,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -39,7 +44,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * @since 2019-04-16
  */
 @Component
-public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, ChargeRules> implements ChargeRulesManager{
+public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, ChargeRules> implements ChargeRulesManager {
 
     @Autowired
     private ChargeRuleTemplateRelationManager relationManager;
@@ -128,6 +133,19 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
 
         List<ChargeRuleDTO> ruleDTOS = newArrayList();
         List<ChargeRules> chargeRules = chargeRulesPage.getRecords();
+        List<Long> chargeRuleIds =
+                StreamUtil.convert(chargeRules, ChargeRules::getChargeRuleId);
+
+        // 通过计费规则id查询其对应的计费模板信息
+        List<ChargeRuleTemplateRelation> ruleTemplateRelations =
+                relationManager.selectTemplatesByChargeRuleIds(chargeRuleIds);
+        List<Long> chargeTemplateIds = StreamUtil.convert(ruleTemplateRelations,
+                ChargeRuleTemplateRelation::getChargeTemplateId);
+
+        // 将查询到的计费模板信息按照计费规则id进行分组
+        Map<Long, List<ChargeRuleTemplateRelation>> chargeRuleTemplateMap =
+                ruleTemplateRelations.stream().collect(Collectors.groupingBy
+                        (ChargeRuleTemplateRelation::getChargeRuleId));
 
         // 将 ChargeRules 对象转化为 ChargeRuleDTO 对象
         chargeRules.forEach(rule -> {
@@ -135,6 +153,9 @@ public class ChargeRulesManagerImpl extends BaseManagerImpl<ChargeRulesDao, Char
             ruleDTO.setChargeRuleId(rule.getChargeRuleId());
             ruleDTO.setChargeRuleName(rule.getChargeRuleName());
 
+            //todo: 将 ChargeTemplate 转化为 ChargeTemplateDTO
+
+            //ruleDTO.setChargeTemplateDTOS();
             ruleDTOS.add(ruleDTO);
         });
 

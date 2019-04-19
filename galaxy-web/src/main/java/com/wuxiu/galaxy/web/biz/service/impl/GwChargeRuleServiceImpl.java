@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 /**
  * 计费规则相关服务
  *
@@ -127,11 +129,13 @@ public class GwChargeRuleServiceImpl implements GwChargeRuleService {
      * @param chargeRuleDTOMap
      * @param chargeRuleVOS
      */
-    private void convertTemplateDTO2VO(Map<Long, ChargeRuleDTO> chargeRuleDTOMap,
-                                       List<ChargeRuleVO> chargeRuleVOS) {
+    private List<ChargeRuleVO> convertTemplateDTO2VO(
+            Map<Long, ChargeRuleDTO> chargeRuleDTOMap,
+            List<ChargeRuleVO> chargeRuleVOS) {
 
+        List<ChargeRuleVO> chargeRuleVOList = newArrayList();
         // 将计费规则对应的计费模板转化为 ChargeTemplateVO
-        chargeRuleVOS.forEach(chargeRuleVO -> {
+        StreamUtil.convert(chargeRuleVOS, chargeRuleVO -> {
             ChargeRuleDTO chargeRuleDTO =
                     chargeRuleDTOMap.get(chargeRuleVO.getChargeRuleId());
             List<ChargeTemplateDTO> chargeTemplateDTOS = StreamUtil.flatConvert(
@@ -142,7 +146,12 @@ public class GwChargeRuleServiceImpl implements GwChargeRuleService {
                     StreamUtil.convertBeanCopy(chargeTemplateDTOS, ChargeTemplateVO.class);
 
             chargeRuleVO.setChargeTemplateVOList(chargeTemplateVOS);
+            chargeRuleVOList.add(chargeRuleVO);
+
+            return chargeRuleVOList;
         });
+
+        return chargeRuleVOList;
     }
 
     /**

@@ -63,6 +63,12 @@ public class ExceptionNotifyFilter implements Filter {
                 log.info("业务异常：{}", exception.getMessage());
                 return new RpcResult(APIResult.error(exception.getMessage()));
             }
+
+            // 运行时异常
+            if (exception instanceof RuntimeException) {
+                log.info("运行时异常：{}", exception.getMessage());
+                return new RpcResult(APIResult.error(exception.getMessage()));
+            }
         }
 
         return result;
