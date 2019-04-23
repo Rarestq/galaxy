@@ -9,6 +9,7 @@
 package com.wuxiu.galaxy.dal.manager.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
@@ -100,6 +101,20 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         Page<Admin> adminPage = selectPage(queryDTO.getPage(), wrapper);
 
         return buildAdminDTOS(adminPage);
+    }
+
+    /**
+     * 根据管理员姓名查询管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    @Override
+    public List<Admin> selectAdminByName(String adminName) {
+        Wrapper<Admin> wrapper = new EntityWrapper<>();
+        wrapper.eq("admin_name", adminName);
+
+        return selectList(wrapper);
     }
 
     /**

@@ -15,6 +15,8 @@ import com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
 
+import java.util.List;
+
 /**  
  * LuggageStorageRecordManager
  * 行李寄存-取件表
@@ -40,4 +42,13 @@ public interface LuggageStorageRecordManager extends BaseManager<LuggageStorageR
      */
     Page<LuggageStorageInfoDTO> queryStorageRecordList(
             LuggageStorageRecordQueryDTO recordQueryDTO);
+
+    /**
+     * 根据行李类型id查询行李寄存信息
+     *
+     * @param luggageTypeIds
+     * @return
+     */
+    List<LuggageStorageRecord> selectRecordsByLuggageTypeId(List<Long> luggageTypeIds);
+
 }

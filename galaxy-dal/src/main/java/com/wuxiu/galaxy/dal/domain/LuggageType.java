@@ -41,7 +41,7 @@ public class LuggageType extends BaseModel {
     @TableId(value = "luggage_type_id", type = IdType.AUTO)
     private Long luggageTypeId;
     /**
-     * 行李类型(0-、1-、2、)
+     * 行李类型(1-普通物件、2-易碎物件、3-贵重物件)
      */
     @TableField("luggage_type")
     private Integer luggageType;

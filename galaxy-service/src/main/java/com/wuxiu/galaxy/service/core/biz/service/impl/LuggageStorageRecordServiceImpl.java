@@ -1,10 +1,14 @@
 package com.wuxiu.galaxy.service.core.biz.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.eventbus.AsyncEventBus;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.*;
+import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
+import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
+import com.wuxiu.galaxy.api.dto.NewLuggageStorageRecordDTO;
+import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
@@ -13,12 +17,14 @@ import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.bus.event.SyncOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +46,9 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
     @Autowired
     private LuggageTypeManager luggageTypeManager;
+
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
     /**
      * 新增行李寄存记录
@@ -66,14 +75,24 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         LuggageType luggageType = luggageTypeManager.getLuggageTypeById(luggageTypeId);
         // 普通物价寄存费用
         if (Objects.equals(LuggageTypeEnum.valueOf(
-                luggageType.getLuggageType()), LuggageTypeEnum.COMMON_LUGGAGE_TYPE)) {
+                luggageType.getLuggageTypeId()), LuggageTypeEnum.COMMON_LUGGAGE_TYPE)) {
 
         }
 
         //todo:计算寄存所需费用
 
-        //todo： 新增营业额记录
+
         return storageRecordManager.insertLuggageStorageRecord(newLuggageStorageRecordDTO);
+    }
+
+    /**
+     * 判断行李寄存结束时间相对系统当前时间是否已逾期
+     *
+     * @param timeValue
+     * @return
+     */
+    private boolean isTimeExpired(long timeValue) {
+        return timeValue > System.currentTimeMillis();
     }
 
     /**
@@ -91,11 +110,14 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         recordDTO.setLuggageRecordNo(UUIDGenerateUtil.genStorageRecordNo());
         recordDTO.setLuggageTypeId(storageRecordDTO.getLuggageTypeId());
+
         recordDTO.setAdminId(operateUserDTO.getOperateUserId());
         recordDTO.setAdminName(operateUserDTO.getName());
         recordDTO.setAdminPhone(operateUserDTO.getOperateUserPhone());
+
         recordDTO.setDepositorName(storageRecordDTO.getDepositorName());
         recordDTO.setDepositorPhone(storageRecordDTO.getDepositorPhone());
+
         recordDTO.setStorageStartTime(LocalDateTime.now());
         recordDTO.setStorageEndTime(storageRecordDTO.getStorageEndTime());
         if (StringUtils.isNotEmpty(storageRecordDTO.getRemark())) {
@@ -173,6 +195,9 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
             return PageInfoUtil.ofEmptyPage(queryDTO);
         }
 
+        // 在寄存结束时间前 15 min 发送短信，判断是否已到寄存结束时间，是就发送自动创建逾期记录事件
+        notifyDepositorBySMS();
+
         List<LuggageStorageInfoDTO> records = storageRecordInfoPage.getRecords();
 
         return PageInfoUtil.of(storageRecordInfoPage, records);
@@ -187,5 +212,34 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
     @Override
     public void pickupLuggage(Long luggageId) {
 
+    }
+
+    /**
+     * 校验行李寄存结束时间是否逾期，结束前 15 min 短信通知寄存人，
+     * 逾期后，发送事件给「逾期未取清理服务」，自动创建逾期记录
+     */
+    private void notifyDepositorBySMS() {
+        LuggageStorageRecordQueryDTO queryDTO = new LuggageStorageRecordQueryDTO();
+
+        // 获取所有的寄存记录信息
+        PageInfo<LuggageStorageInfoDTO> storageInfoDTOPageInfo =
+                queryStorageRecordList(queryDTO);
+        List<LuggageStorageInfoDTO> storageInfoDTOS = storageInfoDTOPageInfo.getRecords();
+
+        for (LuggageStorageInfoDTO storageInfoDTO : storageInfoDTOS) {
+            LocalDateTime storageEndTime = storageInfoDTO.getStorageEndTime();
+            long storageEndTimeMilli =
+                    storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+            //todo:到期前 15 min 发送短信给寄存人
+
+            // 已逾期，发送事件
+            if (isTimeExpired(storageEndTimeMilli)) {
+                asyncEventBus.post(SyncOverdueRecordEvent.builder()
+                        .luggageId(storageInfoDTO.getLuggageId())
+                        .status(storageInfoDTO.getStatus())
+                        .remark(storageInfoDTO.getRemark())
+                        .build());
+            }
+        }
     }
 }

@@ -11,6 +11,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
 
 
+/**
+ * 项目启动类
+ *
+ * @author wuxiu
+ */
 @ComponentScan(basePackages = {
         "com.wuxiu.galaxy.dal",
         "com.wuxiu.galaxy.service",
@@ -21,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableSwagger2Doc
 @EnableDubboConfiguration
 @RestController
-@SpringBootApplication(exclude = {HibernateJpaAutoConfiguration.class },
+@SpringBootApplication(exclude = {HibernateJpaAutoConfiguration.class},
         scanBasePackages = "com.wuxiu.galaxy")
 public class GalaxyWebApplication {
 

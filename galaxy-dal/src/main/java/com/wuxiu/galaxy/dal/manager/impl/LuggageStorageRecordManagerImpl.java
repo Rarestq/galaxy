@@ -13,16 +13,20 @@ package com.wuxiu.galaxy.dal.manager.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageStorageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO;
-import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.dao.LuggageStorageRecordDao;
+import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
-import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,16 +46,49 @@ import static com.google.common.collect.Lists.newArrayList;
 @Component
 public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStorageRecordDao, LuggageStorageRecord> implements LuggageStorageRecordManager {
 
+    @Autowired
+    private TurnoverRecordManager turnoverRecordManager;
+
     /**
      * 新增行李寄存记录
      *
      * @param newLuggageStorageRecordDTO
      * @return
      */
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Long insertLuggageStorageRecord(
             NewLuggageStorageRecordDTO newLuggageStorageRecordDTO) {
-        return null;
+
+        LuggageStorageRecord storageRecord = new LuggageStorageRecord();
+        storageRecord.setAdminId(newLuggageStorageRecordDTO.getAdminId());
+        storageRecord.setAdminName(newLuggageStorageRecordDTO.getAdminName());
+        storageRecord.setAdminPhone(newLuggageStorageRecordDTO.getAdminPhone());
+
+        storageRecord.setDepositorName(newLuggageStorageRecordDTO.getDepositorName());
+        storageRecord.setDepositorPhone(newLuggageStorageRecordDTO.getDepositorPhone());
+
+        storageRecord.setLuggageRecordNo(newLuggageStorageRecordDTO.getLuggageRecordNo());
+        storageRecord.setLuggageTypeId(newLuggageStorageRecordDTO.getLuggageTypeId());
+        storageRecord.setRemark(newLuggageStorageRecordDTO.getRemark());
+
+        storageRecord.setStorageStartTime(newLuggageStorageRecordDTO.getStorageStartTime());
+        storageRecord.setStorageEndTime(newLuggageStorageRecordDTO.getStorageEndTime());
+        storageRecord.setGmtCreate(LocalDateTime.now());
+        storageRecord.setGmtModified(LocalDateTime.now());
+
+        // 新增行寄存记录
+        insert(storageRecord);
+
+        //todo:将寄存的费用及管理员相关信息添加到「营业额记录表中」
+        TurnoverRecord turnoverRecord = new TurnoverRecord();
+        turnoverRecord.setAdminId(storageRecord.getAdminId());
+        turnoverRecord.setLuggageId(storageRecord.getLuggageId());
+        //todo: turnoverRecord.setFee();
+
+        turnoverRecordManager.insert(turnoverRecord);
+
+        return storageRecord.getLuggageId();
     }
 
     /**
@@ -98,6 +135,21 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     }
 
     /**
+     * 根据行李类型id查询行李寄存信息
+     *
+     * @param luggageTypeIds
+     * @return
+     */
+    @Override
+    public List<LuggageStorageRecord> selectRecordsByLuggageTypeId(
+            List<Long> luggageTypeIds) {
+        Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
+        wrapper.in("luggage_type_id", luggageTypeIds);
+
+        return selectList(wrapper);
+    }
+
+    /**
      * 构建 LuggageStorageInfoDTO 对象
      *
      * @param storageRecordPage
@@ -119,8 +171,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTO.setDepositorName(storageRecord.getDepositorName());
             storageInfoDTO.setDepositorPhone(storageRecord.getDepositorPhone());
             storageInfoDTO.setRemark(storageRecord.getRemark());
-            storageInfoDTO.setStatus(
-                    LuggageStorageStatusEnum.getDescByCode(storageRecord.getStatus()));
+            storageInfoDTO.setStatus(LuggageStorageStatusEnum.getDescByCode(
+                    storageRecord.getStatus()));
             storageInfoDTO.setStorageStartTime(storageRecord.getStorageStartTime());
             storageInfoDTO.setStorageEndTime(storageRecord.getStorageEndTime());
 
@@ -130,6 +182,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         Page<LuggageStorageInfoDTO> page = new Page<>();
         page.setRecords(storageInfoDTOS);
         page.setTotal(storageRecordPage.getTotal());
+
         return page;
     }
 }

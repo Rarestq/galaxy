@@ -55,7 +55,7 @@ public class LuggageTypeManagerImpl extends BaseManagerImpl<LuggageTypeDao, Lugg
         luggageTypes.forEach(luggageType -> {
             PairDTO<Long, String> pairDTO = new PairDTO<>();
             pairDTO.setKey(luggageType.getLuggageTypeId());
-            pairDTO.setValue(LuggageTypeEnum.getDescByCode(luggageType.getLuggageType()));
+            pairDTO.setValue(LuggageTypeEnum.getDescByCode(luggageType.getLuggageTypeId()));
             pairDTOList.add(pairDTO);
         });
 

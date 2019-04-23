@@ -15,6 +15,8 @@ import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.AdminInfoQueryDTO;
 import com.wuxiu.galaxy.dal.domain.Admin;
 
+import java.util.List;
+
 /**  
  * AdminManager
  * 管理员表 - 按照编号前缀的不同具有不同权限
@@ -39,4 +41,12 @@ public interface AdminManager extends BaseManager<Admin> {
      * @return
      */
     Page<AdminDTO> queryAdminInfoList(AdminInfoQueryDTO queryDTO);
+
+    /**
+     * 根据管理员姓名查询管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    List<Admin> selectAdminByName(String adminName);
 }

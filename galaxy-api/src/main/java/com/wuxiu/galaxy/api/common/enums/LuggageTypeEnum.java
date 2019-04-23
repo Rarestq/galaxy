@@ -16,12 +16,12 @@ import lombok.ToString;
 public enum LuggageTypeEnum {
 
     // 行李类型
-    COMMON_LUGGAGE_TYPE(1, "普通物件"),
-    FRAGILE_LUGGAGE_TYPE(2, "易碎物件"),
-    VALUABLE_LUGGAGE_TYPE(3, "贵重物件"),
+    COMMON_LUGGAGE_TYPE(1L, "普通物件"),
+    FRAGILE_LUGGAGE_TYPE(2L, "易碎物件"),
+    VALUABLE_LUGGAGE_TYPE(3L, "贵重物件"),
     ;
 
-    private Integer code;
+    private Long code;
     private String desc;
 
     /**
@@ -30,7 +30,7 @@ public enum LuggageTypeEnum {
      * @param code
      * @return
      */
-    public static LuggageTypeEnum valueOf(Integer code) {
+    public static LuggageTypeEnum valueOf(Long code) {
         for (LuggageTypeEnum luggageTypeEnum : LuggageTypeEnum.values()) {
             if (luggageTypeEnum.getCode().equals(code)) {
                 return luggageTypeEnum;
@@ -45,7 +45,7 @@ public enum LuggageTypeEnum {
      * @param code 枚举的 code
      * @return
      */
-    public static String getDescByCode(Integer code) {
+    public static String getDescByCode(Long code) {
         LuggageTypeEnum[] arr = values();
         for (LuggageTypeEnum luggageTypeEnum : arr) {
             if (luggageTypeEnum.getCode().equals(code)) {

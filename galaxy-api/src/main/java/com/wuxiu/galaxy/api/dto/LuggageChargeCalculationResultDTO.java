@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.api.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
  * @author: wuxiu
  * @date: 2019/4/22 14:14
  */
+@ApiModel(description = "行李寄存费用计算结果")
 @Data
 public class LuggageChargeCalculationResultDTO implements Serializable {
 
