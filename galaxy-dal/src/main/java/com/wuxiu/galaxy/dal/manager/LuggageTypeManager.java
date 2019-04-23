@@ -29,4 +29,12 @@ public interface LuggageTypeManager extends BaseManager<LuggageType> {
      * @return key-value 类型
      */
     List<PairDTO<Long, String>> getLuggageTypeList();
+
+    /**
+     * 根据行李类型id获取行李类型信息
+     *
+     * @param luggageTypeId
+     * @return
+     */
+    LuggageType getLuggageTypeById(Long luggageTypeId);
 }

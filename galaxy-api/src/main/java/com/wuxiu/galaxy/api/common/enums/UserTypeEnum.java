@@ -18,6 +18,7 @@ public enum UserTypeEnum {
     // 管理员类型
     ADMIN(1, "普通管理员"),
     SUPER_ADMIN(2, "超级管理员"),
+    SYSTEM(3, "系统"),
     ;
 
     private Integer code;

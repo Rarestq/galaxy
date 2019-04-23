@@ -5,18 +5,16 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.LuggageStorageRecord">
                     <id column="luggage_id" property="luggageId"/>
-                    <result column="luggage_record_code" property="luggageRecordCode"/>
+                    <result column="luggage_record_no" property="luggageRecordNo"/>
                     <result column="luggage_type_id" property="luggageTypeId"/>
                     <result column="admin_id" property="adminId"/>
                     <result column="admin_name" property="adminName"/>
                     <result column="admin_phone" property="adminPhone"/>
                     <result column="depositor_name" property="depositorName"/>
                     <result column="depositor_phone" property="depositorPhone"/>
-                    <result column="depositor_gender" property="depositorGender"/>
                     <result column="remark" property="remark"/>
                     <result column="storage_start_time" property="storageStartTime"/>
                     <result column="storage_end_time" property="storageEndTime"/>
-                    <result column="luggage_pick_up_time" property="luggagePickUpTime"/>
                     <result column="status" property="status"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
@@ -24,6 +22,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       luggage_id,luggage_record_code,luggage_type_id,admin_id,admin_name,admin_phone,depositor_name,depositor_phone,depositor_gender,remark,storage_start_time,storage_end_time,luggage_pick_up_time,status,deleted,gmt_create,gmt_modified
+       luggage_id,luggage_record_no,luggage_type_id,admin_id,admin_name,admin_phone,depositor_name,depositor_phone,remark,storage_start_time,storage_end_time,status,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

@@ -37,9 +37,4 @@ public class AdminInfoQueryDTO implements Serializable {
      */
     private String adminName;
 
-    /**
-     * 管理员性别(0-男，1-女)
-     */
-    private Integer gender;
-
 }

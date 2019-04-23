@@ -15,8 +15,10 @@ import lombok.ToString;
 @ToString
 public enum LuggageTypeEnum {
 
-    // todo:行李类型
-
+    // 行李类型
+    COMMON_LUGGAGE_TYPE(1, "普通物件"),
+    FRAGILE_LUGGAGE_TYPE(2, "易碎物件"),
+    VALUABLE_LUGGAGE_TYPE(3, "贵重物件"),
     ;
 
     private Integer code;

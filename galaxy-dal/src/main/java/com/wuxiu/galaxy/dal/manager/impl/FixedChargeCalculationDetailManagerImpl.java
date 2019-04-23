@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * 固定计费表
  * </p>
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 @Component
 public class FixedChargeCalculationDetailManagerImpl extends BaseManagerImpl<FixedChargeCalculationDetailDao, FixedChargeCalculationDetail> implements FixedChargeCalculationDetailManager{

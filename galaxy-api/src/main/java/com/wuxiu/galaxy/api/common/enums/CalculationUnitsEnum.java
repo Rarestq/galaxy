@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 /**
  * 计算单位类型
  *
@@ -16,12 +18,12 @@ import lombok.ToString;
 public enum CalculationUnitsEnum {
 
     // 计算单位类型
-    YUAN_EACH_DAY(1, "元/件/天"),
-    YUAN_PER_ITEM(2, "元/件/次"),
-    YUAN_EACH(3, "元/件"),
+    YUAN_EACH_DAY(1L, "元/件/天"),
+    YUAN_PER_ITEM(2L, "元/件/次"),
+    YUAN_EACH(3L, "元/件"),
     ;
 
-    private Integer code;
+    private Long code;
     private String desc;
 
     /**
@@ -30,7 +32,11 @@ public enum CalculationUnitsEnum {
      * @param code
      * @return
      */
-    public static CalculationUnitsEnum valueOf(Integer code) {
+    public static CalculationUnitsEnum valueOf(Long code) {
+        if (Objects.isNull(code)) {
+            return null;
+        }
+
         for (CalculationUnitsEnum statusEnum : CalculationUnitsEnum.values()) {
             if (statusEnum.getCode().equals(code)) {
                 return statusEnum;
@@ -45,7 +51,11 @@ public enum CalculationUnitsEnum {
      * @param code 枚举的 code
      * @return
      */
-    public static String getDescByCode(Integer code) {
+    public static String getDescByCode(Long code) {
+        if (Objects.isNull(code)) {
+            return null;
+        }
+
         CalculationUnitsEnum[] arr = values();
         for (CalculationUnitsEnum statusEnum : arr) {
             if (statusEnum.getCode().equals(code)) {

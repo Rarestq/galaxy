@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  固定计费表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-16
+ *  * @since 2019-04-22
  *  
  */
 @Data
@@ -40,11 +40,6 @@ public class FixedChargeCalculationDetail extends BaseModel {
      */
     @TableId(value = "fixed_rule_id", type = IdType.AUTO)
     private Long fixedRuleId;
-    /**
-     * 计算规则主键id
-     */
-    @TableField("calculation_rule_id")
-    private Long calculationRuleId;
     /**
      * 计费单位(1-元/件/天，2-元/件/次，3-元/件)
      */

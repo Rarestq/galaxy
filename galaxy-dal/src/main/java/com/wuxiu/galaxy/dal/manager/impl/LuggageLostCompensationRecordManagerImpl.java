@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * 行李遗失赔偿记录表
  * </p>
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 @Component
 public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<LuggageLostCompensationRecordDao, LuggageLostCompensationRecord> implements LuggageLostCompensationRecordManager{

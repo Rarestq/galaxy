@@ -8,6 +8,10 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
+import com.wuxiu.galaxy.dal.common.dto.LuggageStorageRecordQueryDTO;
+import com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
 
@@ -16,8 +20,24 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  * 行李寄存-取件表
  * 
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface LuggageStorageRecordManager extends BaseManager<LuggageStorageRecord> {
 
+    /**
+     * 新增行李寄存记录
+     *
+     * @param newLuggageStorageRecordDTO
+     * @return
+     */
+    Long insertLuggageStorageRecord(NewLuggageStorageRecordDTO newLuggageStorageRecordDTO);
+
+    /**
+     * 查询行李寄存列表信息
+     *
+     * @param recordQueryDTO
+     * @return
+     */
+    Page<LuggageStorageInfoDTO> queryStorageRecordList(
+            LuggageStorageRecordQueryDTO recordQueryDTO);
 }

@@ -15,7 +15,7 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  * <p>TurnoverRecordDao接口</p>
  * 营业额记录表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-19
+ * @since 2019-04-22
  */
 public interface TurnoverRecordDao extends BaseDao<TurnoverRecord> {
 

@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
      * @return OperateUserDTO
      */
     @Override
-    public OperateUserDTO getCurrentOperate() {
+    public OperateUserDTO getCurrentOperateUser() {
+        // todo:获取当前登录人信息
         return null;
     }
 }

@@ -23,13 +23,21 @@ public class LuggageStorageRecordQueryDTO implements Serializable {
      */
     Page<LuggageStorageRecord> page;
     /**
-     * 行李类型主键id
+     * 行李寄存主键id
      */
-    private Long luggageTypeId;
+    private Long luggageId;
+    /**
+     * 行李寄存记录编号
+     */
+    private String luggageRecordNo;
     /**
      * 寄存人姓名
      */
     private String depositorName;
+    /**
+     * 寄存人电话
+     */
+    private String depositorPhone;
     /**
      * 寄存开始时间
      */

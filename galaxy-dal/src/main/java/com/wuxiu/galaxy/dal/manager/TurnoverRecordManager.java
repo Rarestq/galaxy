@@ -16,7 +16,7 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  * 营业额记录表
  * 
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-19
+ * @since 2019-04-22
  */
 public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
 

@@ -15,7 +15,7 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  * <p>LuggageOverdueRecordDao接口</p>
  * 行李逾期未取记录表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface LuggageOverdueRecordDao extends BaseDao<LuggageOverdueRecord> {
 

@@ -37,7 +37,7 @@ public class LuggageStorageRecordVO implements Serializable {
      * 行李寄存记录编号
      */
     @ApiModelProperty(value = "行李寄存记录编号", required = true)
-    private String luggageRecordCode;
+    private String luggageRecordNo;
     /**
      * 行李类型主键id
      */
@@ -69,11 +69,6 @@ public class LuggageStorageRecordVO implements Serializable {
     @ApiModelProperty(value = "寄存人电话", required = true)
     private String depositorPhone;
     /**
-     * 寄存人性别(0-男，1-女)
-     */
-    @ApiModelProperty(value = "寄存人性别", required = true)
-    private Integer depositorGender;
-    /**
      * 备注
      */
     @ApiModelProperty(value = "备注", required = true)
@@ -90,12 +85,6 @@ public class LuggageStorageRecordVO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "寄存结束时间", required = true)
     private LocalDateTime storageEndTime;
-    /**
-     * 行李取件时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @ApiModelProperty(value = "行李取件时间", required = true)
-    private LocalDateTime luggagePickUpTime;
     /**
      * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */

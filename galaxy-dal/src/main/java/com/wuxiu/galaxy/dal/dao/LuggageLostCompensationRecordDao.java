@@ -15,7 +15,7 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  * <p>LuggageLostCompensationRecordDao接口</p>
  * 行李遗失赔偿记录表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface LuggageLostCompensationRecordDao extends BaseDao<LuggageLostCompensationRecord> {
 

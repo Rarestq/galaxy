@@ -28,10 +28,4 @@ public class AdminInfoQueryForm extends PageInfo {
      */
     @ApiModelProperty(value = "管理员姓名", required = false)
     private String adminName;
-
-    /**
-     * 管理员性别(0-男，1-女)
-     */
-    @ApiModelProperty(value = "管理员性别", required = false)
-    private Integer gender;
 }

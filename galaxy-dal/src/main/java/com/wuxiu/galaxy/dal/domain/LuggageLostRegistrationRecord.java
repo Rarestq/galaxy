@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  行李遗失登记记录表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-16
+ *  * @since 2019-04-22
  *  
  */
 @Data
@@ -46,6 +46,11 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     @TableField("admin_id")
     private Long adminId;
     /**
+     * 管理员姓名
+     */
+    @TableField("admin_name")
+    private String adminName;
+    /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")
@@ -53,18 +58,13 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     /**
      * 行李寄存记录编号(冗余)
      */
-    @TableField("luggage_record_code")
-    private String luggageRecordCode;
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
     /**
      * 行李类型主键id(冗余)
      */
     @TableField("luggage_type_id")
     private Long luggageTypeId;
-    /**
-     * 管理员姓名(冗余)
-     */
-    @TableField("admin_name")
-    private String adminName;
     /**
      * 行李遗失登记者姓名(冗余)
      */
@@ -79,11 +79,6 @@ public class LuggageLostRegistrationRecord extends BaseModel {
      * 行李遗失登记备注
      */
     private String remark;
-    /**
-     * 登记时间
-     */
-    @TableField("registration_time")
-    private LocalDateTime registrationTime;
     /**
      * 记录状态(1-删除、0-正常)
      */

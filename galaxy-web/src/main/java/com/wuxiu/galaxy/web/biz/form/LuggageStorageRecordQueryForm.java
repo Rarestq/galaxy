@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.web.biz.form;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,52 +28,29 @@ public class LuggageStorageRecordQueryForm extends PageInfo {
     /**
      * 行李寄存记录编号
      */
-    @ApiModelProperty(value = "行李寄存记录编号", required = true)
+    @ApiModelProperty(value = "行李寄存记录编号", required = false)
     private String luggageRecordNo;
-    /**
-     * 行李类型主键id
-     */
-    @ApiModelProperty(value = "行李类型主键id", required = true)
-    private Long luggageTypeId;
-    /**
-     * 管理员id
-     */
-    @ApiModelProperty(value = "管理员id", required = true)
-    private Long adminId;
-    /**
-     * 管理员姓名(冗余)
-     */
-    @ApiModelProperty(value = "管理员姓名", required = true)
-    private String adminName;
-    /**
-     * 管理员电话(冗余)
-     */
-    @ApiModelProperty(value = "管理员电话", required = true)
-    private String adminPhone;
     /**
      * 寄存人姓名
      */
-    @ApiModelProperty(value = "寄存人姓名", required = true)
+    @ApiModelProperty(value = "寄存人姓名", required = false)
     private String depositorName;
     /**
      * 寄存人电话
      */
-    @ApiModelProperty(value = "寄存人电话", required = true)
+    @ApiModelProperty(value = "寄存人电话", required = false)
     private String depositorPhone;
+
     /**
-     * 寄存人性别(0-男，1-女)
+     * 寄存开始时间
      */
-    @ApiModelProperty(value = "寄存人性别", required = true)
-    private Integer depositorGender;
-    /**
-     * 备注
-     */
-    @ApiModelProperty(value = "备注", required = true)
-    private String remark;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty(value = "寄存开始时间", required = false)
+    private LocalDateTime storageStartTime;
     /**
      * 寄存结束时间
      */
-    @ApiModelProperty(value = "寄存结束时间", required = true)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty(value = "寄存结束时间", required = false)
     private LocalDateTime storageEndTime;
-
 }

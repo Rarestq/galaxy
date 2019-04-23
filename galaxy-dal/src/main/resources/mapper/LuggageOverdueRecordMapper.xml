@@ -6,9 +6,9 @@
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.LuggageOverdueRecord">
                     <id column="luggage_overdue_record_id" property="luggageOverdueRecordId"/>
                     <result column="admin_id" property="adminId"/>
-                    <result column="luggage_id" property="luggageId"/>
-                    <result column="luggage_record_code" property="luggageRecordCode"/>
                     <result column="admin_name" property="adminName"/>
+                    <result column="luggage_id" property="luggageId"/>
+                    <result column="luggage_record_no" property="luggageRecordNo"/>
                     <result column="depositor_name" property="depositorName"/>
                     <result column="depositor_phone" property="depositorPhone"/>
                     <result column="remark" property="remark"/>
@@ -19,6 +19,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       luggage_overdue_record_id,admin_id,luggage_id,luggage_record_code,admin_name,depositor_name,depositor_phone,remark,status,deleted,gmt_create,gmt_modified
+       luggage_overdue_record_id,admin_id,admin_name,luggage_id,luggage_record_no,depositor_name,depositor_phone,remark,status,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

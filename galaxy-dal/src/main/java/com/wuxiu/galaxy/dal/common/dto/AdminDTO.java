@@ -33,10 +33,6 @@ public class AdminDTO implements Serializable {
      */
     private String adminPhone;
     /**
-     * 管理员性别(0-男，1-女)
-     */
-    private Integer gender;
-    /**
      * 创建时间
      */
     private LocalDateTime gmtCreate;

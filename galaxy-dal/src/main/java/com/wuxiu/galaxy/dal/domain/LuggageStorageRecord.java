@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  行李寄存-取件表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-16
+ *  * @since 2019-04-22
  *  
  */
 @Data
@@ -43,8 +43,8 @@ public class LuggageStorageRecord extends BaseModel {
     /**
      * 行李寄存记录编号
      */
-    @TableField("luggage_record_code")
-    private String luggageRecordCode;
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
     /**
      * 行李类型主键id
      */
@@ -76,11 +76,6 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("depositor_phone")
     private String depositorPhone;
     /**
-     * 寄存人性别(0-男，1-女)
-     */
-    @TableField("depositor_gender")
-    private Integer depositorGender;
-    /**
      * 备注
      */
     private String remark;
@@ -95,13 +90,7 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("storage_end_time")
     private LocalDateTime storageEndTime;
     /**
-     * 行李取件时间
-     */
-    @TableField("luggage_pick_up_time")
-    private LocalDateTime luggagePickUpTime;
-    /**
-     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期）
-，3-已逾期，4-已作废)
+     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */
     private Integer status;
     /**

@@ -14,5 +14,5 @@ public interface UserService {
      *
      * @return OperateUserDTO
      */
-    OperateUserDTO getCurrentOperate();
+    OperateUserDTO getCurrentOperateUser();
 }

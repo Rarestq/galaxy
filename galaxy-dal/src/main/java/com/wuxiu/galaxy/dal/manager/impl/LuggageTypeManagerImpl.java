@@ -61,4 +61,15 @@ public class LuggageTypeManagerImpl extends BaseManagerImpl<LuggageTypeDao, Lugg
 
         return pairDTOList;
     }
+
+    /**
+     * 根据行李类型id获取行李类型信息
+     *
+     * @param luggageTypeId
+     * @return
+     */
+    @Override
+    public LuggageType getLuggageTypeById(Long luggageTypeId) {
+        return selectById(luggageTypeId);
+    }
 }

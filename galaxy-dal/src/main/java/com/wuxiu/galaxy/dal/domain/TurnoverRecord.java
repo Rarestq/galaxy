@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>TurnoverRecordDomian实体对象</p>
- *
- * 营业额记录表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-19
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>TurnoverRecordDomian实体对象</p>
+ * <p>
+ *  营业额记录表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-22
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_turnover_record")
@@ -45,15 +41,15 @@ public class TurnoverRecord extends BaseModel {
     @TableId(value = "turnover_record_id", type = IdType.AUTO)
     private Long turnoverRecordId;
     /**
-     * 管理员主键id
-     */
-    @TableField("admin_id")
-    private Long adminId;
-    /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")
     private Long luggageId;
+    /**
+     * 管理员主键id(冗余)
+     */
+    @TableField("admin_id")
+    private Long adminId;
     /**
      * 费用
      */
@@ -67,11 +63,11 @@ public class TurnoverRecord extends BaseModel {
      * 创建时间
      */
     @TableField("gmt_create")
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate;
     /**
      * 修改时间
      */
     @TableField("gmt_modified")
-    private Date gmtModified;
+    private LocalDateTime gmtModified;
 
 }

@@ -16,7 +16,7 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  * 行李遗失登记记录表
  * 
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface LuggageLostRegistrationRecordManager extends BaseManager<LuggageLostRegistrationRecord> {
 

@@ -15,7 +15,7 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  * <p>LuggageStorageRecordDao接口</p>
  * 行李寄存-取件表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface LuggageStorageRecordDao extends BaseDao<LuggageStorageRecord> {
 

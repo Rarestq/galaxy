@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  行李逾期未取记录表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-16
+ *  * @since 2019-04-22
  *  
  */
 @Data
@@ -46,6 +46,11 @@ public class LuggageOverdueRecord extends BaseModel {
     @TableField("admin_id")
     private Long adminId;
     /**
+     * 管理员姓名
+     */
+    @TableField("admin_name")
+    private String adminName;
+    /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")
@@ -53,13 +58,8 @@ public class LuggageOverdueRecord extends BaseModel {
     /**
      * 行李寄存记录编号(冗余)
      */
-    @TableField("luggage_record_code")
-    private String luggageRecordCode;
-    /**
-     * 管理员姓名(冗余)
-     */
-    @TableField("admin_name")
-    private String adminName;
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
     /**
      * 行李寄存者姓名(冗余)
      */

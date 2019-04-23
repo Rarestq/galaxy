@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * 营业额记录表
  * </p>
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-19
+ * @since 2019-04-22
  */
 @Component
 public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao, TurnoverRecord> implements TurnoverRecordManager{

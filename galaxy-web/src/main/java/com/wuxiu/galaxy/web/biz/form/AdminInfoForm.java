@@ -31,10 +31,4 @@ public class AdminInfoForm implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     @NotNull(message = "管理员电话不能为空")
     private String adminPhone;
-    /**
-     * 管理员性别(0-男，1-女)
-     */
-    @ApiModelProperty(value = "管理员性别(0-男，1-女)", required = true)
-    @NotNull(message = "管理员性别不能为空")
-    private Integer gender;
 }

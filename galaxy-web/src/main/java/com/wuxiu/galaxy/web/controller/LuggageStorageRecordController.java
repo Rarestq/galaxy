@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * 行李寄存相关接口
@@ -46,12 +47,22 @@ public class LuggageStorageRecordController {
     @ApiOperation(value = "查询行李寄存记录列表", notes = "查询行李寄存记录列表")
     @GetMapping("")
     public APIResult<PageInfo<LuggageStorageRecordVO>> queryStorageRecordList(
-            LuggageStorageRecordQueryForm form) {
+            @Valid LuggageStorageRecordQueryForm form) {
         // 参数校验
         String recordQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(recordQueryCheck)) {
             return APIResult.error(recordQueryCheck);
         }
         return storageRecordService.queryStorageRecordList(form);
+    }
+
+    @ApiOperation(value = "取件", notes = "取件")
+    @PostMapping(value = "/pickup")
+    public APIResult<Void> pickupLuggage(Long luggageId) {
+
+        if (Objects.isNull(luggageId)) {
+            return APIResult.error("参数错误，行李寄存记录id不能为空");
+        }
+        return storageRecordService.pickupLuggage(luggageId);
     }
 }

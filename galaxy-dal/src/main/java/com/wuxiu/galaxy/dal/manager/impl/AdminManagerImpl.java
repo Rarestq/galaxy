@@ -52,7 +52,6 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             updateAdmin.setAdminNo(adminInfoDTO.getAdminNo());
             updateAdmin.setAdminName(adminInfoDTO.getAdminName());
             updateAdmin.setAdminPhone(adminInfoDTO.getAdminPhone());
-            updateAdmin.setGender(adminInfoDTO.getGender());
             updateAdmin.setGmtModified(LocalDateTime.now());
 
             updateById(updateAdmin);
@@ -65,7 +64,6 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         insertAdmin.setAdminNo(adminInfoDTO.getAdminNo());
         insertAdmin.setAdminName(adminInfoDTO.getAdminName());
         insertAdmin.setAdminPhone(adminInfoDTO.getAdminPhone());
-        insertAdmin.setGender(adminInfoDTO.getGender());
 
         // 新增管理员信息
         insert(insertAdmin);
@@ -95,10 +93,6 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             wrapper.eq("admin_name", queryDTO.getAdminName());
         }
 
-        if (Objects.nonNull(queryDTO.getGender())) {
-            wrapper.eq("gender", queryDTO.getGender());
-        }
-
         wrapper.orderBy("gmt_create", false)
                 .orderBy("admin_id", false);
 
@@ -126,7 +120,6 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             adminDTO.setAdminNo(admin.getAdminNo());
             adminDTO.setAdminName(admin.getAdminName());
             adminDTO.setAdminPhone(admin.getAdminPhone());
-            adminDTO.setGender(admin.getGender());
             adminDTOS.add(adminDTO);
         });
 

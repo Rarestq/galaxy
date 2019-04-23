@@ -16,7 +16,7 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  * 固定计费表
  * 
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-16
+ * @since 2019-04-22
  */
 public interface FixedChargeCalculationDetailManager extends BaseManager<FixedChargeCalculationDetail> {
 

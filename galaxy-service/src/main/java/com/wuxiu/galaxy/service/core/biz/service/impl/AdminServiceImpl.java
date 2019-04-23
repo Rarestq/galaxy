@@ -8,7 +8,7 @@ import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
 import com.wuxiu.galaxy.dal.manager.AdminManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
-import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerator;
+import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,6 @@ public class AdminServiceImpl implements AdminService {
             editAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
             editAdminInfoDTO.setAdminNo(adminInfoDTO.getAdminNo());
             editAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
-            editAdminInfoDTO.setGender(adminInfoDTO.getGender());
             editAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
             return editAdminInfoDTO;
@@ -81,9 +80,8 @@ public class AdminServiceImpl implements AdminService {
         AdminInfoDTO newAdminInfoDTO = new AdminInfoDTO();
         newAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
         // TODO：随机生成 adminNo
-        newAdminInfoDTO.setAdminNo(UUIDGenerator.getUUID());
+        newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.genAdminNo());
         newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
-        newAdminInfoDTO.setGender(adminInfoDTO.getGender());
         newAdminInfoDTO.setGmtCreate(LocalDateTime.now());
         newAdminInfoDTO.setGmtModified(LocalDateTime.now());
 

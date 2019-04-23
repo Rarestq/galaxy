@@ -56,10 +56,6 @@ public class Admin extends BaseModel {
     @TableField("admin_phone")
     private String adminPhone;
     /**
-     * 管理员性别(0-男，1-女)
-     */
-    private Integer gender;
-    /**
      * 记录状态(1-删除、0-正常)
      */
     @TableLogic

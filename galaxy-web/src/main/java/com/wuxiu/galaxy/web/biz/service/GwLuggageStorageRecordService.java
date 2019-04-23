@@ -30,4 +30,11 @@ public interface GwLuggageStorageRecordService {
      */
     APIResult<PageInfo<LuggageStorageRecordVO>> queryStorageRecordList(LuggageStorageRecordQueryForm form);
 
+    /**
+     * 行李取件
+     *
+     * @param luggageId  行李寄存记录id
+     * @return
+     */
+    APIResult<Void> pickupLuggage(Long luggageId);
 }

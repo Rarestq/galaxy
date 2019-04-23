@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  行李遗失赔偿记录表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-16
+ *  * @since 2019-04-22
  *  
  */
 @Data
@@ -40,6 +40,36 @@ public class LuggageLostCompensationRecord extends BaseModel {
      */
     @TableId(value = "luggage_lost_compensation_record_id", type = IdType.AUTO)
     private Long luggageLostCompensationRecordId;
+    /**
+     * 行李遗失登记主键id
+     */
+    @TableField("lost_registration_record_id")
+    private Long lostRegistrationRecordId;
+    /**
+     * 管理员id(冗余)
+     */
+    @TableField("admin_id")
+    private Long adminId;
+    /**
+     * 管理员姓名(冗余)
+     */
+    @TableField("admin_name")
+    private String adminName;
+    /**
+     * 赔偿对象姓名(冗余)
+     */
+    @TableField("depositor_name")
+    private String depositorName;
+    /**
+     * 赔偿对象电话(冗余)
+     */
+    @TableField("depositor_phone")
+    private String depositorPhone;
+    /**
+     * 行李类型主键id(冗余)
+     */
+    @TableField("luggage_type_id")
+    private Long luggageTypeId;
     /**
      * 赔偿金额
      */

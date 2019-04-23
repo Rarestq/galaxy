@@ -5,8 +5,8 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.TurnoverRecord">
                     <id column="turnover_record_id" property="turnoverRecordId"/>
-                    <result column="admin_id" property="adminId"/>
                     <result column="luggage_id" property="luggageId"/>
+                    <result column="admin_id" property="adminId"/>
                     <result column="fee" property="fee"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
@@ -14,6 +14,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       turnover_record_id,admin_id,luggage_id,fee,deleted,gmt_create,gmt_modified
+       turnover_record_id,luggage_id,admin_id,fee,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

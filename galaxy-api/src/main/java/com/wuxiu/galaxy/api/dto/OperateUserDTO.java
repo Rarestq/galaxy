@@ -29,6 +29,12 @@ public class OperateUserDTO implements Serializable {
     private String name;
 
     /**
+     * 操作人电话
+     */
+    @NotNull(message = "操作人电话不能为空")
+    private String operateUserPhone;
+
+    /**
      * 用户类型
      *
      */
@@ -38,8 +44,9 @@ public class OperateUserDTO implements Serializable {
     public static OperateUserDTO ofEmpty(){
         OperateUserDTO operateUserDTO = new OperateUserDTO();
         operateUserDTO.setOperateUserId(0L);
-        operateUserDTO.setName("");
-        operateUserDTO.setUserTypeEnum(UserTypeEnum.ADMIN);
+        operateUserDTO.setName(UserTypeEnum.getDescByCode(3));
+        operateUserDTO.setOperateUserPhone("1008611");
+        operateUserDTO.setUserTypeEnum(UserTypeEnum.SYSTEM);
 
         return operateUserDTO;
     }
