@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.api.common.constant;
+package com.wuxiu.galaxy.api.common.constants;
 
 /**
  * api 接口常量
