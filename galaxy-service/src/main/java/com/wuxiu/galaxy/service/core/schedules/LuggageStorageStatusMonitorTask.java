@@ -3,7 +3,7 @@ package com.wuxiu.galaxy.service.core.schedules;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
 import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class LuggageStorageDateMonitorTask {
+public class LuggageStorageStatusMonitorTask {
 
     @Autowired
     private LuggageStorageRecordService storageRecordService;
@@ -30,7 +30,7 @@ public class LuggageStorageDateMonitorTask {
     // @Scheduled(fixedDelay = 30 * 60000L )
     @Scheduled(cron = "* 30 * * * ?")
     public void refreshLuggageStorageStatus() {
-        // todo：定时检查行李寄存记录的寄存结束时间
+        //todo:定时检查行李寄存记录的寄存结束时间
         LuggageStorageRecordQueryDTO queryDTO = new LuggageStorageRecordQueryDTO();
 
         PageInfo<LuggageStorageInfoDTO> storageInfoDTOPageInfo =

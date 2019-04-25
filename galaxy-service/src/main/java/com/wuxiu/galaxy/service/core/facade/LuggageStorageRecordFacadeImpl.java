@@ -7,7 +7,7 @@ import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
 import com.wuxiu.galaxy.api.dto.NewLuggageStorageRecordDTO;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.service.LuggageStorageRecordFacade;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

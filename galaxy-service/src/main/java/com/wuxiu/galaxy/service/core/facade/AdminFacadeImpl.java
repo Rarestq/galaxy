@@ -6,7 +6,7 @@ import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
 import com.wuxiu.galaxy.api.service.AdminFacade;
-import com.wuxiu.galaxy.service.core.biz.service.AdminService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

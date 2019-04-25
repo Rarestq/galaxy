@@ -6,7 +6,7 @@ import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.api.service.TurnoverRecordFacade;
-import com.wuxiu.galaxy.service.core.biz.service.TurnoverRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.TurnoverRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

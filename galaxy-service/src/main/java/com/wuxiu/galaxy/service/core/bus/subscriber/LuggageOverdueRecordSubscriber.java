@@ -5,9 +5,9 @@ import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.SaveLuggageOverdueRecordDTO;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageOverdueRecordService;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageStorageRecordService;
-import com.wuxiu.galaxy.service.core.bus.event.SyncOverdueRecordEvent;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ public class LuggageOverdueRecordSubscriber {
      * @param event
      */
     @Subscribe
-    public void autoCreateLugaggeOverdueRecord(SyncOverdueRecordEvent event) {
+    public void autoCreateLugaggeOverdueRecord(CreateOverdueRecordEvent event) {
         log.info("自动创建行李逾期记录开始，event:{}", event);
 
         SaveLuggageOverdueRecordDTO overdueRecordDTO = new SaveLuggageOverdueRecordDTO();

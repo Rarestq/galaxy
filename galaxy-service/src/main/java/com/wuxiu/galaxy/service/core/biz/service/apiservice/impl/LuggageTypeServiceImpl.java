@@ -1,9 +1,9 @@
-package com.wuxiu.galaxy.service.core.biz.service.impl;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageTypeService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @Getter
-public class SyncOverdueRecordEvent {
+public class CreateOverdueRecordEvent {
 
     /**
      * 行李寄存记录主键id

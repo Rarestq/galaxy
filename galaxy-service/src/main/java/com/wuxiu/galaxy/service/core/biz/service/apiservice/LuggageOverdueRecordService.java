@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.biz.service;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice;
 
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;

@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.biz.service.impl;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -10,7 +10,7 @@ import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
-import com.wuxiu.galaxy.service.core.biz.service.TurnoverRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.TurnoverRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

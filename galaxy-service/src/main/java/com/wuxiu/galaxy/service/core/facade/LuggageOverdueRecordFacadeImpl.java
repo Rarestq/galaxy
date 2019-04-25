@@ -5,7 +5,7 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordQueryDTO;
 import com.wuxiu.galaxy.api.service.LuggageOverdueRecordFacade;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageOverdueRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

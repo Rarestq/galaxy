@@ -3,7 +3,7 @@ package com.wuxiu.galaxy.service.core.facade;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.service.LuggageTypeFacade;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageTypeService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

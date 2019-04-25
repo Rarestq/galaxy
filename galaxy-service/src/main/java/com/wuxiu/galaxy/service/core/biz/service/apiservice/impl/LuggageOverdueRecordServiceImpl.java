@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.biz.service.impl;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
@@ -9,7 +9,7 @@ import com.wuxiu.galaxy.dal.manager.LuggageOverdueRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageOverdueRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

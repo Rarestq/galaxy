@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.biz.service.impl;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 /**
  * 登录服务实现类

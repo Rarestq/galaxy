@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.biz.service.impl;
+package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.eventbus.AsyncEventBus;
@@ -16,8 +16,8 @@ import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
-import com.wuxiu.galaxy.service.core.biz.service.LuggageStorageRecordService;
-import com.wuxiu.galaxy.service.core.bus.event.SyncOverdueRecordEvent;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,18 +81,11 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         //todo:计算寄存所需费用
 
+        //todo:新增行李寄存记录
+
+        //todo:发送行李寄存完成事件
 
         return storageRecordManager.insertLuggageStorageRecord(newLuggageStorageRecordDTO);
-    }
-
-    /**
-     * 判断行李寄存结束时间相对系统当前时间是否已逾期
-     *
-     * @param timeValue
-     * @return
-     */
-    private boolean isTimeExpired(long timeValue) {
-        return timeValue > System.currentTimeMillis();
     }
 
     /**
@@ -196,7 +189,7 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         }
 
         // 在寄存结束时间前 15 min 发送短信，判断是否已到寄存结束时间，是就发送自动创建逾期记录事件
-        notifyDepositorBySMS();
+        //notifyDepositorBySMS();
 
         List<LuggageStorageInfoDTO> records = storageRecordInfoPage.getRecords();
 
@@ -230,16 +223,25 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
             LocalDateTime storageEndTime = storageInfoDTO.getStorageEndTime();
             long storageEndTimeMilli =
                     storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
-            //todo:到期前 15 min 发送短信给寄存人
 
             // 已逾期，发送事件
             if (isTimeExpired(storageEndTimeMilli)) {
-                asyncEventBus.post(SyncOverdueRecordEvent.builder()
+                asyncEventBus.post(CreateOverdueRecordEvent.builder()
                         .luggageId(storageInfoDTO.getLuggageId())
                         .status(storageInfoDTO.getStatus())
                         .remark(storageInfoDTO.getRemark())
                         .build());
             }
         }
+    }
+
+    /**
+     * 判断行李寄存结束时间相对系统当前时间是否已逾期
+     *
+     * @param timeValue
+     * @return
+     */
+    private boolean isTimeExpired(long timeValue) {
+        return timeValue > System.currentTimeMillis();
     }
 }
