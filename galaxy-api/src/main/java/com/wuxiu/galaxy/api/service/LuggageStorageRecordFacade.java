@@ -33,12 +33,4 @@ public interface LuggageStorageRecordFacade {
      */
     APIResult<PageInfo<LuggageStorageInfoDTO>> queryStorageRecordList(
             LuggageStorageRecordQueryDTO queryDTO);
-
-    /**
-     * 行李取件
-     *
-     * @param luggageId
-     * @return
-     */
-    APIResult<Void> pickupLuggage(Long luggageId);
 }

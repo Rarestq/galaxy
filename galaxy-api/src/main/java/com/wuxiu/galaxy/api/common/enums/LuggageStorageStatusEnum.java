@@ -19,6 +19,8 @@ public enum LuggageStorageStatusEnum {
     DEPOSITING(0, "寄存中"),
     PICKED_UP(1, "已取件"),
     OVERDUE(2, "已逾期"),
+    OVERDUE_PICKUP(3, "逾期取件"),
+    HAD_LOST(4, "行李已遗失"),
     ;
 
     private Integer code;

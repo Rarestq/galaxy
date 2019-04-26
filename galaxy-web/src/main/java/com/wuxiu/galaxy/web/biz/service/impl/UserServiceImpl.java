@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * All rights Reserved, Designed By www.maihaoche.com
+ * 用户相关服务
  *
  * @author: wuxiu
  * @date: 2019/4/15 16:00

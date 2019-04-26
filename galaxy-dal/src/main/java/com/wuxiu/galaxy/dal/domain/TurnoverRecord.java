@@ -55,6 +55,10 @@ public class TurnoverRecord extends BaseModel {
      */
     private String fee;
     /**
+     * 备注
+     */
+    private String remark;
+    /**
      * 记录状态(1-删除、0-正常)
      */
     @TableLogic

@@ -8,12 +8,13 @@
                     <result column="luggage_id" property="luggageId"/>
                     <result column="admin_id" property="adminId"/>
                     <result column="fee" property="fee"/>
+                    <result column="remark" property="remark"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
                     <result column="gmt_modified" property="gmtModified"/>
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       turnover_record_id,luggage_id,admin_id,fee,deleted,gmt_create,gmt_modified
+       turnover_record_id,luggage_id,admin_id,fee,remark,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

@@ -46,14 +46,4 @@ public class LuggageStorageRecordClient {
 
         return storageRecordFacade.queryStorageRecordList(queryDTO);
     }
-
-    /**
-     * 行李取件
-     *
-     * @param luggageId
-     * @return
-     */
-    public APIResult<Void> pickupLuggage(Long luggageId) {
-        return storageRecordFacade.pickupLuggage(luggageId);
-    }
 }

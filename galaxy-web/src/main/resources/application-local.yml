@@ -57,8 +57,8 @@ mybatis-plus:
     #刷新mapper 调试神器
     refresh-mapper: false
     #逻辑删除配置
-    logic-delete-value: 0
-    logic-not-delete-value: 1
+    logic-delete-value: 1
+    logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false

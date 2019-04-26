@@ -122,15 +122,4 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
 
         return APIResult.ok(pageInfo);
     }
-
-    /**
-     * 行李取件
-     *
-     * @param luggageId 行李寄存记录id
-     * @return
-     */
-    @Override
-    public APIResult<Void> pickupLuggage(Long luggageId) {
-        return storageRecordClient.pickupLuggage(luggageId);
-    }
 }

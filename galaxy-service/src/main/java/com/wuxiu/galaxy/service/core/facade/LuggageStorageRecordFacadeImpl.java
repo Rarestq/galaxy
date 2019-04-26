@@ -51,15 +51,4 @@ public class LuggageStorageRecordFacadeImpl implements LuggageStorageRecordFacad
         return APIResult.ok(storageRecordService.queryStorageRecordList(queryDTO));
     }
 
-    /**
-     * 行李取件
-     *
-     * @param luggageId
-     * @return
-     */
-    @Override
-    public APIResult<Void> pickupLuggage(Long luggageId) {
-        storageRecordService.pickupLuggage(luggageId);
-        return APIResult.ok();
-    }
 }

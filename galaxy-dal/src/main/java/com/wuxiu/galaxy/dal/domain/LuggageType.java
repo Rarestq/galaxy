@@ -44,7 +44,7 @@ public class LuggageType extends BaseModel {
      * 行李类型(1-普通物件、2-易碎物件、3-贵重物件)
      */
     @TableField("luggage_type")
-    private Integer luggageType;
+    private String luggageType;
     /**
      * 记录状态(1-删除、0-正常)
      */

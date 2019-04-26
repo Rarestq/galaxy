@@ -32,12 +32,4 @@ public interface LuggageStorageRecordService {
      */
     PageInfo<LuggageStorageInfoDTO> queryStorageRecordList(
             LuggageStorageRecordQueryDTO queryDTO);
-
-    /**
-     * 行李取件
-     *
-     * @param luggageId
-     * @return
-     */
-    void pickupLuggage(Long luggageId);
 }

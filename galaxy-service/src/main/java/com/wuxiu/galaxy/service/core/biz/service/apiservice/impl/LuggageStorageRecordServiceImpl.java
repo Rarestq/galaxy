@@ -17,14 +17,12 @@ import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
-import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
 
@@ -196,52 +194,4 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         return PageInfoUtil.of(storageRecordInfoPage, records);
     }
 
-    /**
-     * 行李取件
-     *
-     * @param luggageId
-     * @return
-     */
-    @Override
-    public void pickupLuggage(Long luggageId) {
-
-    }
-
-    /**
-     * 校验行李寄存结束时间是否逾期，结束前 15 min 短信通知寄存人，
-     * 逾期后，发送事件给「逾期未取清理服务」，自动创建逾期记录
-     */
-    private void notifyDepositorBySMS() {
-        LuggageStorageRecordQueryDTO queryDTO = new LuggageStorageRecordQueryDTO();
-
-        // 获取所有的寄存记录信息
-        PageInfo<LuggageStorageInfoDTO> storageInfoDTOPageInfo =
-                queryStorageRecordList(queryDTO);
-        List<LuggageStorageInfoDTO> storageInfoDTOS = storageInfoDTOPageInfo.getRecords();
-
-        for (LuggageStorageInfoDTO storageInfoDTO : storageInfoDTOS) {
-            LocalDateTime storageEndTime = storageInfoDTO.getStorageEndTime();
-            long storageEndTimeMilli =
-                    storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
-
-            // 已逾期，发送事件
-            if (isTimeExpired(storageEndTimeMilli)) {
-                asyncEventBus.post(CreateOverdueRecordEvent.builder()
-                        .luggageId(storageInfoDTO.getLuggageId())
-                        .status(storageInfoDTO.getStatus())
-                        .remark(storageInfoDTO.getRemark())
-                        .build());
-            }
-        }
-    }
-
-    /**
-     * 判断行李寄存结束时间相对系统当前时间是否已逾期
-     *
-     * @param timeValue
-     * @return
-     */
-    private boolean isTimeExpired(long timeValue) {
-        return timeValue > System.currentTimeMillis();
-    }
 }
