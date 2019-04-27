@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.form;
+package com.wuxiu.galaxy.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
@@ -9,14 +9,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 行李遗失登记记录查询参数表单
+ * 行李遗失登记记录查询参数对象
  *
  * @author: wuxiu
  * @date: 2019/4/26 20:33
  */
-@ApiModel("行李遗失登记记录查询参数表单")
+@ApiModel("行李遗失登记记录查询参数对象")
 @Data
-public class LuggageLostRegisterRecordQueryForm extends PageInfo {
+public class LuggageLostRegisterRecordQueryDTO extends PageInfo {
 
     private static final long serialVersionUID = 5697799673656389828L;
 

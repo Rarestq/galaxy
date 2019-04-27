@@ -10,29 +10,35 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
+import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
-import com.wuxiu.galaxy.dal.common.dto.PickupLuggageDTO;
+import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
+import com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupOverdueLuggageDTO;
 import com.wuxiu.galaxy.dal.domain.PickupLuggageRecord;
 
-/**  
+/**
+ *   
  * PickupLuggageRecordManager
-  * 行李取件记录表
- * 
-  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * 行李取件记录表
+ *  
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *
  * @since 2019-04-22
- */
+ *  
+ */
 public interface PickupLuggageRecordManager extends BaseManager<PickupLuggageRecord> {
 
 
     /**
      * 行李取件
      *
-     * @param pickupLuggageDTO
+     * @param commonPickupLuggageDTO
      * @return
      */
-    void pickupLuggage(PickupLuggageDTO pickupLuggageDTO);
+    void pickupLuggage(CommonPickupLuggageDTO commonPickupLuggageDTO);
 
     /**
      * 逾期取件
@@ -49,4 +55,13 @@ public interface PickupLuggageRecordManager extends BaseManager<PickupLuggageRec
      * @return
      */
     void markLuggageAsLost(MarkLuggageAsLostDTO markLuggageAsLostDTO);
+
+    /**
+     * 查询行李取件记录列表信息
+     *
+     * @param recordQueryDTO
+     * @return
+     */
+    Page<PickupLuggageRecordDTO> queryStorageRecordList(
+            PickupLuggageRecordQueryDTO recordQueryDTO);
 }

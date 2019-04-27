@@ -150,6 +150,20 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     }
 
     /**
+     * 通过行李寄存编号模糊查询行李寄存信息
+     *
+     * @param luggageRecordNo
+     * @return
+     */
+    @Override
+    public LuggageStorageRecord selectByLuggageRecordNo(String luggageRecordNo) {
+        Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<LuggageStorageRecord>()
+                .like("luggage_record_no", luggageRecordNo);
+
+        return selectOne(wrapper);
+    }
+
+    /**
      * 构建 LuggageStorageInfoDTO 对象
      *
      * @param storageRecordPage

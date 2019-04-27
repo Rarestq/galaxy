@@ -16,6 +16,10 @@ public class SaveLuggageOverdueRecordDTO implements Serializable {
     private static final long serialVersionUID = -7459024447476207927L;
 
     /**
+     * 逾期记录编号
+     */
+    private String overdueRecordNo;
+    /**
      * 管理员主键id
      */
     private Long adminId;

@@ -15,6 +15,11 @@ public class PickupOverdueLuggageDTO implements Serializable {
 
     private static final long serialVersionUID = 6372556757159927979L;
 
+    /**
+     * 取件记录编号
+     */
+    private String pickupRecordNo;
+
     private Long adminId;
 
     private String adminName;

@@ -1,10 +1,19 @@
 package com.wuxiu.galaxy.web.biz.vo;
 
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+
+import java.io.Serializable;
+
 /**
- * All rights Reserved, Designed By www.maihaoche.com
+ * 遗失赔偿记录页面展示对象
  *
  * @author: wuxiu
  * @date: 2019/4/26 20:12
  */
-public class LuggageLostCompensateRecordVO {
+@ApiModel("遗失赔偿记录页面展示对象")
+@Data
+public class LuggageLostCompensateRecordVO implements Serializable {
+
+    private static final long serialVersionUID = 3290646436654854972L;
 }

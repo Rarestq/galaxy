@@ -95,6 +95,7 @@ public class GwPickupLuggageServiceImpl implements GwPickupLuggageService {
             return CommonUtil.errorAPIResult(pickupRecordPageInfoAPIResult);
         }
 
+        // 将 PickupLuggageRecordDTO 转化为 PickupLuggageRecordVO
         PageInfo<PickupLuggageRecordDTO> recordDTOPageInfo =
                 pickupRecordPageInfoAPIResult.getData();
         List<PickupLuggageRecordDTO> pickupLuggageRecordDTOS =

@@ -41,6 +41,11 @@ public class PickupLuggageRecord extends BaseModel {
     @TableId(value = "pickup_luggage_record_id", type = IdType.AUTO)
     private Long pickupLuggageRecordId;
     /**
+     * 取件记录编号
+     */
+    @TableField(value = "pickup_record_no")
+    private String pickupRecordNo;
+    /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")

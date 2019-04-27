@@ -41,6 +41,11 @@ public class LuggageOverdueRecord extends BaseModel {
     @TableId(value = "luggage_overdue_record_id", type = IdType.AUTO)
     private Long luggageOverdueRecordId;
     /**
+     * 逾期记录编号
+     */
+    @TableField(value = "overdue_record_no")
+    private String overdueRecordNo;
+    /**
      * 管理员主键id
      */
     @TableField("admin_id")

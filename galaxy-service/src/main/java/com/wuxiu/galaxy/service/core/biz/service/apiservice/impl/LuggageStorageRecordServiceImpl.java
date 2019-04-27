@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.eventbus.AsyncEventBus;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
@@ -99,7 +100,8 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO recordDTO =
                 new com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO();
 
-        recordDTO.setLuggageRecordNo(UUIDGenerateUtil.genStorageRecordNo());
+        recordDTO.setLuggageRecordNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.LUGGAGE_STORAGE_RECORD_NO_PREFIX));
         recordDTO.setLuggageTypeId(storageRecordDTO.getLuggageTypeId());
 
         recordDTO.setAdminId(operateUserDTO.getOperateUserId());

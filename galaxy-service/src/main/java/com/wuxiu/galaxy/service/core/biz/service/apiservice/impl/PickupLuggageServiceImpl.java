@@ -1,5 +1,7 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
@@ -8,18 +10,23 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
+import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
-import com.wuxiu.galaxy.dal.common.dto.PickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupOverdueLuggageDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.PickupLuggageRecordManager;
+import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
+import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
+import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.PickupLuggageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -56,40 +63,43 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         }
         // 获取行李寄存记录
         LuggageStorageRecord storageRecord = storageRecordManager.selectById(luggageId);
-        PickupLuggageDTO pickupLuggageDTO = new PickupLuggageDTO();
+        CommonPickupLuggageDTO commonPickupLuggageDTO = new CommonPickupLuggageDTO();
         // 正常取件（之前状态为「寄存中」），将其状态更新为「已取件」
         if (Objects.equals(LuggageStorageStatusEnum.DEPOSITING.getCode(),
                 storageRecord.getStatus())) {
 
-            pickupLuggageDTO = buildPickupLuggageDTO(operateUserDTO, storageRecord);
+            commonPickupLuggageDTO = buildPickupLuggageDTO(operateUserDTO, storageRecord);
         }
 
-        pickupLuggageRecordManager.pickupLuggage(pickupLuggageDTO);
+        pickupLuggageRecordManager.pickupLuggage(commonPickupLuggageDTO);
     }
 
     /**
-     * 构造 PickupLuggageDTO 对象
+     * 构造 CommonPickupLuggageDTO 对象
      *
      * @param operateUserDTO
      * @param storageRecord
      * @return
      */
-    private PickupLuggageDTO buildPickupLuggageDTO(OperateUserDTO operateUserDTO,
-                                                   LuggageStorageRecord storageRecord) {
-        PickupLuggageDTO pickupLuggageDTO = new PickupLuggageDTO();
-        pickupLuggageDTO.setLuggageId(storageRecord.getLuggageId());
-        pickupLuggageDTO.setAdminId(operateUserDTO.getOperateUserId());
-        pickupLuggageDTO.setAdminName(operateUserDTO.getName());
+    private CommonPickupLuggageDTO buildPickupLuggageDTO(OperateUserDTO operateUserDTO,
+                                                         LuggageStorageRecord storageRecord) {
+        CommonPickupLuggageDTO commonPickupLuggageDTO = new CommonPickupLuggageDTO();
 
-        pickupLuggageDTO.setPickerName(storageRecord.getDepositorName());
-        pickupLuggageDTO.setPickerPhone(storageRecord.getDepositorPhone());
-        pickupLuggageDTO.setPickupType(PickupLuggageTypeEnum.NORMAL.getCode());
-        pickupLuggageDTO.setPickUpTime(LocalDateTime.now());
-        pickupLuggageDTO.setStatus(LuggageStorageStatusEnum.PICKED_UP.getCode());
+        commonPickupLuggageDTO.setPickupRecordNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.PICKUP_RECORD_NO_PREFIX));
+        commonPickupLuggageDTO.setLuggageId(storageRecord.getLuggageId());
+        commonPickupLuggageDTO.setAdminId(operateUserDTO.getOperateUserId());
+        commonPickupLuggageDTO.setAdminName(operateUserDTO.getName());
 
-        pickupLuggageDTO.setGmtModified(LocalDateTime.now());
+        commonPickupLuggageDTO.setPickerName(storageRecord.getDepositorName());
+        commonPickupLuggageDTO.setPickerPhone(storageRecord.getDepositorPhone());
+        commonPickupLuggageDTO.setPickupType(PickupLuggageTypeEnum.NORMAL.getCode());
+        commonPickupLuggageDTO.setPickUpTime(LocalDateTime.now());
+        commonPickupLuggageDTO.setStatus(LuggageStorageStatusEnum.PICKED_UP.getCode());
 
-        return pickupLuggageDTO;
+        commonPickupLuggageDTO.setGmtModified(LocalDateTime.now());
+
+        return commonPickupLuggageDTO;
     }
 
 
@@ -179,7 +189,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
     }
 
     /**
-     * todo:查询行李取件记录列表
+     * 查询行李取件记录列表
      *
      * @param queryDTO
      * @return
@@ -187,7 +197,37 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
     @Override
     public PageInfo<PickupLuggageRecordDTO> queryPickupLuggageRecordList(
             PickupLuggageRecordQueryDTO queryDTO) {
-        return null;
+        log.info("查询行李取件记录列表, queryDTO:{}", queryDTO);
+
+        // 参数校验
+        String pickupLuggageRecordCheck = ValidatorUtil.returnAnyMessageIfError(queryDTO);
+        if (StringUtils.isNotEmpty(pickupLuggageRecordCheck)) {
+            log.info("查询行李取件记录列表，参数错误，{}", pickupLuggageRecordCheck);
+            throw new ParamException(pickupLuggageRecordCheck);
+        }
+
+        // 构造查询参数
+        com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO recordQueryDTO =
+                new com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO();
+        // 通过行李寄存编号查询行李寄存信息
+        LuggageStorageRecord luggageStorageRecord = storageRecordManager
+                .selectByLuggageRecordNo(queryDTO.getLuggageRecordNo());
+
+        recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
+        recordQueryDTO.setLuggageId(luggageStorageRecord.getLuggageId());
+        recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
+        recordQueryDTO.setPickupTime(queryDTO.getPickupTime());
+
+        // 查询行李取件记录列表信息
+        Page<PickupLuggageRecordDTO> recordDTOPage =
+                pickupLuggageRecordManager.queryStorageRecordList(recordQueryDTO);
+        if (PageInfoUtil.isEmpty(recordDTOPage)) {
+            return PageInfoUtil.ofEmptyPage(queryDTO);
+        }
+
+        List<PickupLuggageRecordDTO> records = recordDTOPage.getRecords();
+
+        return PageInfoUtil.of(recordDTOPage, records);
     }
 
     /**
@@ -201,6 +241,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
             LuggageStorageRecord storageRecord, OperateUserDTO operateUserDTO) {
         MarkLuggageAsLostDTO markLuggageAsLostDTO = new MarkLuggageAsLostDTO();
 
+        markLuggageAsLostDTO.setRegisterRecordNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.REGISTER_RECORD_NO_PREFIX));
         markLuggageAsLostDTO.setLuggageId(storageRecord.getLuggageId());
         markLuggageAsLostDTO.setLuggageRecordNo(storageRecord.getLuggageRecordNo());
 

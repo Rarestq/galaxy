@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 public class LuggageStorageRecordVO implements Serializable {
 
     private static final long serialVersionUID = -2149920244516242581L;
+
     /**
      * 行李寄存主键id
      */

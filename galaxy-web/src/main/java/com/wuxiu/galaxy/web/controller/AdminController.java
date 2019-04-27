@@ -10,11 +10,13 @@ import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 管理员相关接口
@@ -33,7 +35,7 @@ public class AdminController {
 
     @ApiOperation(value = "新增/编辑管理员信息", notes = "新增/编辑管理员信息，根据是否有管理员id来判断")
     @PostMapping(value = "/save")
-    public APIResult<AdminInfoVO> saveTaskTemplate(@RequestBody @Valid AdminInfoForm form) {
+    public APIResult<AdminInfoVO> saveAdminInfo(@RequestBody @Valid AdminInfoForm form) {
         // 参数校验
         String adminInfoCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(adminInfoCheck)) {
@@ -44,13 +46,23 @@ public class AdminController {
 
     @ApiOperation(value = "查询管理员信息列表", notes = "查询管理员信息列表")
     @GetMapping("")
-    public APIResult<PageInfo<AdminInfoVO>> queryTaskTemplateList(@RequestBody @Valid AdminInfoQueryForm form) {
+    public APIResult<PageInfo<AdminInfoVO>> queryAdminInfoList(
+            @RequestBody @Valid AdminInfoQueryForm form) {
         // 参数校验
         String adminInfoQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(adminInfoQueryCheck)) {
             return APIResult.error(adminInfoQueryCheck);
         }
         return adminService.queryAdminInfoList(form);
+    }
+
+    @ApiOperation(value = "删除管理员信息", notes = "删除管理员信息")
+    @PostMapping("/delete")
+    public APIResult<Void> deleteAdmin(List<Long> adminIds) {
+        if (CollectionUtils.isEmpty(adminIds)) {
+            return APIResult.error("管理员id不能为空");
+        }
+        return adminService.deleteAdmin(adminIds);
     }
 
 }

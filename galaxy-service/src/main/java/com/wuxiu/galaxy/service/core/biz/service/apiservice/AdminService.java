@@ -5,6 +5,8 @@ import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
 
+import java.util.List;
+
 /**
  * 管理员服务接口
  *
@@ -28,4 +30,12 @@ public interface AdminService {
      * @return
      */
     PageInfo<AdminDTO> queryAdminInfoList(AdminInfoQueryDTO queryDTO);
+
+    /**
+     * 删除管理员信息
+     *
+     * @param adminIds
+     * @return
+     */
+    void deleteAdmin(List<Long> adminIds);
 }

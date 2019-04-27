@@ -12,9 +12,14 @@ import java.time.LocalDateTime;
  * @date: 2019/4/26 15:42
  */
 @Data
-public class PickupLuggageDTO implements Serializable {
+public class CommonPickupLuggageDTO implements Serializable {
 
     private static final long serialVersionUID = -7394359133274896660L;
+
+    /**
+     * 取件记录编号
+     */
+    private String pickupRecordNo;
 
     /**
      * 行李寄存主键id

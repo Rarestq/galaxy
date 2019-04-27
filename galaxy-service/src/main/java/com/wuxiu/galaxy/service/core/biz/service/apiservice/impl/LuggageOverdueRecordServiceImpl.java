@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.*;
@@ -8,6 +9,7 @@ import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageOverdueRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
+import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -127,6 +129,8 @@ public class LuggageOverdueRecordServiceImpl implements LuggageOverdueRecordServ
         com.wuxiu.galaxy.dal.common.dto.SaveLuggageOverdueRecordDTO recordDTO =
                 new com.wuxiu.galaxy.dal.common.dto.SaveLuggageOverdueRecordDTO();
 
+        recordDTO.setOverdueRecordNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.OVERDUE_RECORD_NO_PREFIX));
         recordDTO.setLuggageId(overdueRecordDTO.getLuggageId());
         recordDTO.setLuggageRecordNo(luggageStorageRecord.getLuggageRecordNo());
         recordDTO.setRemark(overdueRecordDTO.getRemark());

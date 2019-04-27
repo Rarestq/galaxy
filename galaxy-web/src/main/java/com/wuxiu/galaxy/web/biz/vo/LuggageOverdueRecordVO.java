@@ -24,6 +24,11 @@ public class LuggageOverdueRecordVO implements Serializable {
     @ApiModelProperty(value = "行李逾期未取记录主键id", required = true)
     private Long luggageOverdueRecordId;
     /**
+     * 逾期记录编号
+     */
+    @ApiModelProperty(value = "逾期记录编号", required = true)
+    private String overdueRecordNo;
+    /**
      * 管理员主键id
      */
     @ApiModelProperty(value = "管理员主键id", required = true)

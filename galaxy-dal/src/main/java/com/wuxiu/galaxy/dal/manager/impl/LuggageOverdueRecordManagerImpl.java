@@ -50,6 +50,8 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
             SaveLuggageOverdueRecordDTO saveLuggageOverdueRecordDTO) {
 
         LuggageOverdueRecord overdueRecord = new LuggageOverdueRecord();
+
+        overdueRecord.setOverdueRecordNo(saveLuggageOverdueRecordDTO.getOverdueRecordNo());
         overdueRecord.setAdminId(saveLuggageOverdueRecordDTO.getAdminId());
         overdueRecord.setAdminName(saveLuggageOverdueRecordDTO.getAdminName());
 

@@ -21,7 +21,7 @@ public class LuggageOverdueRecordQueryDTO implements Serializable {
     private static final long serialVersionUID = 1192913045896876865L;
 
     /**
-     * 分页餐宿
+     * 分页条件
      */
     Page<LuggageOverdueRecord> page;
 

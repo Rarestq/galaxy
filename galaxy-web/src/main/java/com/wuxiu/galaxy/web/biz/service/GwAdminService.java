@@ -6,6 +6,8 @@ import com.wuxiu.galaxy.web.biz.form.AdminInfoForm;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
 import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
 
+import java.util.List;
+
 /**
  * 管理员服务
  *
@@ -29,4 +31,12 @@ public interface GwAdminService {
      * @return
      */
     APIResult<PageInfo<AdminInfoVO>> queryAdminInfoList(AdminInfoQueryForm form);
+
+    /**
+     * 删除管理员信息
+     *
+     * @param adminIds
+     * @return
+     */
+    APIResult<Void> deleteAdmin(List<Long> adminIds);
 }

@@ -16,6 +16,10 @@ public class MarkLuggageAsLostDTO implements Serializable {
     private static final long serialVersionUID = 7413784809463824884L;
 
     /**
+     * 遗失登记记录编号
+     */
+    private String registerRecordNo;
+    /**
      * 行李寄存主键id
      */
     private Long luggageId;

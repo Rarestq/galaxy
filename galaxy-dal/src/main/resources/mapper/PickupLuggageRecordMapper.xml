@@ -5,6 +5,7 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.PickupLuggageRecord">
                     <id column="pickup_luggage_record_id" property="pickupLuggageRecordId"/>
+                    <result column="pickup_record_no" property="pickupRecordNo"/>
                     <result column="luggage_id" property="luggageId"/>
                     <result column="admin_id" property="adminId"/>
                     <result column="admin_name" property="adminName"/>
@@ -18,6 +19,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       pickup_luggage_record_id,luggage_id,admin_id,admin_name,picker_name,picker_phone,pickup_type,pick_up_time,deleted,gmt_create,gmt_modified
+       pickup_luggage_record_id,pickup_record_no,luggage_id,admin_id,admin_name,picker_name,picker_phone,pickup_type,pick_up_time,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

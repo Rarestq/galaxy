@@ -41,6 +41,11 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     @TableId(value = "lost_registration_record_id", type = IdType.AUTO)
     private Long lostRegistrationRecordId;
     /**
+     * 行李遗失登记记录编号
+     */
+    @TableField(value = "register_record_no")
+    private String registerRecordNo;
+    /**
      * 管理员id
      */
     @TableField("admin_id")

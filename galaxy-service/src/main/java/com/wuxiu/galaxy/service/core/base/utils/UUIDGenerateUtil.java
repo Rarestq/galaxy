@@ -22,7 +22,22 @@ public class UUIDGenerateUtil {
     /**
      * 行李寄存记录编号前缀
      */
-    private static final String LUGGAGE_STORAGE_RECORD_PREFIX = "XLJC";
+    private static final String LUGGAGE_STORAGE_RECORD_NO_PREFIX = "XLJC";
+
+    /**
+     * 行李逾期记录编号前缀
+     */
+    private static final String OVERDUE_RECORD_NO_PREFIX = "XLYQ";
+
+    /**
+     * 遗失登记记录编号
+     */
+    private static final String REGISTER_RECORD_NO_PREFIX = "YSDJ";
+
+    /**
+     * 取件记录编号
+     */
+    private static final String PICKUP_RECORD_NO_PREFIX = "XLQJ";
 
     /**
      * 普通管理员编号前缀
@@ -45,35 +60,17 @@ public class UUIDGenerateUtil {
     }
 
     /**
-     * 获取行李寄存记录编号
+     * 生成唯一编号
      *
+     * @param prefix
      * @return
      */
-    public static String genStorageRecordNo() {
-        //编号 = 前缀 + 当前时间(年月日时分秒)
-        StringBuilder builder = new StringBuilder();
+    public static String generateUniqueNo(final String prefix) {
+        StringBuilder stringBuilder = new StringBuilder();
         String dateStr = getNowDateStr();
-        builder.append(LUGGAGE_STORAGE_RECORD_PREFIX).append(dateStr);
+        stringBuilder.append(prefix).append(dateStr);
 
-        return builder.toString();
+        return stringBuilder.toString();
     }
 
-    /**
-     * 获取普通管理员编号
-     *
-     * @return
-     */
-    public static String genAdminNo() {
-        //编号 = 前缀 + 当前时间(年月日时分秒)
-        StringBuilder builder = new StringBuilder();
-        String dateStr = getNowDateStr();
-        builder.append(ADMIN_PREFIX).append(dateStr);
-
-        return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        String s = genStorageRecordNo();
-        System.out.println("编号为：" + s);
-    }
 }

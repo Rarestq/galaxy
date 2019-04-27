@@ -10,6 +10,8 @@ import com.wuxiu.galaxy.service.core.biz.service.apiservice.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 管理员服务
  *
@@ -42,5 +44,17 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public APIResult<PageInfo<AdminDTO>> queryAdminInfoList(AdminInfoQueryDTO queryDTO) {
         return APIResult.ok(adminService.queryAdminInfoList(queryDTO));
+    }
+
+    /**
+     * 删除管理员信息
+     *
+     * @param adminIds
+     * @return
+     */
+    @Override
+    public APIResult<Void> deleteAdmin(List<Long> adminIds) {
+        adminService.deleteAdmin(adminIds);
+        return APIResult.ok();
     }
 }

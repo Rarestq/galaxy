@@ -106,4 +106,15 @@ public class GwAdminServiceImpl implements GwAdminService {
 
         return APIResult.ok(pageInfo);
     }
+
+    /**
+     * 删除管理员信息
+     *
+     * @param adminIds
+     * @return
+     */
+    @Override
+    public APIResult<Void> deleteAdmin(List<Long> adminIds) {
+        return adminClient.deleteAdmin(adminIds);
+    }
 }

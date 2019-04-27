@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -79,8 +81,9 @@ public class AdminServiceImpl implements AdminService {
         // 新增管理员信息
         AdminInfoDTO newAdminInfoDTO = new AdminInfoDTO();
         newAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
-        // TODO：随机生成 adminNo
-        newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.genAdminNo());
+
+        newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.ADMIN_PREFIX));
         newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
         newAdminInfoDTO.setGmtCreate(LocalDateTime.now());
         newAdminInfoDTO.setGmtModified(LocalDateTime.now());
@@ -119,5 +122,20 @@ public class AdminServiceImpl implements AdminService {
         List<AdminDTO> adminDTOS = adminDTOPage.getRecords();
 
         return PageInfoUtil.of(adminDTOPage, adminDTOS);
+    }
+
+    /**
+     * 删除管理员信息
+     *
+     * @param adminIds
+     * @return
+     */
+    @Override
+    public void deleteAdmin(List<Long> adminIds) {
+        if (CollectionUtils.isEmpty(adminIds)) {
+            log.info("删除管理员信息失败，adminId 不能为空");
+            return;
+        }
+        adminManager.deleteBatchIds(adminIds);
     }
 }

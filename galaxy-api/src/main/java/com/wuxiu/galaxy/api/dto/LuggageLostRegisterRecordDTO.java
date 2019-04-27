@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.vo;
+package com.wuxiu.galaxy.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,14 +7,14 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 行李遗失登记记录展示对象
+ * 行李遗失登记记录对象
  *
  * @author: wuxiu
  * @date: 2019/4/26 20:33
  */
-@ApiModel("行李遗失登记记录展示对象")
+@ApiModel("行李遗失登记记录对象")
 @Data
-public class LuggageLostRegisterRecordVO implements Serializable {
+public class LuggageLostRegisterRecordDTO implements Serializable {
 
     private static final long serialVersionUID = 9002047504708575458L;
 
@@ -49,10 +49,10 @@ public class LuggageLostRegisterRecordVO implements Serializable {
     @ApiModelProperty(value = "行李寄存记录编号", required = true)
     private String luggageRecordNo;
     /**
-     * 行李类型
+     * 行李类型主键id
      */
-    @ApiModelProperty(value = "行李类型", required = true)
-    private String luggageTypeDesc;
+    @ApiModelProperty(value = "行李类型主键id", required = true)
+    private Long luggageTypeId;
     /**
      * 行李遗失登记者姓名
      */
