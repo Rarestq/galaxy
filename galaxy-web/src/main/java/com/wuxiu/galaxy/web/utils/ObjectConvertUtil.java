@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.utils;
+package com.wuxiu.galaxy.web.utils;
 
 import com.google.common.collect.Lists;
 import com.wuxiu.galaxy.api.dto.PairDTO;

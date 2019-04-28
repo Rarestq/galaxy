@@ -4,7 +4,7 @@ import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.integration.LuggageTypeClient;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
-import com.wuxiu.galaxy.utils.ObjectConvertUtil;
+import com.wuxiu.galaxy.web.utils.ObjectConvertUtil;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageTypeService;
 import com.wuxiu.galaxy.web.biz.vo.Pair;
 import lombok.extern.slf4j.Slf4j;

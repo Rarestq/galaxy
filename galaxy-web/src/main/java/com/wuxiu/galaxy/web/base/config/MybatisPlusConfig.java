@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.base.config;
+package com.wuxiu.galaxy.web.base.config;
 
 import com.baomidou.mybatisplus.mapper.ISqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;

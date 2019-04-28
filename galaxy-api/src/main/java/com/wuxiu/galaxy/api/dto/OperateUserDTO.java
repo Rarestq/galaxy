@@ -23,6 +23,12 @@ public class OperateUserDTO implements Serializable {
     private Long operateUserId;
 
     /**
+     * 操作人编号
+     */
+    @NotNull(message = "操作人编号参数不能为空")
+    private String operateUserNo;
+
+    /**
      * 操作人名称
      */
     @NotNull(message = "操作人名称参数不能为空")

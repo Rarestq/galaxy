@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.base.config;
+package com.wuxiu.galaxy.web.base.config;
 
 import lombok.NoArgsConstructor;
 

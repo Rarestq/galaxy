@@ -1,11 +1,10 @@
-package com.wuxiu.galaxy.utils;
+package com.wuxiu.galaxy.web.utils;
 
 import com.google.gson.Gson;
-import com.wuxiu.galaxy.base.config.RedisExpire;
-import com.wuxiu.galaxy.base.config.SessionConstants;
+import com.wuxiu.galaxy.web.base.config.RedisExpire;
+import com.wuxiu.galaxy.web.base.config.SessionConstants;
 import com.wuxiu.galaxy.dal.domain.Admin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,9 @@ import org.springframework.stereotype.Component;
  *
  * @author wuxiu
  */
+@Slf4j
 @Component
 public class SessionHelper {
-    private static final Logger log = LoggerFactory.getLogger(SessionHelper.class);
 
     @Autowired
     private RedisCacheTemplate redisManager;
@@ -30,7 +29,7 @@ public class SessionHelper {
 
     public Admin getUserBySessionId(String key) {
         // 先从本地session获取
-        Admin user = (Admin) WebSessionUtil.getSeesion()
+        Admin user = (Admin) WebSessionUtil.getSession()
                 .getAttribute(SessionConstants.OAUTH_SESSION_KEY + key);
         if (null != user && null != user.getAdminId()) {
             return user;
@@ -44,7 +43,7 @@ public class SessionHelper {
         }
         if (null != jsonUser) {
             user = gson.fromJson(jsonUser, Admin.class);
-            WebSessionUtil.getSeesion()
+            WebSessionUtil.getSession()
                     .setAttribute(SessionConstants.OAUTH_SESSION_KEY + key, user);
             return user;
         }
@@ -63,7 +62,7 @@ public class SessionHelper {
     public void setUser(Admin user, Long timeMillis, String sessionId) {
         // 缓存到本地session
         log.info("util user to local session ...");
-        WebSessionUtil.getSeesion().setAttribute(SessionConstants.OAUTH_SESSION_KEY + sessionId, user);
+        WebSessionUtil.getSession().setAttribute(SessionConstants.OAUTH_SESSION_KEY + sessionId, user);
         String jsonUser = gson.toJson(user);
         try {
             redisManager.setString(SessionConstants.OAUTH_SESSION_KEY + sessionId, jsonUser, (int) (timeMillis / 1000));

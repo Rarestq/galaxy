@@ -11,7 +11,7 @@ import com.wuxiu.galaxy.service.core.base.utils.BeanCopierUtil;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
-import com.wuxiu.galaxy.utils.ObjectConvertUtil;
+import com.wuxiu.galaxy.web.utils.ObjectConvertUtil;
 import com.wuxiu.galaxy.web.biz.form.TurnoverRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwTurnoverService;
 import com.wuxiu.galaxy.web.biz.vo.Pair;

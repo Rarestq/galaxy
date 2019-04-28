@@ -164,6 +164,17 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     }
 
     /**
+     * 查询所有的行李寄存记录
+     * @return
+     */
+    @Override
+    public List<LuggageStorageRecord> selectAllStorageRecords() {
+        Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
+
+        return selectList(wrapper);
+    }
+
+    /**
      * 构建 LuggageStorageInfoDTO 对象
      *
      * @param storageRecordPage

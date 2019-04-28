@@ -27,6 +27,7 @@ public class ExecutorConstant {
             10,
             new BasicThreadFactory.Builder()
                     .namingPattern("spring-schedule-pool-%d")
+                    //.daemon(true)
                     .build()
     );
 

@@ -63,4 +63,10 @@ public interface LuggageStorageRecordManager extends BaseManager<LuggageStorageR
      * @return
      */
     LuggageStorageRecord selectByLuggageRecordNo(String luggageRecordNo);
+
+    /**
+     * 查询所有的行李寄存记录
+     * @return
+     */
+    List<LuggageStorageRecord> selectAllStorageRecords();
 }

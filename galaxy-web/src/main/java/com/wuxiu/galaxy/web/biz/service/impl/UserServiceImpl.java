@@ -3,11 +3,11 @@ package com.wuxiu.galaxy.web.biz.service.impl;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.domain.Admin;
-import com.wuxiu.galaxy.utils.SessionHelper;
+import com.wuxiu.galaxy.web.utils.SessionHelper;
 import com.wuxiu.galaxy.web.biz.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @date: 2019/4/15 16:00
  */
 @Slf4j
-@Service
+@Component
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -37,7 +37,9 @@ public class UserServiceImpl implements UserService {
         if (Objects.isNull(currentUser)) {
             OperateUserDTO operateUserDTO = new OperateUserDTO();
             operateUserDTO.setOperateUserId(0L);
+            operateUserDTO.setOperateUserNo("0");
             operateUserDTO.setName("");
+            operateUserDTO.setOperateUserPhone("");
             operateUserDTO.setUserTypeEnum(UserTypeEnum.SYSTEM);
 
             return operateUserDTO;
@@ -47,7 +49,11 @@ public class UserServiceImpl implements UserService {
                 //.map(Long::valueOf)
                 .orElse(0L);
         operateUserDTO.setOperateUserId(userId);
+        operateUserDTO.setOperateUserNo(Optional.ofNullable(currentUser.getAdminNo())
+                .orElse("0"));
         operateUserDTO.setName(Optional.ofNullable(currentUser.getAdminName())
+                .orElse(""));
+        operateUserDTO.setOperateUserPhone(Optional.ofNullable(currentUser.getAdminPhone())
                 .orElse(""));
         operateUserDTO.setUserTypeEnum(UserTypeEnum.ADMIN);
 

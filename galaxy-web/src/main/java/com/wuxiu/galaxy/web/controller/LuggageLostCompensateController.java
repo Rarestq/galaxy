@@ -47,7 +47,8 @@ public class LuggageLostCompensateController {
 
     @ApiOperation(value = "对遗失的行李进行赔偿", notes = "对遗失的行李进行赔偿")
     @PostMapping("/compensate_luggage")
-    public APIResult<Void> compensateByLuggageType(Long lostRegistrationRecordId) {
+    public APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
+            Long lostRegistrationRecordId) {
         return compensateService.compensateByLuggageType(lostRegistrationRecordId);
     }
 }

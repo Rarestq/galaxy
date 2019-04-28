@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.utils;
+package com.wuxiu.galaxy.web.utils;
 
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class WebSessionUtil {
     private static final String URL_SESSION_PARAM = "JSESSIONID";
     private static final String REQUEST_ATTR_SESSION = "JSESSIONID";
 
-    public static HttpSession getSeesion() {
+    public static HttpSession getSession() {
         return Objects.requireNonNull(NetWorkUtil.getRequest()).getSession();
     }
 
@@ -52,7 +52,7 @@ public class WebSessionUtil {
         cookie.setPath("/");
         Objects.requireNonNull(NetWorkUtil.getRequest())
                 .setAttribute(REQUEST_ATTR_SESSION, sessionId);
-        Objects.requireNonNull(NetWorkUtil.getResonse()).addCookie(cookie);
+        Objects.requireNonNull(NetWorkUtil.getResponse()).addCookie(cookie);
 
         return sessionId;
     }
@@ -61,6 +61,6 @@ public class WebSessionUtil {
         Cookie cookie = new Cookie(GALAXY_SESSION_ID, null);
         cookie.setPath("/");
         cookie.setMaxAge(0);
-        Objects.requireNonNull(NetWorkUtil.getResonse()).addCookie(cookie);
+        Objects.requireNonNull(NetWorkUtil.getResponse()).addCookie(cookie);
     }
 }

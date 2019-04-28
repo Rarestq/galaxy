@@ -24,9 +24,4 @@ public class UUIDGenerator {
 
         return str;
     }
-
-    public static void main(String[] args) {
-        String uuid = getUUID();
-        System.out.printf("随机产生的 id 为：" + uuid);
-    }
 }

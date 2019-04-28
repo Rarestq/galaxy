@@ -1,8 +1,7 @@
-package com.wuxiu.galaxy.utils;
+package com.wuxiu.galaxy.web.utils;
 
 import com.alibaba.fastjson.JSON;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -16,10 +15,9 @@ import java.util.Objects;
 /**
  * @author wuxiu
  */
+@Slf4j
 @Component
 public class RedisCacheTemplate {
-
-    private static Logger logger = LoggerFactory.getLogger(RedisCacheTemplate.class);
 
     @Autowired
     private JedisPool jedisPool;
@@ -27,7 +25,7 @@ public class RedisCacheTemplate {
     private Jedis getJedis() {
         Jedis jedis = jedisPool.getResource();
         if (jedis == null) {
-            logger.error("Redis Connect Error");
+            log.error("Redis Connect Error");
             throw new RuntimeException("Redis 连接有问题啦！");
         }
         return jedis;
