@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.form;
+package com.wuxiu.galaxy.api.dto;
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
@@ -7,16 +7,16 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 行李遗失赔偿记录参数查询表单
+ * 行李遗失赔偿记录查询参数
  *
  * @author: wuxiu
- * @date: 2019/4/26 20:30
+ * @date: 2019/4/28 09:37
  */
-@ApiModel("行李遗失赔偿记录参数查询表单")
+@ApiModel("行李遗失赔偿记录查询参数")
 @Data
-public class LuggageLostCompensateRecordQueryForm extends PageInfo {
+public class LostCompensateRecordQueryDTO extends PageInfo {
 
-    private static final long serialVersionUID = -7194370096686614596L;
+    private static final long serialVersionUID = -4338941191519603214L;
 
     /**
      * 赔偿记录主键id

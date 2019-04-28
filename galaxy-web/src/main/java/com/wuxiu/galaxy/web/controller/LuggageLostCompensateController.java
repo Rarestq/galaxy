@@ -3,7 +3,6 @@ package com.wuxiu.galaxy.web.controller;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
-import com.wuxiu.galaxy.web.biz.form.LuggageCompensateForm;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostCompensateRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageLostCompensateService;
 import com.wuxiu.galaxy.web.biz.vo.LuggageLostCompensateRecordVO;
@@ -12,7 +11,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -45,13 +47,7 @@ public class LuggageLostCompensateController {
 
     @ApiOperation(value = "对遗失的行李进行赔偿", notes = "对遗失的行李进行赔偿")
     @PostMapping("/compensate_luggage")
-    public APIResult<Void> compensateByLuggageType(
-            @Valid @RequestBody LuggageCompensateForm form) {
-        // 参数校验
-        String recordQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
-        if (StringUtils.isNotEmpty(recordQueryCheck)) {
-            return APIResult.error(recordQueryCheck);
-        }
-        return compensateService.compensateByLuggageType(form);
+    public APIResult<Void> compensateByLuggageType(Long lostRegistrationRecordId) {
+        return compensateService.compensateByLuggageType(lostRegistrationRecordId);
     }
 }

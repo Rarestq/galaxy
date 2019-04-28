@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
+ * session 工具类
+ *
  * @author wuxiu
  */
 @Slf4j

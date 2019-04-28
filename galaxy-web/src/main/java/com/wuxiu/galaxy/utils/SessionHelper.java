@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
+ * session 助手
+ *
  * @author wuxiu
  */
 @Component
@@ -27,7 +29,7 @@ public class SessionHelper {
     }
 
     public Admin getUserBySessionId(String key) {
-        // 先本地session获取
+        // 先从本地session获取
         Admin user = (Admin) WebSessionUtil.getSeesion()
                 .getAttribute(SessionConstants.OAUTH_SESSION_KEY + key);
         if (null != user && null != user.getAdminId()) {
@@ -66,7 +68,7 @@ public class SessionHelper {
         try {
             redisManager.setString(SessionConstants.OAUTH_SESSION_KEY + sessionId, jsonUser, (int) (timeMillis / 1000));
         } catch (Exception e) {
-            log.error("Redis is unabled, Please check: Store user operationrecord", e);
+            log.error("Redis is unable, Please check: Store user operationRecord", e);
         }
     }
 

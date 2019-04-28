@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.web.biz.vo;
+package com.wuxiu.galaxy.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -7,16 +7,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 遗失赔偿记录页面展示对象
+ * 行李遗失赔偿记录对象
  *
  * @author: wuxiu
- * @date: 2019/4/26 20:12
+ * @date: 2019/4/28 09:31
  */
-@ApiModel("遗失赔偿记录页面展示对象")
+@ApiModel("行李遗失赔偿记录对象")
 @Data
-public class LuggageLostCompensateRecordVO implements Serializable {
+public class LostCompensateRecordInfoDTO implements Serializable {
 
-    private static final long serialVersionUID = 3290646436654854972L;
+    private static final long serialVersionUID = 5714864466721710026L;
 
     /**
      * 赔偿记录主键id

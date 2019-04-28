@@ -54,6 +54,24 @@ public class GwLuggageLostRegisterServiceImpl implements GwLuggageLostRegisterSe
             return CommonUtil.errorAPIResult(registerRecordsAPIResult);
         }
 
+        // 构造 LuggageLostRegisterRecordVO 分页对象
+        PageInfo<LuggageLostRegisterRecordVO> pageInfo = buildLostRegisterRecordVOPageInfo(
+                form, registerRecordsAPIResult);
+
+        return APIResult.ok(pageInfo);
+    }
+
+    /**
+     * 构造 LuggageLostRegisterRecordVO 分页对象
+     *
+     * @param form
+     * @param registerRecordsAPIResult
+     * @return
+     */
+    private PageInfo<LuggageLostRegisterRecordVO> buildLostRegisterRecordVOPageInfo(
+            LuggageLostRegisterRecordQueryForm form,
+            APIResult<PageInfo<LuggageLostRegisterRecordDTO>> registerRecordsAPIResult) {
+
         PageInfo<LuggageLostRegisterRecordDTO> registerRecordDTOPageInfo =
                 registerRecordsAPIResult.getData();
         List<LuggageLostRegisterRecordDTO> registerRecordDTOS =
@@ -68,7 +86,6 @@ public class GwLuggageLostRegisterServiceImpl implements GwLuggageLostRegisterSe
         pageInfo.setRecords(recordVOS);
         pageInfo.setTotal(registerRecordDTOPageInfo.getTotal());
         pageInfo.setPages(registerRecordDTOPageInfo.getPages());
-
-        return APIResult.ok(pageInfo);
+        return pageInfo;
     }
 }

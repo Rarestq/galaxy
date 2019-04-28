@@ -80,8 +80,6 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         //todo:计算寄存所需费用
 
-        //todo:新增行李寄存记录
-
         //todo:发送行李寄存完成事件
 
         return storageRecordManager.insertLuggageStorageRecord(newLuggageStorageRecordDTO);
