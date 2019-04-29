@@ -32,15 +32,15 @@ public class SaveLuggageOverdueRecordDTO implements Serializable {
      */
     private Long luggageId;
     /**
-     * 行李寄存记录编号(冗余)
+     * 行李寄存记录编号
      */
     private String luggageRecordNo;
     /**
-     * 行李寄存者姓名(冗余)
+     * 行李寄存者姓名
      */
     private String depositorName;
     /**
-     * 行李寄存者联系方式(冗余)
+     * 行李寄存者联系方式
      */
     private String depositorPhone;
 

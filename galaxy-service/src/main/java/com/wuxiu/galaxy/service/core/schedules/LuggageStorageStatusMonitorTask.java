@@ -37,13 +37,14 @@ public class LuggageStorageStatusMonitorTask {
      */
     @Scheduled(cron = "0/5 * * * * ?")
     public void refreshLuggageStorageStatus() {
-        //todo:定时检查行李寄存记录的寄存结束时间
+        // 定时检查行李寄存记录的寄存结束时间
 
         // 查询所有有效的行李寄存记录信息
         List<LuggageStorageRecord> storageRecords =
                 storageRecordManager.selectAllStorageRecords();
         for (LuggageStorageRecord storageRecord : storageRecords) {
             LocalDateTime storageEndTime = storageRecord.getStorageEndTime();
+            // 将行李寄存结束时间转化为当前时区下的毫秒
             long storageEndTimeMilli =
                     storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
 
@@ -55,7 +56,7 @@ public class LuggageStorageStatusMonitorTask {
                                 storageRecord.getStatus()))
                         .remark(storageRecord.getRemark())
                         .build());
-                log.info("逾期的行李寄存记录：storageRecord:{}" + storageRecord);
+                log.info("已发送自动创建逾期行李寄存记录：storageRecord:{}" + storageRecord);
             }
         }
 

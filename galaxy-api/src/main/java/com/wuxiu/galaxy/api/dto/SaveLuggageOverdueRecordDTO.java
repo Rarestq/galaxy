@@ -29,6 +29,4 @@ public class SaveLuggageOverdueRecordDTO implements Serializable {
      * 创建行李逾期未取清理记录的备注
      */
     private String remark;
-
-    //todo: other properties
 }
