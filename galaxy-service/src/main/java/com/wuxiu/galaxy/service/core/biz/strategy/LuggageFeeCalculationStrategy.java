@@ -17,8 +17,8 @@ public interface LuggageFeeCalculationStrategy {
     /**
      * 按照寄存天数
      *
-     * @param calculateDays          计算天数
-     * @param calculationParamDTOS   计算参数
+     * @param calculateDays        计算天数
+     * @param calculationParamDTOS 计算参数
      * @return
      */
     LuggageChargeCalculationResultDTO calculate(
@@ -28,9 +28,9 @@ public interface LuggageFeeCalculationStrategy {
     /**
      * 按照寄存日期进行计费
      *
-     * @param startDate                寄存开始日期
-     * @param endDate                  寄存结束日期
-     * @param calculationParamDTOS     计算参数
+     * @param startDate            寄存开始日期
+     * @param endDate              寄存结束日期
+     * @param calculationParamDTOS 计算参数
      * @return
      */
     LuggageChargeCalculationResultDTO dailyCalculate(

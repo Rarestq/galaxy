@@ -46,7 +46,8 @@ public class TurnoverRecordController {
         return turnoverService.queryTurnoverRecordList(form);
     }
 
-    @ApiOperation(value = "查询营业额记录列表", notes = "查询营业额记录列表")
+    @ApiOperation(value = "按照管理员id对查询到的营业额进行分组",
+            notes = "按照管理员id对查询到的营业额进行分组")
     @GetMapping("/query")
     public APIResult<List<Pair<Long, String>>> getTurnoverRecordPair() {
         return turnoverService.getTurnoverRecordPair();

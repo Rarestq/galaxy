@@ -14,7 +14,7 @@ import java.util.List;
  * @date: 2019/4/22 10:57
  */
 @AllArgsConstructor
-public class LuggageFeeTaximeter {
+public class LuggageFeeMeter {
 
     private LuggageFeeCalculationStrategy strategy;
     private List<LuggageFeeBaseCalculationParamDTO> baseCalculationParamDTOS;

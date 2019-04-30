@@ -51,6 +51,10 @@ public class NewLuggageStorageRecordDTO implements Serializable {
      */
     private BigDecimal feeValue;
     /**
+     * 费用计算过程描述
+     */
+    private String feeCalculationProcessDesc;
+    /**
      * 备注
      */
     private String remark;

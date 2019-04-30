@@ -80,11 +80,12 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         // 新增行寄存记录
         insert(storageRecord);
 
-        //todo:将寄存的费用及管理员相关信息添加到「营业额记录表中」
+        // 将寄存的费用及管理员相关信息添加到「营业额记录表中」
         TurnoverRecord turnoverRecord = new TurnoverRecord();
         turnoverRecord.setAdminId(storageRecord.getAdminId());
         turnoverRecord.setLuggageId(storageRecord.getLuggageId());
-        //todo: turnoverRecord.setFee();
+        turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
+        turnoverRecord.setRemark(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
 
         turnoverRecordManager.insert(turnoverRecord);
 

@@ -20,7 +20,7 @@ public class LuggageFeeBaseCalculationParamDTO {
     /**
      * 计费单位ID
      */
-    private Long calculationUnitsId;
+    private Integer calculationUnitsId;
 
     /**
      * 每个计费单位的金额

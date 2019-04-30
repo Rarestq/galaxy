@@ -41,6 +41,11 @@ public class FixedChargeCalculationDetail extends BaseModel {
     @TableId(value = "fixed_rule_id", type = IdType.AUTO)
     private Long fixedRuleId;
     /**
+     * 行李类型主键id
+     */
+    @TableField(value = "luggage_type_id")
+    private Long luggageTypeId;
+    /**
      * 计费单位(1-元/件/天，2-元/件/次，3-元/件)
      */
     @TableField("calculation_units_id")

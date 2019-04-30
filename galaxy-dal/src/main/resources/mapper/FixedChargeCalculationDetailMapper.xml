@@ -5,6 +5,7 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.FixedChargeCalculationDetail">
                     <id column="fixed_rule_id" property="fixedRuleId"/>
+                    <result column="luggage_type_id" property="luggageTypeId"/>
                     <result column="calculation_units_id" property="calculationUnitsId"/>
                     <result column="fee_per_unit" property="feePerUnit"/>
                     <result column="deleted" property="deleted"/>
@@ -13,6 +14,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       fixed_rule_id,calculation_units_id,fee_per_unit,deleted,gmt_create,gmt_modified
+       fixed_rule_id,luggage_type_id,calculation_units_id,fee_per_unit,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

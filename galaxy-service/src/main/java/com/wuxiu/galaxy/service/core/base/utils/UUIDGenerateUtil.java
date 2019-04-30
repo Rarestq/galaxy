@@ -20,31 +20,6 @@ public class UUIDGenerateUtil {
     private static final UUIDGenerateUtil generateUtil = new UUIDGenerateUtil();
 
     /**
-     * 行李寄存记录编号前缀
-     */
-    private static final String LUGGAGE_STORAGE_RECORD_NO_PREFIX = "XLJC";
-
-    /**
-     * 行李逾期记录编号前缀
-     */
-    private static final String OVERDUE_RECORD_NO_PREFIX = "XLYQ";
-
-    /**
-     * 遗失登记记录编号
-     */
-    private static final String REGISTER_RECORD_NO_PREFIX = "YSDJ";
-
-    /**
-     * 取件记录编号
-     */
-    private static final String PICKUP_RECORD_NO_PREFIX = "XLQJ";
-
-    /**
-     * 普通管理员编号前缀
-     */
-    private static final String ADMIN_PREFIX = "ADMIN";
-
-    /**
      * 格式化的时间字符串
      */
     private static final SimpleDateFormat sdf = new SimpleDateFormat(

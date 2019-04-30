@@ -32,7 +32,7 @@ public class LuggageStorageRecordController {
     private GwLuggageStorageRecordService storageRecordService;
 
     @ApiOperation(value = "新增行李寄存记录", notes = "新增行李寄存记录")
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/create")
     public APIResult<LuggageStorageRecordVO> insertLuggageStorageRecord(
             @RequestBody @Valid NewLuggageStorageRecordForm form) {
         // 参数校验

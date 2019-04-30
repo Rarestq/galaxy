@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "行李类型相关接口")
-@RequestMapping("/station_luggage_storage/luggage_type")
+@RequestMapping("/luggage_storage/luggage_type")
 @RestController
 public class LuggageTypeController {
 

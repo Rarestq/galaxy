@@ -17,10 +17,7 @@ public enum BizTypeEnum {
 
     // todo:业务类型枚举值
     DEFAULT(1, "默认"),
-    FINANCE(1, "金融"),
-    LOGISTICS(2, "物流"),
-    WMS_VIDEO(3, "仓储监控"),
-    WMS(4, "仓储");
+    ;
 
     private Integer code;
     private String desc;

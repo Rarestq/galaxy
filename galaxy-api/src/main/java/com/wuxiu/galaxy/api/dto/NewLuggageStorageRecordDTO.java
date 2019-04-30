@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -36,11 +35,6 @@ public class NewLuggageStorageRecordDTO implements Serializable {
      */
     @ApiModelProperty(value = "寄存人电话", required = true)
     private String depositorPhone;
-    /**
-     * 寄存费用
-     */
-    @ApiModelProperty(value = "寄存费用", required = true)
-    private BigDecimal feeValue;
     /**
      * 备注
      */

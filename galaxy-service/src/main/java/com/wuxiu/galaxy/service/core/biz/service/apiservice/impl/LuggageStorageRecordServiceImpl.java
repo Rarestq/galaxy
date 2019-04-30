@@ -6,10 +6,9 @@ import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
-import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
-import com.wuxiu.galaxy.api.dto.NewLuggageStorageRecordDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
+import com.wuxiu.galaxy.api.common.util.DateUtil;
+import com.wuxiu.galaxy.api.dto.*;
+import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
@@ -18,6 +17,8 @@ import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeter;
+import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeterFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
     @Autowired
     private AsyncEventBus asyncEventBus;
 
+    @Autowired
+    private LuggageFeeMeterFactory feeMeterFactory;
+
     /**
      * 新增行李寄存记录
      *
@@ -78,7 +82,22 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         }
 
-        //todo:计算寄存所需费用
+        // 构造计费规则参数
+        LuggageFeeCalculationRuleDTO calculationRuleDTO = new LuggageFeeCalculationRuleDTO();
+        calculationRuleDTO.setLuggageTypeId(luggageTypeId);
+        int calculateDays = (int) DateUtil.calculateDate2Days(
+                storageRecordDTO.getStorageEndTime(), LocalDateTime.now());
+        calculationRuleDTO.setLuggageStorageDays(calculateDays);
+        calculationRuleDTO.setGmtModified(LocalDateTime.now());
+        // 获取计价器
+        LuggageFeeMeter luggageFeeMeter =
+                feeMeterFactory.getLuggageFeeMeter(calculationRuleDTO);
+        // 计算寄存所需费用
+        LuggageChargeCalculationResultDTO resultDTO =
+                luggageFeeMeter.calculate(calculateDays);
+        newLuggageStorageRecordDTO.setFeeValue(resultDTO.getFeeValue());
+        newLuggageStorageRecordDTO.setFeeCalculationProcessDesc(
+                resultDTO.getFeeCalculationProcessDesc());
 
         return storageRecordManager.insertLuggageStorageRecord(newLuggageStorageRecordDTO);
     }

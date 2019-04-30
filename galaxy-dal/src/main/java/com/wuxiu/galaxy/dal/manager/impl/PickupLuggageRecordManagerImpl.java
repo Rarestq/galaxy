@@ -17,6 +17,7 @@ import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
+import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
@@ -36,7 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -189,9 +189,9 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         overdueRecord.setStatus(LuggageOverdueStatusEnum.CLEARED_UP.getCode());
         overdueRecord.setGmtModified(LocalDateTime.now());
 
-        long overdueHours = calculateOverdueHours(
+        long overdueHours = DateUtil.calculateDate2Hours(
                 luggageStorageRecord.getStorageEndTime(), LocalDateTime.now());
-        //todo:设置逾期补收的费用
+        //todo:设置逾期补收的费用（不满一小时按一小时算）
         overdueRecord.setRemark("此次寄存共逾期【" + overdueHours + "】小时" +
                 "，额外收取超时费用为【" + "】元");
 
@@ -359,15 +359,4 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         return registrationRecord;
     }
 
-    /**
-     * 计算逾期时长
-     *
-     * @param storageEndTime
-     * @param now
-     * @return
-     */
-    private long calculateOverdueHours(LocalDateTime storageEndTime, LocalDateTime now) {
-        Duration between = Duration.between(storageEndTime, now);
-        return between.toHours();
-    }
 }

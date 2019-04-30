@@ -21,7 +21,7 @@ public class LuggageChargeCalculationResultDTO implements Serializable {
     /**
      * 计费单位Id
      */
-    private Long calculationUnitsId;
+    private Integer calculationUnitsId;
 
     /**
      * 费用值

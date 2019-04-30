@@ -18,12 +18,13 @@ import java.util.Objects;
 public enum CalculationUnitsEnum {
 
     // 计算单位类型
-    YUAN_EACH_DAY(1L, "元/件/天"),
-    YUAN_PER_ITEM(2L, "元/件/次"),
-    YUAN_EACH(3L, "元/件"),
+    YUAN_EACH_DAY(1, "元/件/天"),
+    YUAN_PER_ITEM(2, "元/件/次"),
+//    YUAN_EACH_HOUR(3, "元/件/小时"),
+    YUAN_EACH(4, "元/件"),
     ;
 
-    private Long code;
+    private Integer code;
     private String desc;
 
     /**
@@ -32,7 +33,7 @@ public enum CalculationUnitsEnum {
      * @param code
      * @return
      */
-    public static CalculationUnitsEnum valueOf(Long code) {
+    public static CalculationUnitsEnum valueOf(Integer code) {
         if (Objects.isNull(code)) {
             return null;
         }
@@ -51,7 +52,7 @@ public enum CalculationUnitsEnum {
      * @param code 枚举的 code
      * @return
      */
-    public static String getDescByCode(Long code) {
+    public static String getDescByCode(Integer code) {
         if (Objects.isNull(code)) {
             return null;
         }
