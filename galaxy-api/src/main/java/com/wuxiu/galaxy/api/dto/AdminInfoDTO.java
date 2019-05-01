@@ -41,6 +41,21 @@ public class AdminInfoDTO implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     private String adminPhone;
     /**
+     * 管理员类型（默认：admin）
+     */
+    @ApiModelProperty(value = "管理员类型（默认：admin）", required = true)
+    private Integer adminType;
+    /**
+     * 登录密码
+     */
+    @ApiModelProperty(value = "登录密码", required = true)
+    private String password;
+    /**
+     * 管理员状态
+     */
+    @ApiModelProperty(value = "管理员状态", required = true)
+    private Integer deleted;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

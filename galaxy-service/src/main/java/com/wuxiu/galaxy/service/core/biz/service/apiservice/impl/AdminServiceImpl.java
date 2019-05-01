@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
@@ -21,10 +22,9 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
- *
- *
  * @author: wuxiu
  * @date: 2019/4/15 19:39
  */
@@ -66,6 +66,8 @@ public class AdminServiceImpl implements AdminService {
      */
     private AdminInfoDTO buildAdminDTO(AdminInfoDTO adminInfoDTO) {
 
+        Integer adminType = adminInfoDTO.getAdminType();
+
         if (Objects.nonNull(adminInfoDTO.getAdminId())) {
             // 编辑管理员信息
             AdminInfoDTO editAdminInfoDTO = new AdminInfoDTO();
@@ -73,6 +75,8 @@ public class AdminServiceImpl implements AdminService {
             editAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
             editAdminInfoDTO.setAdminNo(adminInfoDTO.getAdminNo());
             editAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
+            editAdminInfoDTO.setAdminType(adminType);
+            editAdminInfoDTO.setPassword(adminInfoDTO.getPassword());
             editAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
             return editAdminInfoDTO;
@@ -82,9 +86,18 @@ public class AdminServiceImpl implements AdminService {
         AdminInfoDTO newAdminInfoDTO = new AdminInfoDTO();
         newAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
 
-        newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-                CommonConstant.ADMIN_PREFIX));
+        if (Objects.equals(UserTypeEnum.valueOf(adminType), UserTypeEnum.ADMIN)) {
+            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.ADMIN_NO_PREFIX));
+        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
+                UserTypeEnum.SUPER_ADMIN)) {
+            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.SUPER_ADMIN_NO_PREFIX));
+        }
         newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
+        newAdminInfoDTO.setAdminType(adminType);
+        newAdminInfoDTO.setPassword(Optional.ofNullable(adminInfoDTO.getPassword())
+                .orElse("admin"));
         newAdminInfoDTO.setGmtCreate(LocalDateTime.now());
         newAdminInfoDTO.setGmtModified(LocalDateTime.now());
 

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: galaxy
+  profiles:
+    active: local     # 本地开发环境

@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 唯一 No 生成器（单例模式）
@@ -23,7 +24,7 @@ public class UUIDGenerateUtil {
      * 格式化的时间字符串
      */
     private static final SimpleDateFormat sdf = new SimpleDateFormat(
-            "yyyyMMddHHmmss");
+            "yyyyMMddHHmmssS");
 
     /**
      * 获取当前时间年月日时分秒毫秒字符串
@@ -40,10 +41,11 @@ public class UUIDGenerateUtil {
      * @param prefix
      * @return
      */
-    public static String generateUniqueNo(final String prefix) {
+    public static String generateUniqueNo(String prefix) {
         StringBuilder stringBuilder = new StringBuilder();
         String dateStr = getNowDateStr();
-        stringBuilder.append(prefix).append(dateStr);
+        stringBuilder.append(prefix).append(dateStr).append(
+                new Random().nextInt(10000));
 
         return stringBuilder.toString();
     }

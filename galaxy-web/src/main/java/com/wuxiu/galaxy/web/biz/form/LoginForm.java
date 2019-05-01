@@ -1,6 +1,5 @@
 package com.wuxiu.galaxy.web.biz.form;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,16 +7,15 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 管理员信息表单
+ * 登录表单
  *
  * @author: wuxiu
- * @date: 2019/4/15 11:40
+ * @date: 2019/5/1 14:51
  */
-@ApiModel("管理员信息表单")
 @Data
-public class AdminInfoForm implements Serializable {
+public class LoginForm implements Serializable {
 
-    private static final long serialVersionUID = -3878144997576152012L;
+    private static final long serialVersionUID = 1257114361697586123L;
 
     /**
      * 管理员姓名
@@ -31,11 +29,10 @@ public class AdminInfoForm implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     @NotNull(message = "管理员电话不能为空")
     private String adminPhone;
-
     /**
      * 登录密码
      */
     @ApiModelProperty(value = "登录密码", required = true)
-    @NotNull(message = "管理员登录密码不能为空")
+    @NotNull(message = "登录密码不能为空")
     private String password;
 }

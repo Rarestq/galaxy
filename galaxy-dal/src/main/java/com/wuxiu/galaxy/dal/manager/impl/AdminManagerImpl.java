@@ -15,6 +15,7 @@ import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.AdminInfoQueryDTO;
+import com.wuxiu.galaxy.dal.common.dto.LoginDTO;
 import com.wuxiu.galaxy.dal.dao.AdminDao;
 import com.wuxiu.galaxy.dal.domain.Admin;
 import com.wuxiu.galaxy.dal.manager.AdminManager;
@@ -53,6 +54,8 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             updateAdmin.setAdminNo(adminInfoDTO.getAdminNo());
             updateAdmin.setAdminName(adminInfoDTO.getAdminName());
             updateAdmin.setAdminPhone(adminInfoDTO.getAdminPhone());
+            updateAdmin.setAdminType(adminInfoDTO.getAdminType());
+            updateAdmin.setPassword(adminInfoDTO.getPassword());
             updateAdmin.setGmtModified(LocalDateTime.now());
 
             updateById(updateAdmin);
@@ -65,6 +68,8 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         insertAdmin.setAdminNo(adminInfoDTO.getAdminNo());
         insertAdmin.setAdminName(adminInfoDTO.getAdminName());
         insertAdmin.setAdminPhone(adminInfoDTO.getAdminPhone());
+        insertAdmin.setAdminType(adminInfoDTO.getAdminType());
+        insertAdmin.setPassword(adminInfoDTO.getPassword());
 
         // 新增管理员信息
         insert(insertAdmin);
@@ -115,6 +120,22 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         wrapper.eq("admin_name", adminName);
 
         return selectList(wrapper);
+    }
+
+    /**
+     * 根据电话号码和登录密码查询管理员信息
+     *
+     * @param dto
+     * @return
+     */
+    @Override
+    public Admin getAdminInfoByPhoneAndPwd(LoginDTO dto) {
+        Wrapper<Admin> wrapper = new EntityWrapper<Admin>()
+                .eq("admin_name", dto.getAdminName())
+                .eq("admin_phone", dto.getAdminPhone())
+                .eq("password", dto.getPassword());
+
+        return selectOne(wrapper);
     }
 
     /**

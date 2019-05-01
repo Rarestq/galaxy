@@ -1,6 +1,10 @@
 package com.wuxiu.galaxy.api.common.enums;
 
-@SuppressWarnings("ALL")
+/**
+ * 全局异常错误码枚举
+ *
+ * @author wuxiu
+ */
 public enum GlobalErrorCodeEnum implements ErrorCode {
 
     /**

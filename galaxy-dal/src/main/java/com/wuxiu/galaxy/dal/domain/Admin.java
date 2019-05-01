@@ -56,6 +56,15 @@ public class Admin extends BaseModel {
     @TableField("admin_phone")
     private String adminPhone;
     /**
+     * 管理员类型
+     */
+    @TableField("admin_type")
+    private Integer adminType;
+    /**
+     * 登录密码
+     */
+    private String password;
+    /**
      * 记录状态(1-删除、0-正常)
      */
     @TableLogic
