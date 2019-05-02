@@ -18,10 +18,17 @@ public class DateUtil {
      * @param now
      * @return
      */
-    public static long calculateDate2Hours(LocalDateTime storageEndTime,
-                                             LocalDateTime now) {
-        Duration between = Duration.between(storageEndTime, now);
+    public static long calculateDate2Hours(LocalDateTime now,
+                                           LocalDateTime storageEndTime) {
+        Duration between = Duration.between(now, storageEndTime);
         return between.toHours();
+    }
+
+    public static void main(String[] args) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.of(2019, 5, 2, 15, 21);
+        long hours = calculateDate2Hours(now, time);
+        System.out.println("时间差：" + hours);
     }
 
     /**
@@ -32,7 +39,7 @@ public class DateUtil {
      * @return
      */
     public static long calculateDate2Days(LocalDateTime storageEndTime,
-                                           LocalDateTime now) {
+                                          LocalDateTime now) {
         Duration between = Duration.between(storageEndTime, now);
         return between.toDays();
     }

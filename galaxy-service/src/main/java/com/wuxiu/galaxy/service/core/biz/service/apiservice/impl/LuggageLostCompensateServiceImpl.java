@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
@@ -9,8 +10,10 @@ import com.wuxiu.galaxy.api.dto.LostCompensateRecordQueryDTO;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageLostCompensateDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
+import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageLostCompensationRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageLostRegistrationRecordManager;
+import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
@@ -20,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +42,9 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
 
     @Autowired
     private LuggageLostRegistrationRecordManager registrationRecordManager;
+
+    @Autowired
+    private TurnoverRecordManager turnoverRecordManager;
 
     /**
      * 查询行李遗失赔偿登记记录列表
@@ -127,19 +134,52 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
             LuggageLostRegistrationRecord registrationRecord,
             OperateUserDTO operateUser) {
 
+        Long luggageTypeId = registrationRecord.getLuggageTypeId();
         LuggageLostCompensateDTO lostCompensateDTO = new LuggageLostCompensateDTO();
+
         lostCompensateDTO.setAdminId(operateUser.getOperateUserId());
         lostCompensateDTO.setAdminName(operateUser.getName());
         lostCompensateDTO.setDepositorName(registrationRecord.getDepositorName());
         lostCompensateDTO.setDepositorPhone(registrationRecord.getDepositorPhone());
-        lostCompensateDTO.setLuggageType(registrationRecord.getLuggageTypeId());
+        lostCompensateDTO.setLuggageType(luggageTypeId);
         lostCompensateDTO.setLostCompensateRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.LUGGAGE_LOST_COMPENSATE_NO_PREFIX));
-        //todo:计算赔偿所需费用
-        lostCompensateDTO.setCompensationFee("");
-        //todo:备注，什么行李赔偿了多少钱
-        lostCompensateDTO.setRemark("");
+        // 计算赔偿所需费用
+        String compensateFee = calculateCompensateFee(luggageTypeId,
+                registrationRecord.getLuggageId());
+        lostCompensateDTO.setCompensationFee(compensateFee);
+
+        String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
+        // 备注，什么行李赔偿了多少钱
+        lostCompensateDTO.setRemark("赔偿的行李类型为：【" + luggageTypeDesc + "】，赔偿金额：【" + compensateFee + "元】");
 
         return lostCompensateDTO;
+    }
+
+    /**
+     * 计算赔偿遗失的行李所需的费用
+     *
+     * @param luggageTypeId 行李类型id
+     * @return 赔偿的费用
+     */
+    private String calculateCompensateFee(long luggageTypeId, Long luggageId) {
+        // compensateFee = storageFee X multiple(depends on luggageType)
+        // 根据行李寄存记录id查询其对应的营业额记录信息
+        TurnoverRecord turnoverRecord = turnoverRecordManager
+                .getTurnoverRecordByLuggageId(luggageId);
+        BigDecimal storageFee = new BigDecimal(turnoverRecord.getFee());
+
+        String compensateFee = StringUtils.EMPTY;
+        if (Objects.equals(LuggageTypeEnum.COMMON_LUGGAGE_TYPE.getCode(), luggageTypeId)) {
+            compensateFee = storageFee.multiply(new BigDecimal(2)).toString();
+        } else if (Objects.equals(LuggageTypeEnum.FRAGILE_LUGGAGE_TYPE.getCode(),
+                luggageTypeId)) {
+            compensateFee = storageFee.multiply(new BigDecimal(3)).toString();
+        } else if (Objects.equals(LuggageTypeEnum.VALUABLE_LUGGAGE_TYPE.getCode(),
+                luggageTypeId)) {
+            compensateFee = storageFee.multiply(new BigDecimal(10)).toString();
+        }
+
+        return compensateFee;
     }
 }

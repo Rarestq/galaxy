@@ -27,9 +27,9 @@ public class LuggageFeeCalculationRuleDTO implements Serializable {
     private Long luggageTypeId;
 
     /**
-     * 行李寄存时长（单位：天）
+     * 行李寄存时长（单位：小时）
      */
-    private Integer luggageStorageDays;
+    private Integer luggageStorageHours;
 
     /**
      * 修改时间

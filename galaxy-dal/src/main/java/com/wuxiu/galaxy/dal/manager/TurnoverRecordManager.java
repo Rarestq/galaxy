@@ -42,4 +42,12 @@ public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
      * @return
      */
     List<PairDTO<Long, String>> getTurnoverRecordPair();
+
+    /**
+     * 根据行李寄存id查询对应的营业额记录
+     *
+     * @param luggageId
+     * @return
+     */
+    TurnoverRecord getTurnoverRecordByLuggageId(Long luggageId);
 }

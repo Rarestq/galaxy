@@ -1,8 +1,10 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.domain.Admin;
+import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.web.utils.SessionHelper;
 import com.wuxiu.galaxy.web.biz.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,8 @@ public class UserServiceImpl implements UserService {
         if (Objects.isNull(currentUser)) {
             OperateUserDTO operateUserDTO = new OperateUserDTO();
             operateUserDTO.setOperateUserId(0L);
-            operateUserDTO.setOperateUserNo("0");
+            operateUserDTO.setOperateUserNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.SYSTEM_PREFIX));
             operateUserDTO.setName("");
             operateUserDTO.setOperateUserPhone("");
             operateUserDTO.setUserTypeEnum(UserTypeEnum.SYSTEM);
@@ -55,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .orElse(""));
         operateUserDTO.setOperateUserPhone(Optional.ofNullable(currentUser.getAdminPhone())
                 .orElse(""));
-        operateUserDTO.setUserTypeEnum(UserTypeEnum.ADMIN);
+        operateUserDTO.setUserTypeEnum(UserTypeEnum.valueOf(currentUser.getAdminType()));
 
         return operateUserDTO;
     }

@@ -38,4 +38,11 @@ public class AdminInfoForm implements Serializable {
     @ApiModelProperty(value = "登录密码", required = true)
     @NotNull(message = "管理员登录密码不能为空")
     private String password;
+
+    /**
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
+     */
+    @ApiModelProperty(value = "管理员类型(1-普通管理员，2-超级管理员,3-系统)", required = true)
+    @NotNull(message = "管理员类型不能为空")
+    private Integer adminType;
 }

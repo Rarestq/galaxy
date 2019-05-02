@@ -28,19 +28,19 @@ public class FinishStorageEvent {
     private String storageFee;
 
     /**
-     * 寄存开始时间
-     */
-    private LocalDateTime storageStartTime;
-
-    /**
      * 寄存结束时间
      */
     private LocalDateTime storageEndTime;
 
     /**
-     * 管理员姓名
+     * 寄存者姓名
      */
-    private String adminName;
+    private String depositorName;
+
+    /**
+     * 寄存者电话
+     */
+    private String depositorPhone;
 
     /**
      * 管理员电话

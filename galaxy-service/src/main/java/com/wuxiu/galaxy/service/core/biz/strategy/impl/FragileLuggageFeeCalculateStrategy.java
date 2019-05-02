@@ -21,11 +21,9 @@ import java.util.Objects;
 @Slf4j
 public class FragileLuggageFeeCalculateStrategy implements LuggageFeeCalculationStrategy {
 
-    private static final Integer HOUR_PER_DAY = 24;
-
     @Override
     public LuggageChargeCalculationResultDTO calculate(
-            Integer calculateDays,
+            Integer calculateHours,
             List<LuggageFeeBaseCalculationParamDTO> calculationParamDTOS) {
 
         LuggageFeeBaseCalculationParamDTO luggageFeeBaseCalculationParamDTO =
@@ -50,7 +48,7 @@ public class FragileLuggageFeeCalculateStrategy implements LuggageFeeCalculation
                 fragileLuggageFeeCalculateParamDTO.getFeePerUnit());
 
         StringBuilder desc = new StringBuilder();
-        desc.append("计费时长").append(calculateDays).append("天,");
+        desc.append("计费时长").append(calculateHours).append("小时,");
 
         switch (calculationUnitsEnum) {
             case YUAN_PER_ITEM:
@@ -58,17 +56,10 @@ public class FragileLuggageFeeCalculateStrategy implements LuggageFeeCalculation
                 desc.append("收费").append(fragileLuggageFeeCalculateParamDTO
                         .getFeePerUnit()).append("元/件/次,");
                 break;
-            case YUAN_EACH_DAY:
-                // 元/件/天,超过一天的话可以打九折
-                calculateFee = calculateFee.multiply(new BigDecimal(calculateDays))
-                        .multiply(new BigDecimal(0.9));
-                desc.append("收费").append(fragileLuggageFeeCalculateParamDTO
-                        .getFeePerUnit()).append("元/件/天,");
-                break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
-                calculateFee = calculateFee.multiply(new BigDecimal(calculateDays)
-                        .multiply(new BigDecimal(HOUR_PER_DAY)));
+                calculateFee = calculateFee.multiply(new BigDecimal(calculateHours))
+                        .multiply(new BigDecimal(0.9));
                 break;
             default:
                 throw new RuntimeException("Unknown CalculationUnitsId = " +

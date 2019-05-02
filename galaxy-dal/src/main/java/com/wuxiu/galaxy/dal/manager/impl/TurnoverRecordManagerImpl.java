@@ -142,6 +142,20 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
     }
 
     /**
+     * 根据行李寄存id查询对应的营业额记录
+     *
+     * @param luggageId
+     * @return
+     */
+    @Override
+    public TurnoverRecord getTurnoverRecordByLuggageId(Long luggageId) {
+        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<TurnoverRecord>()
+                .eq("luggage_id", luggageId);
+
+        return selectOne(wrapper);
+    }
+
+    /**
      * 构造 TurnoverRecordDTO 对象
      *
      * @param turnoverRecordPage

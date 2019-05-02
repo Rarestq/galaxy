@@ -35,4 +35,10 @@ public class AdminInfoQueryDTO extends PageInfo {
     @ApiModelProperty(value = "管理员姓名", required = false)
     private String adminName;
 
+    /**
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
+     */
+    @ApiModelProperty(value = "管理员类型(1-普通管理员，2-超级管理员,3-系统)", required = false)
+    private Integer adminType;
+
 }

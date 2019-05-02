@@ -41,9 +41,9 @@ public class AdminDTO implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     private String adminPhone;
     /**
-     * 管理员类型（默认：admin）
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
      */
-    @ApiModelProperty(value = "管理员类型（默认：admin）", required = true)
+    @ApiModelProperty(value = "管理员类型(1-普通管理员，2-超级管理员,3-系统)", required = true)
     private Integer adminType;
     /**
      * 登录密码

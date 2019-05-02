@@ -92,11 +92,15 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         }
 
         if (Objects.nonNull(queryDTO.getAdminNo())) {
-            wrapper.eq("admin_no", queryDTO.getAdminNo());
+            wrapper.like("admin_no", queryDTO.getAdminNo());
         }
 
         if (Objects.nonNull(queryDTO.getAdminName())) {
             wrapper.eq("admin_name", queryDTO.getAdminName());
+        }
+
+        if (Objects.nonNull(queryDTO.getAdminType())) {
+            wrapper.eq("admin_type", queryDTO.getAdminType());
         }
 
         wrapper.orderBy("gmt_create", false)

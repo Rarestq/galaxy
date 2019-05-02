@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * mybatis-plus 代码自动生成器
+ *
  * @author wuxiu
  */
 public class MPGenerator {
@@ -55,7 +56,7 @@ public class MPGenerator {
                 .setEnableCache(false)
                 // XML ResultMap
                 .setBaseResultMap(true)
-                // XML columList
+                // XML columnList
                 .setBaseColumnList(true)
                 .setMapperName("%sDao")
                 .setServiceName("%sManager")

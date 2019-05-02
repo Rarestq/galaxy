@@ -3,6 +3,7 @@ package com.wuxiu.galaxy.dal.common.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 逾期取件的对象
@@ -40,4 +41,19 @@ public class PickupOverdueLuggageDTO implements Serializable {
      * 行李寄存者联系方式
      */
     private String depositorPhone;
+
+    /**
+     * 计费单位Id
+     */
+    private Integer calculationUnitsId;
+
+    /**
+     * 费用值
+     */
+    private BigDecimal feeValue;
+
+    /**
+     * 费用计算过程描述
+     */
+    private String feeCalculationProcessDesc;
 }

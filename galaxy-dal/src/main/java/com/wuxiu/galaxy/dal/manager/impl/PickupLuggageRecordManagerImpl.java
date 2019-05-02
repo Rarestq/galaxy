@@ -203,12 +203,27 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         overdueRecord.setGmtModified(LocalDateTime.now());
 
         long overdueHours = DateUtil.calculateDate2Hours(
-                luggageStorageRecord.getStorageEndTime(), LocalDateTime.now());
-        //todo:设置逾期补收的费用（不满一小时按一小时算）
-        overdueRecord.setRemark("此次寄存共逾期【" + overdueHours + "】小时" +
-                "，额外收取超时费用为【" + "】元");
+                LocalDateTime.now(), luggageStorageRecord.getStorageEndTime());
+        // 设置逾期补收的费用计算描述（不满一小时按一小时算）
+        overdueRecord.setRemark(pickupOverdueLuggageDTO.getFeeCalculationProcessDesc());
+//        overdueRecord.setRemark("此次寄存共逾期【" + overdueHours + "】小时" +
+////                "，额外收取超时费用为【" + pickupOverdueLuggageDTO.getFeeValue() + "】元");
 
         return overdueRecord;
+    }
+
+    /**
+     * 计算逾期应收费用
+     *
+     * @param overdueHours
+     * @return
+     */
+    private String calculateOverdueFee(long overdueHours) {
+        if (overdueHours < 1) {
+            overdueHours = 1;
+        }
+
+        return null;
     }
 
     /**

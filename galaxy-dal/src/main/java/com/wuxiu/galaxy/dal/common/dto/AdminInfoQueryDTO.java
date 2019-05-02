@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.dal.common.dto;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.dal.domain.Admin;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -37,4 +38,8 @@ public class AdminInfoQueryDTO implements Serializable {
      */
     private String adminName;
 
+    /**
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
+     */
+    private Integer adminType;
 }

@@ -21,11 +21,9 @@ import java.util.Objects;
 @Slf4j
 public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationStrategy {
 
-    private static final Integer HOUR_PER_DAY = 24;
-
     @Override
     public LuggageChargeCalculationResultDTO calculate(
-            Integer calculateDays,
+            Integer calculateHours,
             List<LuggageFeeBaseCalculationParamDTO> calculationParamDTOS) {
 
         LuggageFeeBaseCalculationParamDTO luggageFeeBaseCalculationParamDTO =
@@ -50,7 +48,7 @@ public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationS
                 commonLuggageFeeCalculateParamDTO.getFeePerUnit());
 
         StringBuilder desc = new StringBuilder();
-        desc.append("计费时长").append(calculateDays).append("天,");
+        desc.append("计费时长").append(calculateHours).append("天,");
 
         switch (calculationUnitsEnum) {
             case YUAN_PER_ITEM:
@@ -58,17 +56,10 @@ public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationS
                 desc.append("收费").append(commonLuggageFeeCalculateParamDTO
                         .getFeePerUnit()).append("元/件/次,");
                 break;
-            case YUAN_EACH_DAY:
-                // 元/件/天，超过一天的话可以打八折
-                calculateFee = calculateFee.multiply(new BigDecimal(calculateDays))
-                        .multiply(new BigDecimal(0.8));
-                desc.append("收费").append(commonLuggageFeeCalculateParamDTO
-                        .getFeePerUnit()).append("元/件/天,");
-                break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
-                calculateFee = calculateFee.multiply(new BigDecimal(calculateDays)
-                        .multiply(new BigDecimal(HOUR_PER_DAY)));
+                calculateFee = calculateFee.multiply(new BigDecimal(calculateHours)
+                        .multiply(new BigDecimal(0.8)));
                 break;
             default:
                 throw new RuntimeException("Unknown CalculationUnitsId = " +

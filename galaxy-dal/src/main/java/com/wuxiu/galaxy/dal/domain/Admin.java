@@ -56,7 +56,7 @@ public class Admin extends BaseModel {
     @TableField("admin_phone")
     private String adminPhone;
     /**
-     * 管理员类型
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
      */
     @TableField("admin_type")
     private Integer adminType;

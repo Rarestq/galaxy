@@ -41,6 +41,11 @@ public class AdminInfoVO implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     private String adminPhone;
     /**
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
+     */
+    @ApiModelProperty(value = "管理员类型(1-普通管理员，2-超级管理员,3-系统)", required = true)
+    private Integer adminType;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.*;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.expection.BizException;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
+import com.wuxiu.galaxy.api.common.expection.SmsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
@@ -61,6 +62,12 @@ public class ExceptionNotifyFilter implements Filter {
             // 业务异常处理
             if (exception instanceof BizException) {
                 log.info("业务异常：{}", exception.getMessage());
+                return new RpcResult(APIResult.error(exception.getMessage()));
+            }
+
+            // 短信异常处理
+            if (exception instanceof SmsException) {
+                log.info("短信异常:{}", exception.getMessage());
                 return new RpcResult(APIResult.error(exception.getMessage()));
             }
 

@@ -78,7 +78,7 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         calculationRuleDTO.setLuggageTypeId(luggageTypeId);
         int calculateDays = (int) DateUtil.calculateDate2Days(
                 storageRecordDTO.getStorageEndTime(), LocalDateTime.now());
-        calculationRuleDTO.setLuggageStorageDays(calculateDays);
+        calculationRuleDTO.setLuggageStorageHours(calculateDays);
         calculationRuleDTO.setGmtModified(LocalDateTime.now());
         // 获取计价器
         LuggageFeeMeter luggageFeeMeter =

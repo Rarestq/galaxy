@@ -29,6 +29,7 @@
             <artifactId>galaxy-dal</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- ===== 一方包 END ===== -->
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
@@ -54,7 +55,12 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- ===== 一方包 END ===== -->
+
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>7.37.3</version>
+        </dependency>
     </dependencies>
 
 </project>

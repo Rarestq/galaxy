@@ -19,8 +19,8 @@ public class LuggageFeeMeter {
     private LuggageFeeCalculationStrategy strategy;
     private List<LuggageFeeBaseCalculationParamDTO> baseCalculationParamDTOS;
 
-    public LuggageChargeCalculationResultDTO calculate(int calculateDays) {
-        return strategy.calculate(calculateDays, baseCalculationParamDTOS);
+    public LuggageChargeCalculationResultDTO calculate(int calculateHours) {
+        return strategy.calculate(calculateHours, baseCalculationParamDTOS);
     }
 
     public LuggageChargeCalculationResultDTO dailyFeeCalculate(LocalDateTime startDate,

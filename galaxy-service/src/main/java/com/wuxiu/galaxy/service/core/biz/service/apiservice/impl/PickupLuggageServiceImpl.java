@@ -7,19 +7,26 @@ import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.common.util.DateUtil;
+import com.wuxiu.galaxy.api.dto.LuggageChargeCalculationResultDTO;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
+import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupOverdueLuggageDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.PickupLuggageRecordManager;
+import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.PickupLuggageService;
+import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeter;
+import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeterFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +51,12 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
 
     @Autowired
     private LuggageStorageRecordManager storageRecordManager;
+
+    @Autowired
+    private TurnoverRecordManager turnoverRecordManager;
+
+    @Autowired
+    LuggageFeeMeterFactory meterFactory;
 
     /**
      * 行李取件
@@ -120,20 +133,42 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
             throw new ParamException("参数错误，行李寄存记录id不能为空");
         }
 
+        // 查询行李寄存记录信息
         LuggageStorageRecord luggageStorageRecord =
                 storageRecordManager.selectById(luggageId);
-        PickupOverdueLuggageDTO pickupOverdueLuggageDTO = new PickupOverdueLuggageDTO();
+
+        // 根据行李寄存记录id查询其对应的营业额记录信息
+        TurnoverRecord turnoverRecord = turnoverRecordManager
+                .getTurnoverRecordByLuggageId(luggageId);
+
+        // 逾期时间
+        long overdueHours = DateUtil.calculateDate2Hours(
+                LocalDateTime.now(), luggageStorageRecord.getStorageEndTime());
+
+        // 构造计费规则参数
+        LuggageFeeCalculationRuleDTO ruleDTO = new LuggageFeeCalculationRuleDTO();
+        ruleDTO.setCalculateRuleId(turnoverRecord.getCalculationRuleId());
+        ruleDTO.setLuggageTypeId(luggageStorageRecord.getLuggageTypeId());
+        ruleDTO.setGmtModified(luggageStorageRecord.getGmtModified());
+        ruleDTO.setLuggageStorageHours((int) overdueHours);
+
+        // 计算逾期费用（跟寄存时计算寄存所需费用的规则一样）
+        LuggageFeeMeter luggageFeeMeter = meterFactory.getLuggageFeeMeter(ruleDTO);
+        LuggageChargeCalculationResultDTO calculationResultDTO =
+                luggageFeeMeter.calculate((int) overdueHours);
+
         if (Objects.equals(LuggageStorageStatusEnum.OVERDUE.getCode(),
                 luggageStorageRecord.getStatus())) {
 
-            pickupOverdueLuggageDTO = buildPickupOverdueLuggageDTO(operateUserDTO,
-                    luggageStorageRecord);
+            PickupOverdueLuggageDTO pickupOverdueLuggageDTO =
+                    buildPickupOverdueLuggageDTO(operateUserDTO, luggageStorageRecord,
+                            calculationResultDTO);
+
+            pickupLuggageRecordManager.pickupOverdueLuggage(pickupOverdueLuggageDTO);
         }
 
-        //todo:按照逾期的时长补收费用,并将记录存到 turnover_record 表中
-
-
-        pickupLuggageRecordManager.pickupOverdueLuggage(pickupOverdueLuggageDTO);
+        log.warn("当前行李寄存状态有误，不能进行取件， status:{}",
+                luggageStorageRecord.getStatus());
     }
 
     /**
@@ -145,7 +180,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      */
     private PickupOverdueLuggageDTO buildPickupOverdueLuggageDTO(
             OperateUserDTO operateUserDTO,
-            LuggageStorageRecord luggageStorageRecord) {
+            LuggageStorageRecord luggageStorageRecord,
+            LuggageChargeCalculationResultDTO calculationResultDTO) {
 
         PickupOverdueLuggageDTO overdueLuggageDTO = new PickupOverdueLuggageDTO();
         overdueLuggageDTO.setAdminId(operateUserDTO.getOperateUserId());
@@ -156,6 +192,13 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
 
         overdueLuggageDTO.setDepositorName(luggageStorageRecord.getDepositorName());
         overdueLuggageDTO.setDepositorPhone(luggageStorageRecord.getDepositorPhone());
+
+        // 设置逾期费用的计算结果
+        overdueLuggageDTO.setCalculationUnitsId(calculationResultDTO
+                .getCalculationUnitsId());
+        overdueLuggageDTO.setFeeValue(calculationResultDTO.getFeeValue());
+        overdueLuggageDTO.setFeeCalculationProcessDesc(calculationResultDTO
+                .getFeeCalculationProcessDesc());
 
         return overdueLuggageDTO;
     }
