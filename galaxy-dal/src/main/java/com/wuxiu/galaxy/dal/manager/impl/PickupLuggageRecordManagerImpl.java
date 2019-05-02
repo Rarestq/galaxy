@@ -93,6 +93,20 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         storageRecordManager.updateById(luggageStorageRecord);
 
         // 创建取件记录
+        PickupLuggageRecord pickupLuggageRecord =
+                buildPickupLuggageRecord(commonPickupLuggageDTO);
+        insert(pickupLuggageRecord);
+    }
+
+    /**
+     * 构造 PickupLuggageRecord 对象
+     *
+     * @param commonPickupLuggageDTO
+     * @return
+     */
+    private PickupLuggageRecord buildPickupLuggageRecord(
+            CommonPickupLuggageDTO commonPickupLuggageDTO) {
+
         PickupLuggageRecord pickupLuggageRecord = new PickupLuggageRecord();
 
         pickupLuggageRecord.setPickupRecordNo(commonPickupLuggageDTO.getPickupRecordNo());
@@ -106,7 +120,7 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         pickupLuggageRecord.setPickupType(commonPickupLuggageDTO.getPickupType());
         pickupLuggageRecord.setPickUpTime(commonPickupLuggageDTO.getPickUpTime());
 
-        insert(pickupLuggageRecord);
+        return pickupLuggageRecord;
     }
 
     /**
@@ -152,7 +166,6 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
             // 构造 LuggageOverdueRecord 对象
             LuggageOverdueRecord overdueRecord = buildLuggageOverdueRecord(
                     pickupOverdueLuggageDTO, luggageStorageRecord, luggageOverdueRecord);
-
 
             // 逾期取件后，更新逾期记录状态为「已清理作废」
             overdueRecordManager.updateById(overdueRecord);

@@ -3,13 +3,11 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.eventbus.AsyncEventBus;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
-import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.*;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
-import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 行李寄存相关服务
@@ -74,16 +71,10 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         // 获取寄存行李的类型
         Long luggageTypeId = storageRecordDTO.getLuggageTypeId();
-        // 查询行李类型信息
-        LuggageType luggageType = luggageTypeManager.getLuggageTypeById(luggageTypeId);
-        // 普通物价寄存费用
-        if (Objects.equals(LuggageTypeEnum.valueOf(
-                luggageType.getLuggageTypeId()), LuggageTypeEnum.COMMON_LUGGAGE_TYPE)) {
-
-        }
 
         // 构造计费规则参数
         LuggageFeeCalculationRuleDTO calculationRuleDTO = new LuggageFeeCalculationRuleDTO();
+        calculationRuleDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
         calculationRuleDTO.setLuggageTypeId(luggageTypeId);
         int calculateDays = (int) DateUtil.calculateDate2Days(
                 storageRecordDTO.getStorageEndTime(), LocalDateTime.now());
@@ -117,6 +108,7 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         recordDTO.setLuggageRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.LUGGAGE_STORAGE_RECORD_NO_PREFIX));
+        recordDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
         recordDTO.setLuggageTypeId(storageRecordDTO.getLuggageTypeId());
 
         recordDTO.setAdminId(operateUserDTO.getOperateUserId());

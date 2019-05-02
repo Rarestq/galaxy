@@ -20,7 +20,7 @@ public enum CalculationUnitsEnum {
     // 计算单位类型
     YUAN_EACH_DAY(1, "元/件/天"),
     YUAN_PER_ITEM(2, "元/件/次"),
-//    YUAN_EACH_HOUR(3, "元/件/小时"),
+    YUAN_EACH_HOUR(3, "元/件/小时"),
     YUAN_EACH(4, "元/件"),
     ;
 

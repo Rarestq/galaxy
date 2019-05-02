@@ -25,15 +25,18 @@ public class MPGenerator {
     public static final String PASSWORD = "123123";
 
     public static String[] tables = {
-//            "galaxy_admin",
-            "galaxy_fixed_charge_calculation_detail",
+            "galaxy_admin",
+            "galaxy_charge_calculation_rule",
+            "galaxy_common_calculate_rule_detail",
+            "galaxy_fragile_calculate_rule_detail",
             "galaxy_luggage_lost_compensation_record",
             "galaxy_luggage_lost_registration_record",
             "galaxy_luggage_overdue_record",
             "galaxy_luggage_storage_record",
             "galaxy_pickup_luggage_record",
-//            "galaxy_luggage_type",
-            "galaxy_turnover_record"
+            "galaxy_luggage_type",
+            "galaxy_turnover_record",
+            "galaxy_valuable_calculate_rule_detail"
     };
 
     public static void main(String[] args) {

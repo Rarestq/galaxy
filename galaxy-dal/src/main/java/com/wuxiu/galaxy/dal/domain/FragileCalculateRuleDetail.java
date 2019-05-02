@@ -10,41 +10,45 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
+import com.baomidou.mybatisplus.annotations.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+/**  
+ * <p>FragileCalculateRuleDetailDomian实体对象</p>
+ *
+ * 易碎行李计费规则细节表
+ *
+ * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ * @since 2019-05-02
+ */
+
+import com.baomidou.mybatisplus.annotations.Version;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.time.LocalDateTime;
-
-/**
- *   
- *  * <p>FixedChargeCalculationDetailDomian实体对象</p>
- * <p>
- *  固定计费表
- * <p>
- *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-22
- *  
- */
+import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("galaxy_fixed_charge_calculation_detail")
-public class FixedChargeCalculationDetail extends BaseModel {
+@TableName("galaxy_fragile_calculate_rule_detail")
+public class FragileCalculateRuleDetail extends BaseModel {
 
     private static final long serialVersionUID = 1L;
     /**
-     * 固定计费主键id
+     * 易碎行李计费规则主键id
      */
-    @TableId(value = "fixed_rule_id", type = IdType.AUTO)
-    private Long fixedRuleId;
+    @TableId(value = "fragile_rule_id", type = IdType.AUTO)
+    private Long fragileRuleId;
     /**
-     * 行李类型主键id
+     * 计费规则主键id
      */
-    @TableField(value = "luggage_type_id")
-    private Long luggageTypeId;
+    @TableField("calculation_rule_id")
+    private Long calculationRuleId;
     /**
      * 计费单位(1-元/件/天，2-元/件/次，3-元/件)
      */
@@ -64,11 +68,11 @@ public class FixedChargeCalculationDetail extends BaseModel {
      * 创建时间
      */
     @TableField("gmt_create")
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
     /**
      * 修改时间
      */
     @TableField("gmt_modified")
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 
 }

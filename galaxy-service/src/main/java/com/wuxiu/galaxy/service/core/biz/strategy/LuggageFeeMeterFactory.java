@@ -1,10 +1,17 @@
 package com.wuxiu.galaxy.service.core.biz.strategy;
 
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
+import com.wuxiu.galaxy.api.dto.CommonLuggageFeeCalculateParamDTO;
+import com.wuxiu.galaxy.api.dto.FragileLuggageFeeCalculateParamDTO;
 import com.wuxiu.galaxy.api.dto.LuggageFeeBaseCalculationParamDTO;
+import com.wuxiu.galaxy.api.dto.ValuableLuggageFeeCalculateParamDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
-import com.wuxiu.galaxy.dal.domain.FixedChargeCalculationDetail;
-import com.wuxiu.galaxy.dal.manager.FixedChargeCalculationDetailManager;
+import com.wuxiu.galaxy.dal.domain.CommonCalculateRuleDetail;
+import com.wuxiu.galaxy.dal.domain.FragileCalculateRuleDetail;
+import com.wuxiu.galaxy.dal.domain.ValuableCalculateRuleDetail;
+import com.wuxiu.galaxy.dal.manager.CommonCalculateRuleDetailManager;
+import com.wuxiu.galaxy.dal.manager.FragileCalculateRuleDetailManager;
+import com.wuxiu.galaxy.dal.manager.ValuableCalculateRuleDetailManager;
 import com.wuxiu.galaxy.service.core.biz.strategy.impl.CommonLuggageFeeCalculateStrategy;
 import com.wuxiu.galaxy.service.core.biz.strategy.impl.FragileLuggageFeeCalculateStrategy;
 import com.wuxiu.galaxy.service.core.biz.strategy.impl.ValuableLuggageFeeCalculateStrategy;
@@ -30,7 +37,13 @@ import static com.google.common.collect.Lists.newArrayList;
 public class LuggageFeeMeterFactory {
 
     @Autowired
-    private FixedChargeCalculationDetailManager fixedChargeCalculationDetailManager;
+    private CommonCalculateRuleDetailManager commonCalculateRuleDetailManager;
+
+    @Autowired
+    private FragileCalculateRuleDetailManager fragileCalculateRuleDetailManager;
+
+    @Autowired
+    private ValuableCalculateRuleDetailManager valuableCalculateRuleDetailManager;
 
     /**
      * 计价器的缓存
@@ -46,15 +59,15 @@ public class LuggageFeeMeterFactory {
      */
     public LuggageFeeMeter getLuggageFeeMeter(
             LuggageFeeCalculationRuleDTO feeCalculationRuleDTO) {
-        return getLuggageFeeMeter(feeCalculationRuleDTO.getLuggageTypeId(),
-                feeCalculationRuleDTO.getLuggageStorageDays(),
+        return getLuggageFeeMeter(feeCalculationRuleDTO.getCalculateRuleId(),
+                feeCalculationRuleDTO.getLuggageTypeId(),
                 feeCalculationRuleDTO.getGmtModified()
                         .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
     }
 
     public LuggageFeeMeter getLuggageFeeMeter(
-            Long luggageTypeId, Integer calculateHours, Long lastUpdateTime) {
-        String cacheKey = luggageTypeId + "_" + calculateHours + "_" + lastUpdateTime;
+            Long calculateRuleId, Long luggageTypeId, Long lastUpdateTime) {
+        String cacheKey = calculateRuleId + "_" + luggageTypeId + "_" + lastUpdateTime;
         LuggageFeeMeter luggageFeeMeter = METER_CACHE.get(cacheKey);
         if (Objects.isNull(luggageFeeMeter)) {
             // 缓存不存在，创建
@@ -70,17 +83,18 @@ public class LuggageFeeMeterFactory {
             switch (luggageTypeEnum) {
                 case COMMON_LUGGAGE_TYPE:
                     calculationParamDTO =
-                            buildLuggageFeeCalculateParamDTOsByLuggageType(luggageTypeId);
+                            createCommonLuggageFeeCalculateParamDTOs(calculateRuleId);
                     strategy = new CommonLuggageFeeCalculateStrategy();
                     break;
                 case FRAGILE_LUGGAGE_TYPE:
                     calculationParamDTO =
-                            buildLuggageFeeCalculateParamDTOsByLuggageType(luggageTypeId);
+                            createFragileLuggageFeeCalculateParamDTOs(calculateRuleId);
                     strategy = new FragileLuggageFeeCalculateStrategy();
                     break;
                 case VALUABLE_LUGGAGE_TYPE:
                     calculationParamDTO =
-                            buildLuggageFeeCalculateParamDTOsByLuggageType(luggageTypeId);
+                            createValuableCommonLuggageFeeCalculateParamDTOs(
+                                    calculateRuleId);
                     strategy = new ValuableLuggageFeeCalculateStrategy();
                     break;
                 default:
@@ -101,46 +115,123 @@ public class LuggageFeeMeterFactory {
     }
 
     /**
-     * 根据行李类型(1-普通物件,2-易碎物件,3-贵重物件)构造 LuggageFeeBaseCalculationParamDTO 对象
+     * 构造 ValuableLuggageFeeCalculateParamDTO(3-贵重物件) 对象
      *
-     * @param luggageTypeId
+     * @param calculateRuleId
      * @return
      */
     private List<LuggageFeeBaseCalculationParamDTO>
-    buildLuggageFeeCalculateParamDTOsByLuggageType(Long luggageTypeId) {
+    createValuableCommonLuggageFeeCalculateParamDTOs(Long calculateRuleId) {
+        List<ValuableCalculateRuleDetail> valuableCalculateRuleDetails =
+                valuableCalculateRuleDetailManager
+                        .getValuableCalculateRuleDetails(calculateRuleId);
+
+        return buildLuggageFeeBaseCalculationParamDTOsByValuable(
+                valuableCalculateRuleDetails);
+    }
+
+    private List<LuggageFeeBaseCalculationParamDTO> buildLuggageFeeBaseCalculationParamDTOsByValuable(List<ValuableCalculateRuleDetail> valuableCalculateRuleDetails) {
+
+        if (CollectionUtils.isEmpty(valuableCalculateRuleDetails)) {
+            return Collections.emptyList();
+        }
+
+        List<LuggageFeeBaseCalculationParamDTO> resultList = newArrayList();
+        for (ValuableCalculateRuleDetail fragileCalculateRuleDetail
+                : valuableCalculateRuleDetails) {
+            ValuableLuggageFeeCalculateParamDTO valuableLuggageFeeCalculateParamDTO =
+                    new ValuableLuggageFeeCalculateParamDTO();
+            valuableLuggageFeeCalculateParamDTO.setCalculationUnitsId(
+                    fragileCalculateRuleDetail.getCalculationUnitsId());
+            valuableLuggageFeeCalculateParamDTO.setFeePerUnit(
+                    fragileCalculateRuleDetail.getFeePerUnit());
+
+            resultList.add(valuableLuggageFeeCalculateParamDTO);
+        }
+
+        return resultList;
+    }
+
+    /**
+     * 构造 FragileLuggageFeeCalculateParamDTO(2-易碎物件) 对象
+     *
+     * @param calculateRuleId
+     * @return
+     */
+    private List<LuggageFeeBaseCalculationParamDTO>
+    createFragileLuggageFeeCalculateParamDTOs(Long calculateRuleId) {
+        List<FragileCalculateRuleDetail> fragileCalculateRuleDetails =
+                fragileCalculateRuleDetailManager
+                        .getFragileCalculateRuleDetails(calculateRuleId);
+
+        return buildLuggageFeeBaseCalculationParamDTOsByFragile(
+                fragileCalculateRuleDetails);
+    }
+
+    private List<LuggageFeeBaseCalculationParamDTO> buildLuggageFeeBaseCalculationParamDTOsByFragile(List<FragileCalculateRuleDetail> fragileCalculateRuleDetails) {
+
+        if (CollectionUtils.isEmpty(fragileCalculateRuleDetails)) {
+            return Collections.emptyList();
+        }
+
+        List<LuggageFeeBaseCalculationParamDTO> resultList = newArrayList();
+        for (FragileCalculateRuleDetail fragileCalculateRuleDetail
+                : fragileCalculateRuleDetails) {
+            FragileLuggageFeeCalculateParamDTO fragileLuggageFeeCalculateParamDTO =
+                    new FragileLuggageFeeCalculateParamDTO();
+            fragileLuggageFeeCalculateParamDTO.setCalculationUnitsId(
+                    fragileCalculateRuleDetail.getCalculationUnitsId());
+            fragileLuggageFeeCalculateParamDTO.setFeePerUnit(
+                    fragileCalculateRuleDetail.getFeePerUnit());
+
+            resultList.add(fragileLuggageFeeCalculateParamDTO);
+        }
+
+        return resultList;
+    }
+
+    /**
+     * 构造 CommonLuggageFeeCalculateParamDTO(1-普通物件) 对象
+     *
+     * @param calculateRuleId
+     * @return
+     */
+    private List<LuggageFeeBaseCalculationParamDTO>
+    createCommonLuggageFeeCalculateParamDTOs(Long calculateRuleId) {
 
         // 根据行李类型查询其对应的计费细节
-        List<FixedChargeCalculationDetail> calculationDetails = fixedChargeCalculationDetailManager
-                .getCalculationDetailByLuggageTypeId(luggageTypeId);
+        List<CommonCalculateRuleDetail> calculationDetails =
+                commonCalculateRuleDetailManager
+                        .getCommonCalculateRuleDetails(calculateRuleId);
 
-        // 构造 LuggageFeeBaseCalculationParamDTO 对象
-        return buildLuggageFeeBaseCalculationParamDTO(calculationDetails);
+        // 构造 CommonLuggageFeeCalculateParamDTO 对象
+        return buildLuggageFeeBaseCalculationParamDTOsByCommon(calculationDetails);
     }
 
     /**
      * 构造 LuggageFeeBaseCalculationParamDTO 对象
      *
-     * @param calculationDetails
+     * @param commonCalculateRuleDetails
      * @return
      */
     private List<LuggageFeeBaseCalculationParamDTO>
-    buildLuggageFeeBaseCalculationParamDTO(
-            List<FixedChargeCalculationDetail> calculationDetails) {
-        if (CollectionUtils.isEmpty(calculationDetails)) {
+    buildLuggageFeeBaseCalculationParamDTOsByCommon(
+            List<CommonCalculateRuleDetail> commonCalculateRuleDetails) {
+        if (CollectionUtils.isEmpty(commonCalculateRuleDetails)) {
             return Collections.emptyList();
         }
 
         List<LuggageFeeBaseCalculationParamDTO> resultList = newArrayList();
-        for (FixedChargeCalculationDetail fixedChargeCalculationDetail
-                : calculationDetails) {
-            LuggageFeeBaseCalculationParamDTO fixedCalculationParamDTO =
-                    new LuggageFeeBaseCalculationParamDTO();
-            fixedCalculationParamDTO.setCalculationUnitsId(
-                    fixedChargeCalculationDetail.getCalculationUnitsId());
-            fixedCalculationParamDTO.setFeePerUnit(
-                    fixedChargeCalculationDetail.getFeePerUnit());
+        for (CommonCalculateRuleDetail commonCalculateRuleDetail
+                : commonCalculateRuleDetails) {
+            CommonLuggageFeeCalculateParamDTO commonLuggageFeeCalculateParamDTO =
+                    new CommonLuggageFeeCalculateParamDTO();
+            commonLuggageFeeCalculateParamDTO.setCalculationUnitsId(
+                    commonCalculateRuleDetail.getCalculationUnitsId());
+            commonLuggageFeeCalculateParamDTO.setFeePerUnit(
+                    commonCalculateRuleDetail.getFeePerUnit());
 
-            resultList.add(fixedCalculationParamDTO);
+            resultList.add(commonLuggageFeeCalculateParamDTO);
         }
 
         return resultList;

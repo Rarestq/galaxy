@@ -10,59 +10,55 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
+import com.baomidou.mybatisplus.annotations.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+/**  
+ * <p>ChargeCalculationRuleDomian实体对象</p>
+ *
+ * 计费规则表
+ *
+ * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ * @since 2019-05-02
+ */
+
+import com.baomidou.mybatisplus.annotations.Version;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.time.LocalDateTime;
-
-/**
- *   
- *  * <p>TurnoverRecordDomian实体对象</p>
- * <p>
- *  营业额记录表
- * <p>
- *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-22
- *  
- */
+import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("galaxy_turnover_record")
-public class TurnoverRecord extends BaseModel {
+@TableName("galaxy_charge_calculation_rule")
+public class ChargeCalculationRule extends BaseModel {
 
     private static final long serialVersionUID = 1L;
     /**
-     * 营业额记录表主键id
-     */
-    @TableId(value = "turnover_record_id", type = IdType.AUTO)
-    private Long turnoverRecordId;
-    /**
-     * 行李寄存主键id
-     */
-    @TableField("luggage_id")
-    private Long luggageId;
-    /**
-     * 管理员主键id(冗余)
-     */
-    @TableField("admin_id")
-    private Long adminId;
-    /**
      * 计费规则主键id
      */
-    @TableField("calculation_rule_id")
+    @TableId(value = "calculation_rule_id", type = IdType.AUTO)
     private Long calculationRuleId;
     /**
-     * 费用
+     * 行李类型主键id
      */
-    private String fee;
+    @TableField("luggage_type_id")
+    private Long luggageTypeId;
     /**
-     * 备注
+     * 计费单位(1-元/件/天，2-元/件/次，3-元/件)
      */
-    private String remark;
+    @TableField("calculation_units_id")
+    private Integer calculationUnitsId;
+    /**
+     * 单位金额
+     */
+    @TableField("fee_per_unit")
+    private String feePerUnit;
     /**
      * 记录状态(1-删除、0-正常)
      */
@@ -72,11 +68,11 @@ public class TurnoverRecord extends BaseModel {
      * 创建时间
      */
     @TableField("gmt_create")
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
     /**
      * 修改时间
      */
     @TableField("gmt_modified")
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 
 }

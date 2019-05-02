@@ -17,6 +17,11 @@ public class LuggageFeeCalculationRuleDTO implements Serializable {
     private static final long serialVersionUID = 1549800927130038841L;
 
     /**
+     * 计费规则id
+     */
+    private Long calculateRuleId;
+
+    /**
      * 行李类型id
      */
     private Long luggageTypeId;

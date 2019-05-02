@@ -11,29 +11,28 @@
 package com.wuxiu.galaxy.dal.manager;
 
 import com.wuxiu.galaxy.api.common.base.BaseManager;
-import com.wuxiu.galaxy.dal.domain.FixedChargeCalculationDetail;
+import com.wuxiu.galaxy.dal.domain.CommonCalculateRuleDetail;
 
 import java.util.List;
 
 /**
  *   
- * FixedChargeCalculationDetailManager
- *  * 固定计费表
+ * CommonCalculateRuleDetailManager
+ *  * 普通物价计费规则细节
  *  
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  *
- * @since 2019-04-22
+ * @since 2019-05-02
  *  
  */
-public interface FixedChargeCalculationDetailManager extends BaseManager<FixedChargeCalculationDetail> {
+public interface CommonCalculateRuleDetailManager extends BaseManager<CommonCalculateRuleDetail> {
 
     /**
-     * 根据行李类型查询计费细节信息
+     * 根据计费规则id获取普通行李计费规则信息
      *
-     * @param luggageTypeId
+     * @param calculateRuleId 计费规则id
      * @return
      */
-    List<FixedChargeCalculationDetail> getCalculationDetailByLuggageTypeId(
-            Long luggageTypeId);
+    List<CommonCalculateRuleDetail> getCommonCalculateRuleDetails(Long calculateRuleId);
 
 }

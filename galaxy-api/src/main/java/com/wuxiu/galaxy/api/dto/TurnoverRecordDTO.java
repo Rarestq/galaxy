@@ -40,6 +40,10 @@ public class TurnoverRecordDTO implements Serializable {
      */
     private String adminName;
     /**
+     * 计费规则主键id
+     */
+    private Long calculationRuleId;
+    /**
      * 费用
      */
     private String fee;

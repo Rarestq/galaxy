@@ -46,6 +46,11 @@ public class TurnoverRecordVO implements Serializable {
     @ApiModelProperty(value = "管理员姓名", required = true)
     private String adminName;
     /**
+     * 计费规则主键id
+     */
+    @ApiModelProperty(value = "计费规则主键id", required = true)
+    private Long calculationRuleId;
+    /**
      * 费用
      */
     @ApiModelProperty(value = "费用", required = true)

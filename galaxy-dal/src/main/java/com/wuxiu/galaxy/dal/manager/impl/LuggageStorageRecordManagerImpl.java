@@ -60,6 +60,52 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     public Long insertLuggageStorageRecord(
             NewLuggageStorageRecordDTO newLuggageStorageRecordDTO) {
 
+        // 构造 LuggageStorageRecord 对象
+        LuggageStorageRecord storageRecord =
+                buildLuggageStorageRecord(newLuggageStorageRecordDTO);
+
+        // 新增行寄存记录
+        insert(storageRecord);
+
+        // 将寄存的费用及管理员相关信息添加到「营业额记录表中」
+        TurnoverRecord turnoverRecord =
+                buildTurnoverRecord(newLuggageStorageRecordDTO, storageRecord);
+        turnoverRecordManager.insert(turnoverRecord);
+
+        return storageRecord.getLuggageId();
+    }
+
+    /**
+     * 构造 TurnoverRecord 对象
+     *
+     * @param newLuggageStorageRecordDTO
+     * @param storageRecord
+     * @return
+     */
+    private TurnoverRecord buildTurnoverRecord(
+            NewLuggageStorageRecordDTO newLuggageStorageRecordDTO,
+            LuggageStorageRecord storageRecord) {
+
+        TurnoverRecord turnoverRecord = new TurnoverRecord();
+        turnoverRecord.setAdminId(storageRecord.getAdminId());
+        turnoverRecord.setCalculationRuleId(newLuggageStorageRecordDTO
+                .getCalculateRuleId());
+        turnoverRecord.setLuggageId(storageRecord.getLuggageId());
+        turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
+        turnoverRecord.setRemark(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
+
+        return turnoverRecord;
+    }
+
+    /**
+     * 构造 LuggageStorageRecord 对象
+     *
+     * @param newLuggageStorageRecordDTO
+     * @return
+     */
+    private LuggageStorageRecord buildLuggageStorageRecord(
+            NewLuggageStorageRecordDTO newLuggageStorageRecordDTO) {
+
         LuggageStorageRecord storageRecord = new LuggageStorageRecord();
         storageRecord.setAdminId(newLuggageStorageRecordDTO.getAdminId());
         storageRecord.setAdminName(newLuggageStorageRecordDTO.getAdminName());
@@ -77,19 +123,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         storageRecord.setGmtCreate(LocalDateTime.now());
         storageRecord.setGmtModified(LocalDateTime.now());
 
-        // 新增行寄存记录
-        insert(storageRecord);
-
-        // 将寄存的费用及管理员相关信息添加到「营业额记录表中」
-        TurnoverRecord turnoverRecord = new TurnoverRecord();
-        turnoverRecord.setAdminId(storageRecord.getAdminId());
-        turnoverRecord.setLuggageId(storageRecord.getLuggageId());
-        turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
-        turnoverRecord.setRemark(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
-
-        turnoverRecordManager.insert(turnoverRecord);
-
-        return storageRecord.getLuggageId();
+        return storageRecord;
     }
 
     /**
@@ -166,6 +200,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
 
     /**
      * 查询所有的行李寄存记录
+     *
      * @return
      */
     @Override

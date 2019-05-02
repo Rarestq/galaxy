@@ -8,15 +8,15 @@
  */
 package com.wuxiu.galaxy.dal.dao;
 
-import com.wuxiu.galaxy.dal.domain.FixedChargeCalculationDetail;
+import com.wuxiu.galaxy.dal.domain.FragileCalculateRuleDetail;
 import com.wuxiu.galaxy.api.common.base.BaseDao;
 
 /**  
- * <p>FixedChargeCalculationDetailDao接口</p>
- * 固定计费表
+ * <p>FragileCalculateRuleDetailDao接口</p>
+ * 易碎行李计费规则细节表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-22
+ * @since 2019-05-02
  */
-public interface FixedChargeCalculationDetailDao extends BaseDao<FixedChargeCalculationDetail> {
+public interface FragileCalculateRuleDetailDao extends BaseDao<FragileCalculateRuleDetail> {
 
 }
