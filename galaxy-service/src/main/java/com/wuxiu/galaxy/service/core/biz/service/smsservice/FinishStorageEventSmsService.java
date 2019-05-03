@@ -1,6 +1,11 @@
 package com.wuxiu.galaxy.service.core.biz.service.smsservice;
 
+import com.google.common.eventbus.AsyncEventBus;
+import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
+import com.wuxiu.galaxy.service.core.bus.event.FinishStorageEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +18,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class FinishStorageEventSmsService {
 
-    /**
-     * todo:完成寄存时，发送短信服务
-     */
-    private void notifyDepositorBySMS() {
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
+    @Autowired
+    private LuggageStorageRecordManager storageRecordManager;
+
+    /**
+     * todo:完成寄存时，发送行李寄存完成事件
+     *
+     * @param luggageId 前台返回的行李寄存记录主键id
+     */
+    public void notifyDepositorBySMS(Long luggageId) {
+
+        // 查询刚完成行李寄存的记录信息
+        LuggageStorageRecord storageRecord = storageRecordManager.selectById(luggageId);
+
+        // 发送完成寄存事件
+        asyncEventBus.post(FinishStorageEvent.builder()
+                .luggageRecordNo(storageRecord.getLuggageRecordNo())
+                .adminPhone(storageRecord.getAdminPhone())
+                .depositorName(storageRecord.getDepositorName())
+                .depositorPhone(storageRecord.getDepositorPhone())
+                .storageEndTime(storageRecord.getStorageEndTime())
+                .build());
     }
 
 }

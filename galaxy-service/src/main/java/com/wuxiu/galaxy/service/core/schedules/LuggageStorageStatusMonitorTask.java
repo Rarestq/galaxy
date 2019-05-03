@@ -4,12 +4,16 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
+import com.wuxiu.galaxy.service.core.base.enums.SmsTypeEnum;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsBody;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsSender;
 import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -30,6 +34,11 @@ public class LuggageStorageStatusMonitorTask {
     @Autowired
     private AsyncEventBus asyncEventBus;
 
+    @Autowired
+    private SmsSender smsSender;
+
+    private static final long MINUTES_BEFORE_OVERDUE = 30L;
+
     /**
      * 短信通知寄存者行李寄存即将逾期(寄存结束时间前 15 min 通知)，若已逾期，则更新状态
      * <p>
@@ -48,6 +57,14 @@ public class LuggageStorageStatusMonitorTask {
             long storageEndTimeMilli =
                     storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
 
+            // 根据寄存时长，在其寄存时间到达前半小时发送短信告知用户
+            if (isHalfHourBeforeOverdue(storageEndTime)) {
+                SmsBody smsBody = buildSmsBody(storageRecord);
+
+                // 发送逾期前通知提醒短信
+                smsSender.sendSms(smsBody);
+            }
+
             // 已逾期，发送事件
             if (isTimeExpired(storageEndTimeMilli)) {
                 asyncEventBus.post(CreateOverdueRecordEvent.builder()
@@ -56,10 +73,28 @@ public class LuggageStorageStatusMonitorTask {
                                 storageRecord.getStatus()))
                         .remark(storageRecord.getRemark())
                         .build());
-                log.info("已发送自动创建逾期行李寄存记录：storageRecord:{}" + storageRecord);
+                log.info("已发送自动创建逾期行李寄存记录事件：storageRecord:{}" + storageRecord);
             }
         }
 
+    }
+
+    /**
+     * 构造 SmsBody
+     *
+     * @param storageRecord
+     * @return
+     */
+    private SmsBody buildSmsBody(LuggageStorageRecord storageRecord) {
+        SmsBody smsBody = new SmsBody();
+        smsBody.setAdminPhone(storageRecord.getAdminPhone());
+        smsBody.setDepositorName(storageRecord.getDepositorName());
+        smsBody.setDepositorPhone(storageRecord.getDepositorPhone());
+        smsBody.setStorageRecordNo(storageRecord.getLuggageRecordNo());
+        smsBody.setStorageEndTime(storageRecord.getStorageEndTime());
+        smsBody.setSmsType(SmsTypeEnum.BEFORE_OVERDUE_SMS_TYPE.getCode());
+
+        return smsBody;
     }
 
     /**
@@ -70,5 +105,19 @@ public class LuggageStorageStatusMonitorTask {
      */
     private boolean isTimeExpired(long timeValue) {
         return timeValue > System.currentTimeMillis();
+    }
+
+    /**
+     * 判断当前时间是否为寄存结束时间前半小时
+     *
+     * @param localDateTime
+     * @return
+     */
+    private boolean isHalfHourBeforeOverdue(LocalDateTime localDateTime) {
+
+        Duration between = Duration.between(localDateTime, LocalDateTime.now());
+        long minutes = between.toMinutes();
+
+        return MINUTES_BEFORE_OVERDUE == minutes;
     }
 }

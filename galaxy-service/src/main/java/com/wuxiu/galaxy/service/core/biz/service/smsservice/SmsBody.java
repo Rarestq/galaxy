@@ -42,7 +42,12 @@ public class SmsBody implements Serializable {
     private LocalDateTime storageEndTime;
 
     /**
-     * 寄存所需费用/逾期补收费用
+     * 寄存所需费用
      */
     private String fee;
+
+    /**
+     * 短信类型
+     */
+    private Integer smsType;
 }

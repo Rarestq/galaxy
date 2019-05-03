@@ -2,13 +2,17 @@ package com.wuxiu.galaxy.service.core.biz.service.smsservice;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import com.wuxiu.galaxy.api.common.expection.SmsException;
+import com.wuxiu.galaxy.service.core.base.utils.SplicingStringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.*;
+import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.ACCOUNT_SID;
+import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.AUTH_TOKEN;
+import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.FROM_PHONE;
 
 /**
  * twilio 短信发送
@@ -20,16 +24,18 @@ import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.*;
 @Component
 public class SmsSender {
 
-    public void sendSms(String smsContent) {
-
+    static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    }
+
+    public void sendSms(SmsBody smsBody) {
 
         Message message = Message
                 // to
-                .creator(TO_PHONE,
+                .creator(new PhoneNumber(smsBody.getDepositorPhone()),
                         // from
                         FROM_PHONE,
-                        smsContent)
+                        SplicingStringUtils.getSmsContentBySmsType(smsBody))
                 .create();
 
         if (!Objects.equals(message.getStatus(), Message.Status.SENT)) {

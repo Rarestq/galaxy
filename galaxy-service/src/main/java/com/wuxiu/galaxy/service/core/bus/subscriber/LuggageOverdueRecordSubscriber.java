@@ -5,8 +5,12 @@ import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.SaveLuggageOverdueRecordDTO;
+import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
+import com.wuxiu.galaxy.service.core.base.enums.SmsTypeEnum;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
-import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsBody;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsSender;
 import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +30,10 @@ public class LuggageOverdueRecordSubscriber {
     private LuggageOverdueRecordService luggageOverdueRecordService;
 
     @Autowired
-    private LuggageStorageRecordService storageRecordService;
+    private LuggageStorageRecordManager storageRecordManager;
+
+    @Autowired
+    private SmsSender smsSender;
 
     /**
      * 自动创建行李逾期记录
@@ -53,5 +60,33 @@ public class LuggageOverdueRecordSubscriber {
         luggageOverdueRecordService.createLuggageOverdueRecord(overdueRecordDTO,
                 operateUserDTO);
         log.info("自动创建行李逾期记录结束");
+
+        // 查询寄存记录信息
+        LuggageStorageRecord storageRecord =
+                storageRecordManager.selectById(event.getLuggageId());
+
+        SmsBody smsBody = buildSmsBody(storageRecord);
+
+        // 发送短信
+        smsSender.sendSms(smsBody);
+
+    }
+
+    /**
+     * 构造 SmsBody
+     *
+     * @param storageRecord
+     * @return
+     */
+    private SmsBody buildSmsBody(LuggageStorageRecord storageRecord) {
+        SmsBody smsBody = new SmsBody();
+        smsBody.setAdminPhone(storageRecord.getAdminPhone());
+        smsBody.setDepositorName(storageRecord.getDepositorName());
+        smsBody.setDepositorPhone(storageRecord.getDepositorPhone());
+        smsBody.setStorageRecordNo(storageRecord.getLuggageRecordNo());
+        smsBody.setStorageEndTime(storageRecord.getStorageEndTime());
+        smsBody.setSmsType(SmsTypeEnum.OVERDUE_SMS_TYPE.getCode());
+
+        return smsBody;
     }
 }
