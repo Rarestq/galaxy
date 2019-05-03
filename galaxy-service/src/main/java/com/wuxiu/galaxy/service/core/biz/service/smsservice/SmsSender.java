@@ -4,7 +4,7 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import com.wuxiu.galaxy.api.common.expection.SmsException;
-import com.wuxiu.galaxy.service.core.base.utils.SplicingStringUtils;
+import com.wuxiu.galaxy.service.core.base.utils.SmsTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ public class SmsSender {
                 .creator(new PhoneNumber(smsBody.getDepositorPhone()),
                         // from
                         FROM_PHONE,
-                        SplicingStringUtils.getSmsContentBySmsType(smsBody))
+                        SmsTemplateUtils.getSmsContentBySmsType(smsBody))
                 .create();
 
         if (!Objects.equals(message.getStatus(), Message.Status.SENT)) {

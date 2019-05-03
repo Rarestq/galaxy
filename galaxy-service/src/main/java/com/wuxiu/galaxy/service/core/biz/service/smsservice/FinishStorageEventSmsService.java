@@ -25,7 +25,7 @@ public class FinishStorageEventSmsService {
     private LuggageStorageRecordManager storageRecordManager;
 
     /**
-     * todo:完成寄存时，发送行李寄存完成事件
+     * 完成寄存时，发送行李寄存完成事件
      *
      * @param luggageId 前台返回的行李寄存记录主键id
      */

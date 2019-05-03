@@ -7,15 +7,18 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 
 /**
- * 拼接字符串工具类
+ * 短信模板工具类
  *
  * @author: wuxiu
  * @date: 2019/5/3 08:47
  */
-public class SplicingStringUtils {
+public class SmsTemplateUtils {
+
+    private static final String TEMPLATE_PREFIX = "【存易天-Galaxy】";
 
     /**
      * 根据发送短信的类型指定具体的内容模板
+     *
      * @param smsBody
      * @return
      */
@@ -43,7 +46,8 @@ public class SplicingStringUtils {
      */
     public static String getStorageSmsContent(SmsBody smsBody) {
         StringBuilder builder = new StringBuilder(70);
-        builder.append("尊敬的 ").append(smsBody.getDepositorName())
+        builder.append(TEMPLATE_PREFIX)
+                .append("尊敬的 ").append(smsBody.getDepositorName())
                 .append(" 先生/女士，").append("您的寄存编号为 ")
                 .append(smsBody.getStorageRecordNo()).append(" ,")
                 .append("请您在 ").append(smsBody.getStorageEndTime())
@@ -61,7 +65,8 @@ public class SplicingStringUtils {
      */
     public static String getBeforeOverdueSmsContent(SmsBody smsBody) {
         StringBuilder builder = new StringBuilder(70);
-        builder.append("尊敬的 ").append(smsBody.getDepositorName())
+        builder.append(TEMPLATE_PREFIX)
+                .append("尊敬的 ").append(smsBody.getDepositorName())
                 .append(" 先生/女士，").append("您寄存编号为 ")
                 .append(smsBody.getStorageRecordNo()).append(" 的行李即将逾期,")
                 .append("请您在 ").append(smsBody.getStorageEndTime())
@@ -79,7 +84,8 @@ public class SplicingStringUtils {
      */
     public static String getOverdueSmsContent(SmsBody smsBody) {
         StringBuilder builder = new StringBuilder(70);
-        builder.append("尊敬的 ").append(smsBody.getDepositorName())
+        builder.append(TEMPLATE_PREFIX)
+                .append("尊敬的 ").append(smsBody.getDepositorName())
                 .append(" 先生/女士，").append("您寄存编号为 ")
                 .append(smsBody.getStorageRecordNo()).append(" 的行李已逾期,")
                 .append("请您及时进行取件，")

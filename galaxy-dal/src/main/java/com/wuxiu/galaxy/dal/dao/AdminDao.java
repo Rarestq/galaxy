@@ -18,5 +18,4 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  * @since 2019-04-16
  */
 public interface AdminDao extends BaseDao<Admin> {
-
 }
