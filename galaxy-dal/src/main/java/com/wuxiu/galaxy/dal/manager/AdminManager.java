@@ -18,8 +18,6 @@ import com.wuxiu.galaxy.dal.common.dto.AdminInfoQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.LoginDTO;
 import com.wuxiu.galaxy.dal.domain.Admin;
 
-import java.util.List;
-
 /**
  *   
  * AdminManager
@@ -54,7 +52,7 @@ public interface AdminManager extends BaseManager<Admin> {
      * @param adminName
      * @return
      */
-    List<Admin> selectAdminByName(String adminName);
+    Admin selectAdminByName(String adminName);
 
     /**
      * 根据电话号码和登录密码查询管理员信息(确保唯一性)

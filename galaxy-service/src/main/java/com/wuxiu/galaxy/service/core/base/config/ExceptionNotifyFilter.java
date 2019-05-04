@@ -13,7 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
- * dubbo 异常通知过滤器
+ * META-INF.dubbo 异常通知过滤器
  *
  * @author: wuxiu
  * @date: 2019/4/17 20:31

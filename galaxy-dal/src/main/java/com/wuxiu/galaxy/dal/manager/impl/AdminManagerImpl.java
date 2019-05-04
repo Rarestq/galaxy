@@ -119,11 +119,11 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
      * @return
      */
     @Override
-    public List<Admin> selectAdminByName(String adminName) {
+    public Admin selectAdminByName(String adminName) {
         Wrapper<Admin> wrapper = new EntityWrapper<>();
         wrapper.eq("admin_name", adminName);
 
-        return selectList(wrapper);
+        return selectOne(wrapper);
     }
 
     /**

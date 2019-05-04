@@ -6,6 +6,7 @@ import com.wuxiu.galaxy.web.biz.form.TurnoverRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.vo.Pair;
 import com.wuxiu.galaxy.web.biz.vo.TurnoverRecordVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,4 +32,11 @@ public interface GwTurnoverService {
      * @return
      */
     APIResult<List<Pair<Long, String>>> getTurnoverRecordPair();
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    APIResult<BigDecimal> statisticsTotalTurnover();
 }

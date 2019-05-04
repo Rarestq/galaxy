@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.ACCOUNT_SID;
-import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.AUTH_TOKEN;
-import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.FROM_PHONE;
+import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.*;
 
 /**
  * twilio 短信发送
@@ -45,4 +43,15 @@ public class SmsSender {
 
         System.out.println(message.getSid());
     }
+
+//    public static void main(String[] args) {
+//        Message message = Message
+//                // to
+//                .creator(TO_PHONE,
+//                        // from
+//                        FROM_PHONE,
+//                        "you are handsome")
+//                .create();
+//        System.out.println(message.getSid());
+//    }
 }

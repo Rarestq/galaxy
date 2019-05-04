@@ -51,6 +51,7 @@ public class LoginServiceImpl implements LoginService {
         adminInfoDTO.setAdminName(admin.getAdminName());
         adminInfoDTO.setAdminPhone(admin.getAdminPhone());
         adminInfoDTO.setPassword(admin.getPassword());
+        adminInfoDTO.setAdminType(admin.getAdminType());
 
         return adminInfoDTO;
     }

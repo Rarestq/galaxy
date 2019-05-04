@@ -10,6 +10,7 @@ import com.wuxiu.galaxy.service.core.biz.service.apiservice.TurnoverRecordServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -44,5 +45,15 @@ public class TurnoverRecordFacadeImpl implements TurnoverRecordFacade {
     public APIResult<PageInfo<TurnoverRecordDTO>> queryTurnoverRecordList(
             TurnoverRecordQueryDTO queryDTO) {
         return APIResult.ok(turnoverRecordService.queryTurnoverRecordList(queryDTO));
+    }
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    @Override
+    public APIResult<BigDecimal> statisticsTotalTurnover() {
+        return APIResult.ok(turnoverRecordService.statisticsTotalTurnover());
     }
 }

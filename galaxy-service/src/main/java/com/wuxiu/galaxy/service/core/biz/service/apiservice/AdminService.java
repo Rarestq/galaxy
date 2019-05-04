@@ -4,6 +4,7 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
+import com.wuxiu.galaxy.dal.domain.Admin;
 
 import java.util.List;
 
@@ -38,4 +39,12 @@ public interface AdminService {
      * @return
      */
     void deleteAdmin(List<Long> adminIds);
+
+    /**
+     * 根据管理员姓名查看管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    Admin findByName(String adminName);
 }

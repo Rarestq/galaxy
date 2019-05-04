@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,4 +89,22 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
 
         return PageInfoUtil.of(recordDTOPage, records);
     }
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    @Override
+    public BigDecimal statisticsTotalTurnover() {
+        List<String> turnovers = turnoverRecordManager.statisticsTotalTurnover();
+        BigDecimal initValue = BigDecimal.ZERO;
+        BigDecimal totalTurnover = BigDecimal.ZERO;
+        for (String turnover : turnovers) {
+            totalTurnover = initValue.add(new BigDecimal(turnover));
+        }
+
+        return totalTurnover;
+    }
+
 }

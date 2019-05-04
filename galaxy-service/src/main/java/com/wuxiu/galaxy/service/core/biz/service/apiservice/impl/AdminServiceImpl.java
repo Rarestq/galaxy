@@ -8,6 +8,7 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
+import com.wuxiu.galaxy.dal.domain.Admin;
 import com.wuxiu.galaxy.dal.manager.AdminManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
@@ -93,6 +94,10 @@ public class AdminServiceImpl implements AdminService {
                 UserTypeEnum.SUPER_ADMIN)) {
             newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
                     CommonConstant.SUPER_ADMIN_NO_PREFIX));
+        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
+                UserTypeEnum.SYSTEM)) {
+            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.SYSTEM_PREFIX));
         }
         newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
         newAdminInfoDTO.setAdminType(adminType);
@@ -153,5 +158,19 @@ public class AdminServiceImpl implements AdminService {
             return;
         }
         adminManager.deleteBatchIds(adminIds);
+    }
+
+    /**
+     * 根据管理员姓名查找管理员信息
+     * @param adminName
+     * @return
+     */
+    @Override
+    public Admin findByName(String adminName) {
+        if (StringUtils.isNotBlank(adminName)) {
+            log.info("管理员姓名不能为空");
+            throw new ParamException("管理员姓名不能为空");
+        }
+        return adminManager.selectAdminByName(adminName);
     }
 }

@@ -80,11 +80,9 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         }
 
         // 根据管理员姓名查询管理员信息
-        List<Admin> admins = adminManager.selectAdminByName(recordQueryDTO.getAdminName());
-        List<Long> adminIds = StreamUtil.collectDistinctKeyProperty(
-                admins, Admin::getAdminId);
-        if (CollectionUtils.isNotEmpty(adminIds)) {
-            wrapper.in("admin_id", adminIds);
+        Admin admin = adminManager.selectAdminByName(recordQueryDTO.getAdminName());
+        if (Objects.nonNull(admin.getAdminId())) {
+            wrapper.eq("admin_id", admin.getAdminId());
         }
 
         if (Objects.nonNull(recordQueryDTO.getGmtCreate())) {
@@ -156,6 +154,21 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
     }
 
     /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    @Override
+    public List<String> statisticsTotalTurnover() {
+        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<>();
+
+        List<TurnoverRecord> turnoverRecords = selectList(wrapper);
+
+        return StreamUtil.collectDistinctKeyProperty(turnoverRecords,
+                TurnoverRecord::getFee);
+    }
+
+    /**
      * 构造 TurnoverRecordDTO 对象
      *
      * @param turnoverRecordPage
@@ -189,4 +202,6 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
 
         return page;
     }
+
+
 }

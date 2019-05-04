@@ -20,8 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 营业额记录相关服务
@@ -95,5 +97,27 @@ public class GwTurnoverServiceImpl implements GwTurnoverService {
                 ObjectConvertUtil.convertDTO2Domain(data);
 
         return APIResult.ok(turnoverRecords);
+    }
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    @Override
+    public APIResult<BigDecimal> statisticsTotalTurnover() {
+        APIResult<BigDecimal> totalTurnoverAPIResult =
+                turnoverRecordClient.statisticsTotalTurnover();
+        if (!totalTurnoverAPIResult.isSuccess()) {
+            log.warn("统计营业总额，result:{}", totalTurnoverAPIResult);
+            return CommonUtil.errorAPIResult(totalTurnoverAPIResult);
+        }
+
+        BigDecimal totalTurnover = totalTurnoverAPIResult.getData();
+        if (Objects.isNull(totalTurnover)) {
+            return null;
+        }
+
+        return APIResult.ok(totalTurnover);
     }
 }

@@ -68,9 +68,21 @@ swagger:
   version: V1.0.0
   base-package: com.wuxiu
   exclude-path:
-  - /dubbo/*
+  - /META-INF.dubbo/*
   - /online/*
   - /offline/*
   contact:
     name: charon-wuxiu
     email: rarestzhou@gmail.com
+
+#jwt
+#jwt:
+#  header: Authorization
+#  secret: mySecret
+#  # token 过期时间 2个小时
+#  expiration: 7200000
+#  auth:
+#    # 授权路径
+#    path: /login
+#    # 获取用户信息
+#    account: /info

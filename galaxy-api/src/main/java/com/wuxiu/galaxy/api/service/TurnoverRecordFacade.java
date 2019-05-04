@@ -6,6 +6,7 @@ import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,4 +32,11 @@ public interface TurnoverRecordFacade {
      */
     APIResult<PageInfo<TurnoverRecordDTO>> queryTurnoverRecordList(
             TurnoverRecordQueryDTO queryDTO);
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    APIResult<BigDecimal> statisticsTotalTurnover();
 }

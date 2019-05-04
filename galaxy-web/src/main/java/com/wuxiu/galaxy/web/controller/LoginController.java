@@ -44,13 +44,15 @@ public class LoginController {
             return APIResult.error(loginCheck);
         }
         APIResult<AdminInfoDTO> adminInfoDTOAPIResult = loginService.checkLogin(loginForm);
-        if (adminInfoDTOAPIResult.isSuccess()) {
-            AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
-            request.getSession().setAttribute("adminInfoDTO", adminInfoDTO);
-            log.info("login -> " + adminInfoDTO.getAdminName() + "用户已登录 ");
-            return APIResult.ok(SUCCESS.getMessage());
+        if (!adminInfoDTOAPIResult.isSuccess()) {
+            return APIResult.error(LOGIN_FAILURE.getCode(), LOGIN_FAILURE.getMessage());
         }
-        return APIResult.error(LOGIN_FAILURE.getCode(), LOGIN_FAILURE.getMessage());
+
+        AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
+        request.getSession().setAttribute("adminInfoDTO", adminInfoDTO);
+        log.info("login -> " + adminInfoDTO.getAdminName() + "用户已登录 ");
+
+        return APIResult.ok(SUCCESS.getMessage());
     }
 
     @ApiOperation(value = "登出", notes = "登出")
@@ -58,11 +60,12 @@ public class LoginController {
     public APIResult logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute(ADMIN_STRING);
-        if (Objects.isNull(session.getAttribute(ADMIN_STRING))) {
-            log.info("logout -> 用户已注销 ");
-            return APIResult.ok();
+        if (Objects.nonNull(session.getAttribute(ADMIN_STRING))) {
+            return APIResult.error(LOGOUT_FAILURE.getCode(), LOGOUT_FAILURE.getMessage());
         }
-        return APIResult.error(LOGOUT_FAILURE.getCode(), LOGOUT_FAILURE.getMessage());
+
+        log.info("logout -> 用户已注销 ");
+        return APIResult.ok();
     }
 
 }

@@ -26,7 +26,8 @@ public class SmsConstant {
     public static final PhoneNumber FROM_PHONE = new PhoneNumber("+16194576189");
 
     /**
-     * who receive sms
+     * who receive sms(must be verified on twilio.com)
      */
     public static final PhoneNumber TO_PHONE = new PhoneNumber("+8615180354187");
+
 }

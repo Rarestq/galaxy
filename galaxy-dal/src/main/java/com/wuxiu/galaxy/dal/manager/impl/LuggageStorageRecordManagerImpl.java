@@ -91,7 +91,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         turnoverRecord.setCalculationRuleId(newLuggageStorageRecordDTO
                 .getCalculateRuleId());
         turnoverRecord.setLuggageId(storageRecord.getLuggageId());
-        turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
+        turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeValue().toString());
         turnoverRecord.setRemark(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
 
         return turnoverRecord;

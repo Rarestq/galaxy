@@ -10,8 +10,8 @@ import java.util.Map;
 /**
  * 基于 baomidou BaseMapper 的 BaseDao 接口服务
  *
- * @author wuxiu
  * @param <T>
+ * @author wuxiu
  */
 public interface BaseDao<T extends BaseModel> extends BaseMapper<T> {
     List<Long> selectIdPage(@Param("cm") Map<String, Object> var1);

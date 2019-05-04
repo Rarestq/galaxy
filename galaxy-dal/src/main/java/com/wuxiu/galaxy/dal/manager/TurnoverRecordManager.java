@@ -19,13 +19,16 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
 
 import java.util.List;
 
-/**  
+/**
+ *   
  * TurnoverRecordManager
-  * 营业额记录表
- * 
-  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * 营业额记录表
+ *  
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *
  * @since 2019-04-22
- */
+ *  
+ */
 public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
 
     /**
@@ -50,4 +53,11 @@ public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
      * @return
      */
     TurnoverRecord getTurnoverRecordByLuggageId(Long luggageId);
+
+    /**
+     * 统计营业总额
+     *
+     * @return
+     */
+    List<String> statisticsTotalTurnover();
 }

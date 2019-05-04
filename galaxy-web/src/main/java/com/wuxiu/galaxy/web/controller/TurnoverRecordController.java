@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -51,5 +52,11 @@ public class TurnoverRecordController {
     @GetMapping("/query")
     public APIResult<List<Pair<Long, String>>> getTurnoverRecordPair() {
         return turnoverService.getTurnoverRecordPair();
+    }
+
+    @ApiOperation(value = "统计营业总额", notes = "统计营业总额")
+    @GetMapping("/statistics")
+    public APIResult<BigDecimal> statisticsTotalTurnover() {
+        return turnoverService.statisticsTotalTurnover();
     }
 }
