@@ -27,7 +27,7 @@ import static com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum.*;
  * @date: 2019/4/2 14:51
  */
 @Slf4j
-@RequestMapping("/luggage_storage/login")
+@RequestMapping("/luggage_storage/api/login")
 @RestController
 public class LoginController {
 

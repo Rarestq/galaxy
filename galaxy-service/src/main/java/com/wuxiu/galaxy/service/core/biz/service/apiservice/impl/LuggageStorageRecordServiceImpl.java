@@ -1,7 +1,6 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.google.common.eventbus.AsyncEventBus;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
@@ -9,8 +8,6 @@ import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.*;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
-import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
-import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
@@ -37,15 +34,6 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
     @Autowired
     private LuggageStorageRecordManager storageRecordManager;
-
-    @Autowired
-    private TurnoverRecordManager turnoverRecordManager;
-
-    @Autowired
-    private LuggageTypeManager luggageTypeManager;
-
-    @Autowired
-    private AsyncEventBus asyncEventBus;
 
     @Autowired
     private LuggageFeeMeterFactory feeMeterFactory;

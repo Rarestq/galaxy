@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "管理员相关接口")
-@RequestMapping("/luggage_storage/admin")
+@RequestMapping("/luggage_storage/api/admin")
 @RestController
 public class AdminController {
 

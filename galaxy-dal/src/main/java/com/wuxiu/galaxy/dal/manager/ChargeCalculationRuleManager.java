@@ -8,8 +8,11 @@
  */
 package com.wuxiu.galaxy.dal.manager;
 
+import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.ChargeCalculationRule;
 import com.wuxiu.galaxy.api.common.base.BaseManager;
+
+import java.util.List;
 
 /**  
  * ChargeCalculationRuleManager
@@ -20,4 +23,10 @@ import com.wuxiu.galaxy.api.common.base.BaseManager;
  */
 public interface ChargeCalculationRuleManager extends BaseManager<ChargeCalculationRule> {
 
+    /**
+     * 获取计费规则列表(key-计费规则id，value-行李类型名称)
+     *
+     * @return
+     */
+    List<PairDTO<Long, String>> getChargeCalculateRules();
 }

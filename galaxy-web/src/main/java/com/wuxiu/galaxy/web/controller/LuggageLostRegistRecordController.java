@@ -25,7 +25,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @Api(tags = "行李遗失登记记录相关接口")
-@RequestMapping("/luggage_lost_register/register")
+@RequestMapping("/luggage_storage/api/register")
 @RestController
 public class LuggageLostRegistRecordController {
 

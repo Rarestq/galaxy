@@ -24,7 +24,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @Api(tags = "行李寄存相关接口")
-@RequestMapping("/station_luggage_storage/storage")
+@RequestMapping("/luggage_storage/api/storage")
 @RestController
 public class LuggageStorageRecordController {
 

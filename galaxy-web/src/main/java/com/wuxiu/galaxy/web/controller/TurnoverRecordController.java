@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "营业额记录相关接口")
-@RequestMapping("/turnover_record/turnover")
+@RequestMapping("/luggage_storage/api/turnover")
 @RestController
 public class TurnoverRecordController {
 

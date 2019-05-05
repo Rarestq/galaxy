@@ -26,7 +26,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @Api(tags = "行李遗失赔偿登记记录相关接口")
-@RequestMapping("/luggage_lost_compensate/compensate")
+@RequestMapping("/luggage_storage/api/compensate")
 @RestController
 public class LuggageLostCompensateController {
 

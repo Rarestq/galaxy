@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Api(tags = "行李取件相关接口")
-@RequestMapping("/pickup_luggage/pickup")
+@RequestMapping("/luggage_storage/api/pickup")
 @RestController
 public class PickupLuggageController {
 

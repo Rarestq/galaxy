@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Api(tags = "短信相关接口")
-@RequestMapping("/luggage_storage/sms")
+@RequestMapping("/luggage_storage/api/sms")
 @RestController
 public class SmsController {
 

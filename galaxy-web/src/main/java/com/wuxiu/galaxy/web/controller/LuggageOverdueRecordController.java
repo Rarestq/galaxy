@@ -25,7 +25,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @Api(tags = "行李逾期未取清理相关接口")
-@RequestMapping("/luggage_overdue_record/overdue")
+@RequestMapping("/luggage_storage/api/overdue")
 @RestController
 public class LuggageOverdueRecordController {
 
