@@ -8,13 +8,10 @@
  */
 package com.wuxiu.galaxy.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.base.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * 行李寄存记录信息
@@ -74,15 +71,13 @@ public class LuggageStorageInfoDTO extends BaseModel {
     /**
      * 开始寄存时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "开始寄存时间", required = true)
-    private LocalDateTime storageStartTime;
+    private String storageStartTime;
     /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "寄存结束时间", required = true)
-    private LocalDateTime storageEndTime;
+    private String storageEndTime;
     /**
      * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */

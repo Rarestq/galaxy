@@ -1,7 +1,7 @@
 package com.wuxiu.galaxy.dal.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -66,11 +66,11 @@ public class NewLuggageStorageRecordDTO implements Serializable {
     /**
      * 寄存开始时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     private LocalDateTime storageStartTime;
     /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     private LocalDateTime storageEndTime;
 }

@@ -1,10 +1,17 @@
 package com.wuxiu.galaxy.api.common.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * 全局异常错误码枚举
  *
  * @author wuxiu
  */
+@AllArgsConstructor
+@Getter
+@ToString
 public enum GlobalErrorCodeEnum implements ErrorCode {
 
     /**
@@ -31,20 +38,5 @@ public enum GlobalErrorCodeEnum implements ErrorCode {
 
     private final String code;
     private final String message;
-
-    private GlobalErrorCodeEnum(String code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    @Override
-    public String getCode() {
-        return this.code;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.message;
-    }
 }
 

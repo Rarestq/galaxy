@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class DateUtil {
 
     /**
-     * 计算逾期时长(单位：小时)
+     * 计算逾期（寄存）时长(单位：小时)
      *
      * @param storageEndTime
      * @param now
@@ -32,7 +32,7 @@ public class DateUtil {
     }
 
     /**
-     * 计算逾期时长(单位：天)
+     * 计算逾期（寄存）时长(单位：天)
      *
      * @param storageEndTime
      * @param now

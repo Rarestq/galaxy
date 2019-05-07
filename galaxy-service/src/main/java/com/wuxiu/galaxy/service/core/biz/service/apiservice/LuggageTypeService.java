@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice;
 
+import com.wuxiu.galaxy.api.dto.LuggageTypeDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 
@@ -27,4 +28,11 @@ public interface LuggageTypeService {
      * @return ChargeType
      */
     LuggageType getLuggageTypeById(Long luggageTypeId);
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    List<LuggageTypeDTO> getLuggageTypes();
 }

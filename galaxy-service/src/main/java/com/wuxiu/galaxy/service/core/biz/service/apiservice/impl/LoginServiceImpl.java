@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  * 登录服务实现类
  *
@@ -29,11 +31,10 @@ public class LoginServiceImpl implements LoginService {
         com.wuxiu.galaxy.dal.common.dto.LoginDTO dto =
                 new com.wuxiu.galaxy.dal.common.dto.LoginDTO();
         dto.setAdminName(loginDTO.getAdminName());
-        dto.setAdminPhone(loginDTO.getAdminPhone());
         dto.setPassword(loginDTO.getPassword());
 
         // 根据电话号码和登录密码查询管理员信息
-        Admin admin = adminManager.getAdminInfoByPhoneAndPwd(dto);
+        Admin admin = adminManager.getAdminInfoByNameAndPwd(dto);
 
         return buildAdminInfoDTO(admin);
     }
@@ -45,6 +46,10 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     private AdminInfoDTO buildAdminInfoDTO(Admin admin) {
+        if (Objects.isNull(admin)) {
+            return null;
+        }
+
         AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
         adminInfoDTO.setAdminId(admin.getAdminId());
         adminInfoDTO.setAdminNo(admin.getAdminNo());

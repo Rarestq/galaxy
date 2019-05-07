@@ -36,7 +36,8 @@ public class SmsSender {
                         SmsTemplateUtils.getSmsContentBySmsType(smsBody))
                 .create();
 
-        if (!Objects.equals(message.getStatus(), Message.Status.SENT)) {
+        if (Objects.equals(message.getStatus(), Message.Status.FAILED) ||
+                Objects.equals(message.getStatus(), Message.Status.UNDELIVERED)) {
             log.info("短信发送失败， status:{}" + message.getStatus());
             throw new SmsException("短信发送失败，请检查原因");
         }

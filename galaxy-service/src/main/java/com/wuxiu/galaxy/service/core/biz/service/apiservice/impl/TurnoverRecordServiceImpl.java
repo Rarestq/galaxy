@@ -91,7 +91,7 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
     }
 
     /**
-     * 统计营业总额
+     * todo:统计营业总额(按日期)
      *
      * @return
      */

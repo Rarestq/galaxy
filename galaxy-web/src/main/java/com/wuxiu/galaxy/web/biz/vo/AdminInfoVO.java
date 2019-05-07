@@ -1,12 +1,10 @@
 package com.wuxiu.galaxy.web.biz.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 管理员信息页面展示对象
@@ -41,20 +39,25 @@ public class AdminInfoVO implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     private String adminPhone;
     /**
+     * 登录密码
+     */
+    @ApiModelProperty(value = "登录密码", required = true)
+    private String password;
+    /**
      * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
      */
     @ApiModelProperty(value = "管理员类型(1-普通管理员，2-超级管理员,3-系统)", required = true)
-    private Integer adminType;
+    private String adminType;
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "创建时间", required = true)
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
     /**
      * 修改时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "修改时间", required = true)
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 }

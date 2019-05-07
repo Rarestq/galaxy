@@ -73,11 +73,17 @@ public class AdminServiceImpl implements AdminService {
             // 编辑管理员信息
             AdminInfoDTO editAdminInfoDTO = new AdminInfoDTO();
             editAdminInfoDTO.setAdminId(adminInfoDTO.getAdminId());
-            editAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
-            editAdminInfoDTO.setAdminNo(adminInfoDTO.getAdminNo());
-            editAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
-            editAdminInfoDTO.setAdminType(adminType);
-            editAdminInfoDTO.setPassword(adminInfoDTO.getPassword());
+            if (StringUtils.isNotEmpty(adminInfoDTO.getAdminName().trim())) {
+                editAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
+            }
+            if (StringUtils.isNotEmpty(adminInfoDTO.getAdminPhone().trim())) {
+                editAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
+            }
+            if (Objects.nonNull(adminType)) {
+                // 根据修改后的管理员类型重新生成编号
+                genAdminNoByType(adminType, editAdminInfoDTO);
+                editAdminInfoDTO.setAdminType(adminType);
+            }
             editAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
             return editAdminInfoDTO;
@@ -86,19 +92,7 @@ public class AdminServiceImpl implements AdminService {
         // 新增管理员信息
         AdminInfoDTO newAdminInfoDTO = new AdminInfoDTO();
         newAdminInfoDTO.setAdminName(adminInfoDTO.getAdminName());
-
-        if (Objects.equals(UserTypeEnum.valueOf(adminType), UserTypeEnum.ADMIN)) {
-            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-                    CommonConstant.ADMIN_NO_PREFIX));
-        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
-                UserTypeEnum.SUPER_ADMIN)) {
-            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-                    CommonConstant.SUPER_ADMIN_NO_PREFIX));
-        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
-                UserTypeEnum.SYSTEM)) {
-            newAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-                    CommonConstant.SYSTEM_PREFIX));
-        }
+        genAdminNoByType(adminType, newAdminInfoDTO);
         newAdminInfoDTO.setAdminPhone(adminInfoDTO.getAdminPhone());
         newAdminInfoDTO.setAdminType(adminType);
         newAdminInfoDTO.setPassword(Optional.ofNullable(adminInfoDTO.getPassword())
@@ -107,6 +101,27 @@ public class AdminServiceImpl implements AdminService {
         newAdminInfoDTO.setGmtModified(LocalDateTime.now());
 
         return newAdminInfoDTO;
+    }
+
+    /**
+     * 根据管理员类型生成编号
+     *
+     * @param adminType
+     * @param editAdminInfoDTO
+     */
+    private void genAdminNoByType(Integer adminType, AdminInfoDTO editAdminInfoDTO) {
+        if (Objects.equals(UserTypeEnum.valueOf(adminType), UserTypeEnum.ADMIN)) {
+            editAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.ADMIN_NO_PREFIX));
+        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
+                UserTypeEnum.SUPER_ADMIN)) {
+            editAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.SUPER_ADMIN_NO_PREFIX));
+        } else if (Objects.equals(UserTypeEnum.valueOf(adminType),
+                UserTypeEnum.SYSTEM)) {
+            editAdminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                    CommonConstant.SYSTEM_PREFIX));
+        }
     }
 
     /**
@@ -162,6 +177,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 根据管理员姓名查找管理员信息
+     *
      * @param adminName
      * @return
      */

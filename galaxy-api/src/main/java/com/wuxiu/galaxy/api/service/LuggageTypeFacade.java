@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.api.service;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.dto.LuggageTypeDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 
 import java.util.List;
@@ -19,4 +20,11 @@ public interface LuggageTypeFacade {
      * @return
      */
     APIResult<List<PairDTO<Long, String>>> getLuggageTypeList();
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    APIResult<List<LuggageTypeDTO>> getLuggageTypes();
 }

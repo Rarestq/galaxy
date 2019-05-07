@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.dal.common.dto;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
 import lombok.Data;
 
@@ -34,6 +35,6 @@ public class LuggageLostRegisterRecordQueryDTO implements Serializable {
     /**
      * 行李遗失登记时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     private LocalDateTime lostTime;
 }

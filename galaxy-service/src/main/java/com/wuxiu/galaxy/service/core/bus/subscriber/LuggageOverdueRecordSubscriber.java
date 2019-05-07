@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.bus.subscriber;
 
 import com.google.common.eventbus.Subscribe;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
@@ -48,12 +49,13 @@ public class LuggageOverdueRecordSubscriber {
 
         overdueRecordDTO.setLuggageId(event.getLuggageId());
         overdueRecordDTO.setRemark(event.getRemark());
-        Integer status = LuggageOverdueStatusEnum.valueOf(event.getStatus()).getCode();
+        Integer status = LuggageOverdueStatusEnum.getCodeByDesc(event.getStatus());
         overdueRecordDTO.setStatus(status);
 
         OperateUserDTO operateUserDTO = new OperateUserDTO();
         operateUserDTO.setOperateUserId(0L);
         operateUserDTO.setName(UserTypeEnum.SYSTEM.getDesc());
+        operateUserDTO.setOperateUserNo("SYSTEM");
         operateUserDTO.setOperateUserPhone("-");
         operateUserDTO.setUserTypeEnum(UserTypeEnum.SYSTEM);
 
@@ -82,7 +84,8 @@ public class LuggageOverdueRecordSubscriber {
         SmsBody smsBody = new SmsBody();
         smsBody.setAdminPhone(storageRecord.getAdminPhone());
         smsBody.setDepositorName(storageRecord.getDepositorName());
-        smsBody.setDepositorPhone(storageRecord.getDepositorPhone());
+        smsBody.setDepositorPhone(CommonConstant.PHONE_AREA_CODE +
+                storageRecord.getDepositorPhone());
         smsBody.setStorageRecordNo(storageRecord.getLuggageRecordNo());
         smsBody.setStorageEndTime(storageRecord.getStorageEndTime());
         smsBody.setSmsType(SmsTypeEnum.OVERDUE_SMS_TYPE.getCode());

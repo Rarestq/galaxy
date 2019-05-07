@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.dal.common.dto;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.dal.domain.PickupLuggageRecord;
 import lombok.Data;
 
@@ -37,6 +38,6 @@ public class PickupLuggageRecordQueryDTO implements Serializable {
     /**
      * 取件时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     private LocalDateTime pickupTime;
 }

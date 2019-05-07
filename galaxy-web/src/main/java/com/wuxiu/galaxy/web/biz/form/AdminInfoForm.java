@@ -20,6 +20,11 @@ public class AdminInfoForm implements Serializable {
     private static final long serialVersionUID = -3878144997576152012L;
 
     /**
+     * 管理员id(主键)
+     */
+    @ApiModelProperty(value = "管理员id", required = false)
+    private Long adminId;
+    /**
      * 管理员姓名
      */
     @ApiModelProperty(value = "管理员姓名", required = true)
@@ -35,8 +40,7 @@ public class AdminInfoForm implements Serializable {
     /**
      * 登录密码
      */
-    @ApiModelProperty(value = "登录密码", required = true)
-    @NotNull(message = "管理员登录密码不能为空")
+    @ApiModelProperty(value = "登录密码", required = false)
     private String password;
 
     /**

@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +36,7 @@ public class LuggageLostRegisterRecordQueryDTO extends PageInfo {
     /**
      * 行李遗失登记时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "行李遗失登记时间", required = false)
     private LocalDateTime lostTime;
 }

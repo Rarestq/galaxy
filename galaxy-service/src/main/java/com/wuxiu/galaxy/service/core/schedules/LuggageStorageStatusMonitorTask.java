@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 行李寄存结束日期监控任务
@@ -51,6 +52,12 @@ public class LuggageStorageStatusMonitorTask {
         // 查询所有有效的行李寄存记录信息
         List<LuggageStorageRecord> storageRecords =
                 storageRecordManager.selectAllStorageRecords();
+        if (hasNoOverdueRecords(storageRecords)) {
+            // 如果行李寄存记录中没有「寄存中」状态的记录时，直接返回
+            log.info("没有「寄存中」状态的记录");
+            return;
+        }
+
         for (LuggageStorageRecord storageRecord : storageRecords) {
             LocalDateTime storageEndTime = storageRecord.getStorageEndTime();
             // 将行李寄存结束时间转化为当前时区下的毫秒
@@ -65,15 +72,27 @@ public class LuggageStorageStatusMonitorTask {
                 smsSender.sendSms(smsBody);
             }
 
-            // 已逾期，发送事件
+            // 已逾期,更新寄存记录状态以及发送创建逾期记录事件
             if (isTimeExpired(storageEndTimeMilli)) {
+                // 更新寄存记录状态
+                LuggageStorageRecord luggageStorageRecord =
+                        new LuggageStorageRecord();
+                luggageStorageRecord.setLuggageId(storageRecord.getLuggageId());
+                luggageStorageRecord.setStatus(LuggageStorageStatusEnum.OVERDUE
+                        .getCode());
+                // 将寄存结束时间改为一个小时后
+                luggageStorageRecord.setStorageEndTime(LocalDateTime.now());
+                luggageStorageRecord.setGmtModified(LocalDateTime.now());
+                storageRecordManager.updateById(luggageStorageRecord);
+
+                // 发送创建逾期记录事件
                 asyncEventBus.post(CreateOverdueRecordEvent.builder()
                         .luggageId(storageRecord.getLuggageId())
-                        .status(LuggageStorageStatusEnum.getDescByCode(
-                                storageRecord.getStatus()))
+                        .status(LuggageStorageStatusEnum.OVERDUE.getDesc())
                         .remark(storageRecord.getRemark())
                         .build());
-                log.info("已发送自动创建逾期行李寄存记录事件：storageRecord:{}" + storageRecord);
+                log.info("已发送自动创建逾期行李寄存记录事件：storageRecord:{}" +
+                        storageRecord);
             }
         }
 
@@ -104,7 +123,7 @@ public class LuggageStorageStatusMonitorTask {
      * @return
      */
     private boolean isTimeExpired(long timeValue) {
-        return timeValue > System.currentTimeMillis();
+        return timeValue < System.currentTimeMillis();
     }
 
     /**
@@ -119,5 +138,22 @@ public class LuggageStorageStatusMonitorTask {
         long minutes = between.toMinutes();
 
         return MINUTES_BEFORE_OVERDUE == minutes;
+    }
+
+    /**
+     * 判断是否还有逾期的记录，没有返回 true，有返回 false
+     *
+     * @param storageRecords
+     * @return
+     */
+    private boolean hasNoOverdueRecords(List<LuggageStorageRecord> storageRecords) {
+        boolean flag = false;
+        for (LuggageStorageRecord luggageStorageRecord : storageRecords) {
+            if (!Objects.equals(luggageStorageRecord.getStatus(),
+                    LuggageStorageStatusEnum.DEPOSITING.getCode())) {
+                flag = true;
+            }
+        }
+        return flag;
     }
 }

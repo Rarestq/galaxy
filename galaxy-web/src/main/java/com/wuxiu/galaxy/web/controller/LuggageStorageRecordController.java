@@ -46,7 +46,7 @@ public class LuggageStorageRecordController {
     @ApiOperation(value = "查询行李寄存记录列表", notes = "查询行李寄存记录列表")
     @GetMapping("")
     public APIResult<PageInfo<LuggageStorageRecordVO>> queryStorageRecordList(
-            @Valid LuggageStorageRecordQueryForm form) {
+            LuggageStorageRecordQueryForm form) {
         // 参数校验
         String recordQueryCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(recordQueryCheck)) {

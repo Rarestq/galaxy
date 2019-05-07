@@ -50,4 +50,19 @@ public class CommonConstant {
      * 行李遗失赔偿编号前缀
      */
     public static final String LUGGAGE_LOST_COMPENSATE_NO_PREFIX = "YSPC";
+
+    /**
+     * 逗号分隔符
+     */
+    public static final String COMMA = ",";
+
+    /**
+     * 日期格式
+     */
+    public static final String TIME_PATTERN = "yyyy-MM-dd HH:mm";
+
+    /**
+     * 电话号码区号
+     */
+    public static final String PHONE_AREA_CODE = "+86";
 }

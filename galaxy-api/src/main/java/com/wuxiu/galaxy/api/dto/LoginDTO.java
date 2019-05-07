@@ -25,16 +25,18 @@ public class LoginDTO implements Serializable {
     @ApiModelProperty(value = "管理员姓名", required = true)
     @NotNull(message = "管理员姓名不能为空")
     private String adminName;
-    /**
-     * 管理员电话
-     */
-    @ApiModelProperty(value = "管理员电话", required = true)
-    @NotNull(message = "管理员电话不能为空")
-    private String adminPhone;
+
     /**
      * 登录密码
      */
     @ApiModelProperty(value = "登录密码", required = true)
     @NotNull(message = "登录密码不能为空")
     private String password;
+
+    /**
+     * 管理员电话
+     */
+//    @ApiModelProperty(value = "管理员电话", required = true)
+//    @NotNull(message = "管理员电话不能为空")
+//    private String adminPhone;
 }

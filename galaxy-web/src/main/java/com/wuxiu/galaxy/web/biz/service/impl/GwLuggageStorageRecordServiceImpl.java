@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
 import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -109,10 +111,21 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
 
         PageInfo<LuggageStorageInfoDTO> luggageStoragePageInfo =
                 storageInfoAPIResult.getData();
-        List<LuggageStorageInfoDTO> storageInfoDTOS = luggageStoragePageInfo.getRecords();
+        List<LuggageStorageInfoDTO> storageInfoDTOS = luggageStoragePageInfo
+                .getRecords();
 
+        Map<Long, LuggageStorageInfoDTO> storageInfoDTOMap = StreamUtil.toMap(
+                storageInfoDTOS, LuggageStorageInfoDTO::getLuggageId);
+
+        // 封装成 AdminInfoVO 对象返回
         List<LuggageStorageRecordVO> recordVOS =
-                StreamUtil.convertBeanCopy(storageInfoDTOS, LuggageStorageRecordVO.class);
+                StreamUtil.convertBeanCopy(storageInfoDTOS,
+                        LuggageStorageRecordVO.class);
+
+        // 将 adminType 转化为中文类型
+        recordVOS.forEach(recordVO -> recordVO.setLuggageTypeDesc(Objects.requireNonNull(
+                LuggageTypeEnum.valueOf(storageInfoDTOMap.get(recordVO.getLuggageId())
+                        .getLuggageTypeId())).getDesc()));
 
         PageInfo<LuggageStorageRecordVO> pageInfo =
                 new PageInfo<>(form.getCurrent(), form.getSize());

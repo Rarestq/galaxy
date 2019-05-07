@@ -136,28 +136,30 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     public Page<LuggageStorageInfoDTO> queryStorageRecordList(
             LuggageStorageRecordQueryDTO recordQueryDTO) {
 
-        // 构造查询参数
+        // 构造查询参数(todo:组合查询->wrapper.setSqlSelect())
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
         if (Objects.nonNull(recordQueryDTO.getLuggageId())) {
             wrapper.eq("luggage_id", recordQueryDTO.getLuggageId());
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.eq("depositor_name", recordQueryDTO.getDepositorName());
+            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorPhone())) {
-            wrapper.eq("depositor_phone", recordQueryDTO.getDepositorPhone());
+            wrapper.like("depositor_phone", recordQueryDTO.getDepositorPhone());
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.eq("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
+            wrapper.like("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
         }
 
-        if (Objects.nonNull(recordQueryDTO.getStorageStartTime())) {
-            wrapper.between("gmt_create", recordQueryDTO.getStorageStartTime(),
-                    LocalDateTime.now());
-        }
+//        if (Objects.nonNull(recordQueryDTO.getStorageEndTimeFrom())) {
+//            wrapper.between("storage_end_time",
+//                    recordQueryDTO.getStorageEndTimeFrom(),
+//                    Optional.ofNullable(recordQueryDTO.getStorageEndTimeTo())
+//                            .orElse(LocalDateTime.now()));
+//        }
 
         wrapper.orderBy("gmt_create", false)
                 .orderBy("luggage_id", false);
@@ -234,8 +236,9 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTO.setRemark(storageRecord.getRemark());
             storageInfoDTO.setStatus(LuggageStorageStatusEnum.getDescByCode(
                     storageRecord.getStatus()));
-            storageInfoDTO.setStorageStartTime(storageRecord.getStorageStartTime());
-            storageInfoDTO.setStorageEndTime(storageRecord.getStorageEndTime());
+            storageInfoDTO.setStorageStartTime(storageRecord
+                    .getStorageStartTime().toString());
+            storageInfoDTO.setStorageEndTime(storageRecord.getStorageEndTime().toString());
 
             storageInfoDTOS.add(storageInfoDTO);
         });

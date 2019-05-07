@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.web.biz.form;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,9 +25,9 @@ public class NewLuggageStorageRecordForm implements Serializable {
     /**
      * 计费规则id
      */
-    @ApiModelProperty(value = "计费规则id", required = true)
-    @NotNull(message = "计费规则id不能为空")
-    private Long calculateRuleId;
+//    @ApiModelProperty(value = "计费规则id", required = true)
+//    @NotNull(message = "计费规则id不能为空")
+//    private Long calculateRuleId;
     /**
      * 行李类型主键id
      */
@@ -53,7 +54,7 @@ public class NewLuggageStorageRecordForm implements Serializable {
     /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "寄存结束时间", required = true)
     @NotNull(message = "寄存结束时间不能为空")
     private LocalDateTime storageEndTime;

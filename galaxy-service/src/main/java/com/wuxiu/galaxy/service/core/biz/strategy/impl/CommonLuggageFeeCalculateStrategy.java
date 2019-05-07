@@ -48,7 +48,7 @@ public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationS
                 commonLuggageFeeCalculateParamDTO.getFeePerUnit());
 
         StringBuilder desc = new StringBuilder();
-        desc.append("计费时长").append(calculateHours).append("天,");
+        desc.append("计费时长").append(calculateHours).append("小时,");
 
         switch (calculationUnitsEnum) {
             case YUAN_PER_ITEM:
@@ -58,6 +58,7 @@ public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationS
                 break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
+                desc.append("收费").append(calculateFee).append("元/件/小时,");
                 calculateFee = calculateFee.multiply(new BigDecimal(calculateHours)
                         .multiply(new BigDecimal(0.8)));
                 break;

@@ -63,10 +63,10 @@ public class AdminServiceTest extends BaseTest {
         AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
 
         adminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-                CommonConstant.SYSTEM_PREFIX));
+                CommonConstant.ADMIN_NO_PREFIX));
         adminInfoDTO.setAdminName("admin");
         adminInfoDTO.setAdminPhone("-");
-        adminInfoDTO.setAdminType(UserTypeEnum.SYSTEM.getCode());
+        adminInfoDTO.setAdminType(UserTypeEnum.ADMIN.getCode());
         adminInfoDTO.setPassword("123456");
         adminInfoDTO.setDeleted(RecordStatusEnum.NORMAL.getCode());
         adminInfoDTO.setGmtCreate(LocalDateTime.now());
@@ -106,8 +106,10 @@ public class AdminServiceTest extends BaseTest {
      */
     @Test
     public void testInsertAdminInfo() {
-        Long adminId = saveAdminInfo();
-        assertNotNull(adminId);
+        for (int i = 0; i < 20; i++) {
+            Long adminId = saveAdminInfo();
+            assertNotNull(adminId);
+        }
     }
 
     /**

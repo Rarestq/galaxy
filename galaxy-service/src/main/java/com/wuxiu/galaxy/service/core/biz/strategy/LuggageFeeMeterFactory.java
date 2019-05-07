@@ -203,6 +203,8 @@ public class LuggageFeeMeterFactory {
         List<CommonCalculateRuleDetail> calculationDetails =
                 commonCalculateRuleDetailManager
                         .getCommonCalculateRuleDetails(calculateRuleId);
+        CommonCalculateRuleDetail ruleDetail = commonCalculateRuleDetailManager
+                .selectById(calculateRuleId);
 
         // 构造 CommonLuggageFeeCalculateParamDTO 对象
         return buildLuggageFeeBaseCalculationParamDTOsByCommon(calculationDetails);

@@ -5,7 +5,6 @@ import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 行李寄存记录查询表单
@@ -39,11 +38,11 @@ public class LuggageStorageRecordQueryDTO implements Serializable {
      */
     private String depositorPhone;
     /**
-     * 寄存开始时间
+     * 寄存结束时间(from)
      */
-    private LocalDateTime storageStartTime;
+//    private LocalDateTime storageEndTimeFrom;
     /**
-     * 寄存结束时间
+     * 寄存结束时间(to)
      */
-    private LocalDateTime storageEndTime;
+//    private LocalDateTime storageEndTimeTo;
 }

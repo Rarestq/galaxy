@@ -10,13 +10,11 @@
  */
 package com.wuxiu.galaxy.web.biz.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 行李寄存记录页面展示对象
@@ -42,13 +40,13 @@ public class LuggageStorageRecordVO implements Serializable {
     /**
      * 计费规则id
      */
-    @ApiModelProperty(value = "计费规则id", required = true)
-    private Long calculateRuleId;
+//    @ApiModelProperty(value = "计费规则id", required = true)
+//    private Long calculateRuleId;
     /**
-     * 行李类型主键id
+     * 行李类型
      */
-    @ApiModelProperty(value = "行李类型主键id", required = true)
-    private Long luggageTypeId;
+    @ApiModelProperty(value = "行李类型", required = true)
+    private String luggageTypeDesc;
     /**
      * 管理员id
      */
@@ -82,18 +80,16 @@ public class LuggageStorageRecordVO implements Serializable {
     /**
      * 开始寄存时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "开始寄存时间", required = true)
-    private LocalDateTime storageStartTime;
+    private String storageStartTime;
     /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "寄存结束时间", required = true)
-    private LocalDateTime storageEndTime;
+    private String storageEndTime;
     /**
      * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */
     @ApiModelProperty(value = "行李寄存状态(0-寄存中，1-已取件，2-已逾期)", required = true)
-    private Integer status;
+    private String status;
 }

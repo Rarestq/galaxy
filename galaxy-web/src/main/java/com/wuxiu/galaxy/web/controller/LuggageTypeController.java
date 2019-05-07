@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageTypeService;
+import com.wuxiu.galaxy.web.biz.vo.LuggageTypeVO;
 import com.wuxiu.galaxy.web.biz.vo.Pair;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +29,15 @@ public class LuggageTypeController {
     @Autowired
     private GwLuggageTypeService luggageTypeService;
 
-    @ApiOperation(value = "获取行李类型列表", notes = "寄存行李时，需要选择行李类型，是一个下拉框")
-    @GetMapping("")
-    public APIResult<List<Pair<Long,String>>> getLuggageTypeList() {
+    @ApiOperation(value = "获取行李类型列表(key-value)", notes = "寄存行李时，需要选择行李类型，是一个下拉框")
+    @GetMapping("/pair")
+    public APIResult<List<Pair<Long,String>>> getLuggageTypeListPair() {
         return luggageTypeService.getLuggageTypeList();
+    }
+
+    @ApiOperation(value = "获取行李类型列表", notes = "获取行李类型列表")
+    @GetMapping("")
+    public APIResult<List<LuggageTypeVO>> getLuggageTypes() {
+        return luggageTypeService.getLuggageTypes();
     }
 }

@@ -1,12 +1,15 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.dto.LuggageTypeDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.integration.LuggageTypeClient;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
-import com.wuxiu.galaxy.web.utils.ObjectConvertUtil;
+import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageTypeService;
+import com.wuxiu.galaxy.web.biz.vo.LuggageTypeVO;
 import com.wuxiu.galaxy.web.biz.vo.Pair;
+import com.wuxiu.galaxy.web.utils.ObjectConvertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +55,29 @@ public class GwLuggageTypeServiceImpl implements GwLuggageTypeService {
                 ObjectConvertUtil.convertDTO2Domain(data);
 
         return APIResult.ok(luggageTypeListPair);
+    }
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    @Override
+    public APIResult<List<LuggageTypeVO>> getLuggageTypes() {
+        APIResult<List<LuggageTypeDTO>> luggageTypesAPIResult =
+                luggageTypeClient.getLuggageTypes();
+        if (!luggageTypesAPIResult.isSuccess()) {
+            log.warn("获取行李类型列表失败，result:{}", luggageTypesAPIResult);
+            return CommonUtil.errorAPIResult(luggageTypesAPIResult);
+        }
+
+        List<LuggageTypeDTO> data = luggageTypesAPIResult.getData();
+        if (CollectionUtils.isEmpty(data)) {
+            return APIResult.ok(Collections.emptyList());
+        }
+        List<LuggageTypeVO> luggageTypeVOS = StreamUtil.convertBeanCopy(data,
+                LuggageTypeVO.class);
+
+        return APIResult.ok(luggageTypeVOS);
     }
 }

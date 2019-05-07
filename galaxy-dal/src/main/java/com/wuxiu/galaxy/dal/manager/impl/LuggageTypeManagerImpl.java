@@ -85,4 +85,16 @@ public class LuggageTypeManagerImpl extends BaseManagerImpl<LuggageTypeDao, Lugg
                 .eq("luggage_type", luggageTypeDesc);
         return selectOne(wrapper);
     }
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    @Override
+    public List<LuggageType> getLuggageTypes() {
+        Wrapper<LuggageType> wrapper = new EntityWrapper<>();
+
+        return selectList(wrapper);
+    }
 }

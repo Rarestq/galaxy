@@ -1,12 +1,10 @@
 package com.wuxiu.galaxy.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 管理员数据转换对象
@@ -58,13 +56,11 @@ public class AdminDTO implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "创建时间", required = true)
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
     /**
      * 修改时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value = "修改时间", required = true)
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 }

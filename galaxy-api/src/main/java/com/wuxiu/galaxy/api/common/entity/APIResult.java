@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.beans.ConstructorProperties;
 import java.io.Serializable;
 
+
 @ApiModel(
         description = "响应结果"
 )

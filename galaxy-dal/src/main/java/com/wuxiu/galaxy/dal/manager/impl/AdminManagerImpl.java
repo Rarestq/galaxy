@@ -55,7 +55,6 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             updateAdmin.setAdminName(adminInfoDTO.getAdminName());
             updateAdmin.setAdminPhone(adminInfoDTO.getAdminPhone());
             updateAdmin.setAdminType(adminInfoDTO.getAdminType());
-            updateAdmin.setPassword(adminInfoDTO.getPassword());
             updateAdmin.setGmtModified(LocalDateTime.now());
 
             updateById(updateAdmin);
@@ -96,7 +95,7 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
         }
 
         if (Objects.nonNull(queryDTO.getAdminName())) {
-            wrapper.eq("admin_name", queryDTO.getAdminName());
+            wrapper.like("admin_name", queryDTO.getAdminName());
         }
 
         if (Objects.nonNull(queryDTO.getAdminType())) {
@@ -133,10 +132,10 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
      * @return
      */
     @Override
-    public Admin getAdminInfoByPhoneAndPwd(LoginDTO dto) {
+    public Admin getAdminInfoByNameAndPwd(LoginDTO dto) {
         Wrapper<Admin> wrapper = new EntityWrapper<Admin>()
                 .eq("admin_name", dto.getAdminName())
-                .eq("admin_phone", dto.getAdminPhone())
+                //.eq("admin_phone", dto.getAdminPhone())
                 .eq("password", dto.getPassword());
 
         return selectOne(wrapper);
@@ -160,6 +159,10 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             adminDTO.setAdminNo(admin.getAdminNo());
             adminDTO.setAdminName(admin.getAdminName());
             adminDTO.setAdminPhone(admin.getAdminPhone());
+            adminDTO.setPassword(admin.getPassword());
+            adminDTO.setAdminType(admin.getAdminType());
+            adminDTO.setGmtCreate(admin.getGmtCreate().toString());
+            adminDTO.setGmtModified(admin.getGmtModified().toString());
             adminDTOS.add(adminDTO);
         });
 

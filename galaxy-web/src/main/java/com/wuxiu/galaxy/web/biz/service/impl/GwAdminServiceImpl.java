@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -94,10 +96,17 @@ public class GwAdminServiceImpl implements GwAdminService {
 
         PageInfo<AdminDTO> adminDTOPageInfo = adminInfoListAPIResult.getData();
         List<AdminDTO> adminDTOS = adminDTOPageInfo.getRecords();
+        Map<Long, AdminDTO> adminDTOMap = StreamUtil.toMap(adminDTOS,
+                AdminDTO::getAdminId);
 
         // 封装成 AdminInfoVO 对象返回
         List<AdminInfoVO> adminInfoVOS =
                 StreamUtil.convertBeanCopy(adminDTOS, AdminInfoVO.class);
+        // 将 adminType 转化为中文类型
+        adminInfoVOS.forEach(adminInfoVO ->
+                adminInfoVO.setAdminType(Objects.requireNonNull(UserTypeEnum.valueOf(
+                        adminDTOMap.get(adminInfoVO.getAdminId())
+                                .getAdminType())).getDesc()));
 
         PageInfo<AdminInfoVO> pageInfo = new PageInfo<>(form.getCurrent(), form.getSize());
         pageInfo.setRecords(adminInfoVOS);

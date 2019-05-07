@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -58,13 +59,13 @@ public class AdminInfoDTO implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "创建时间", required = true)
     private LocalDateTime gmtCreate;
     /**
      * 修改时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "修改时间", required = true)
     private LocalDateTime gmtModified;
 }

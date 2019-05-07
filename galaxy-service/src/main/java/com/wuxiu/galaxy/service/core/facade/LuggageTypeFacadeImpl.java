@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.facade;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.dto.LuggageTypeDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.service.LuggageTypeFacade;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageTypeService;
@@ -29,5 +30,15 @@ public class LuggageTypeFacadeImpl implements LuggageTypeFacade {
     @Override
     public APIResult<List<PairDTO<Long, String>>> getLuggageTypeList() {
         return APIResult.ok(luggageTypeService.getLuggageTypeList());
+    }
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    @Override
+    public APIResult<List<LuggageTypeDTO>> getLuggageTypes() {
+        return APIResult.ok(luggageTypeService.getLuggageTypes());
     }
 }

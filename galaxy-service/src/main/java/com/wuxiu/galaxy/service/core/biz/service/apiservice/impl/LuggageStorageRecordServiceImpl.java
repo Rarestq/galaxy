@@ -64,16 +64,16 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         LuggageFeeCalculationRuleDTO calculationRuleDTO = new LuggageFeeCalculationRuleDTO();
         calculationRuleDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
         calculationRuleDTO.setLuggageTypeId(luggageTypeId);
-        int calculateDays = (int) DateUtil.calculateDate2Days(
-                storageRecordDTO.getStorageEndTime(), LocalDateTime.now());
-        calculationRuleDTO.setLuggageStorageHours(calculateDays);
+        int calculateHours = (int) DateUtil.calculateDate2Hours(
+                LocalDateTime.now(), storageRecordDTO.getStorageEndTime());
+        calculationRuleDTO.setLuggageStorageHours(calculateHours);
         calculationRuleDTO.setGmtModified(LocalDateTime.now());
         // 获取计价器
         LuggageFeeMeter luggageFeeMeter =
                 feeMeterFactory.getLuggageFeeMeter(calculationRuleDTO);
         // 计算寄存所需费用
         LuggageChargeCalculationResultDTO resultDTO =
-                luggageFeeMeter.calculate(calculateDays);
+                luggageFeeMeter.calculate(calculateHours);
         newLuggageStorageRecordDTO.setFeeValue(resultDTO.getFeeValue());
         newLuggageStorageRecordDTO.setFeeCalculationProcessDesc(
                 resultDTO.getFeeCalculationProcessDesc());
@@ -173,8 +173,14 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
         recordQueryDTO.setDepositorPhone(queryDTO.getDepositorPhone());
         recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
-        recordQueryDTO.setStorageStartTime(queryDTO.getStorageStartTime());
-        recordQueryDTO.setStorageEndTime(queryDTO.getStorageEndTime());
+//        if (StringUtils.isNotEmpty(queryDTO.getStorageTimeRange().trim())) {
+//            String storageTimeRange = queryDTO.getStorageTimeRange();
+//            String[] timeRange = storageTimeRange.split(CommonConstant.COMMA);
+//            recordQueryDTO.setStorageEndTimeFrom(LocalDateTime.parse(timeRange[0],
+//                    DateTimeFormatter.ofPattern(CommonConstant.TIME_PATTERN)));
+//            recordQueryDTO.setStorageEndTimeTo(LocalDateTime.parse(timeRange[0],
+//                    DateTimeFormatter.ofPattern(CommonConstant.TIME_PATTERN)));
+//        }
 
         // 查询行李寄存列表信息
         Page<LuggageStorageInfoDTO> storageRecordInfoPage =

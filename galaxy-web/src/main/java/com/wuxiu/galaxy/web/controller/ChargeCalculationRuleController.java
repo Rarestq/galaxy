@@ -29,8 +29,8 @@ public class ChargeCalculationRuleController {
     private GwChargeCalculateRuleService calculateRuleService;
 
     @ApiOperation(value = "获取计费规则列表", notes = "寄存行李时，需要选择计费规则(行李类型)，是一个下拉框")
-    @GetMapping("")
-    public APIResult<List<Pair<Long,String>>> getChargeCalculateRules() {
+    @GetMapping("/pair")
+    public APIResult<List<Pair<Long,String>>> getChargeCalculateRulesPair() {
         return calculateRuleService.getChargeCalculateRules();
     }
 }

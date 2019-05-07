@@ -1,12 +1,9 @@
 package com.wuxiu.galaxy.web.biz.form;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * 行李寄存记录查询表单
@@ -44,13 +41,12 @@ public class LuggageStorageRecordQueryForm extends PageInfo {
     /**
      * 寄存开始时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @ApiModelProperty(value = "寄存开始时间", required = false)
-    private LocalDateTime storageStartTime;
+//    @ApiModelProperty(value = "寄存结束日期范围", required = false)
+//    private String storageTimeRange;
     /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @ApiModelProperty(value = "寄存结束时间", required = false)
-    private LocalDateTime storageEndTime;
+//    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
+//    @ApiModelProperty(value = "寄存结束时间", required = false)
+//    private String storageEndTime;
 }

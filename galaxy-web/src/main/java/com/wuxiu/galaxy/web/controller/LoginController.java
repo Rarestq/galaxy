@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Objects;
 
 import static com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum.*;
@@ -38,7 +39,7 @@ public class LoginController {
 
     @ApiOperation(value = "登录", notes = "登录")
     @PostMapping(value = "/login")
-    public APIResult login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
+    public APIResult login(@RequestBody @Valid LoginForm loginForm, HttpServletRequest request) {
         String loginCheck = ValidatorUtil.returnAnyMessageIfError(loginForm);
         if (StringUtils.isNotEmpty(loginCheck)) {
             return APIResult.error(loginCheck);
@@ -50,7 +51,7 @@ public class LoginController {
 
         AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
         request.getSession().setAttribute("adminInfoDTO", adminInfoDTO);
-        log.info("login -> " + adminInfoDTO.getAdminName() + "用户已登录 ");
+        log.info("login -> 用户 " + adminInfoDTO.getAdminName() + " 已登录 ");
 
         return APIResult.ok(SUCCESS.getMessage());
     }

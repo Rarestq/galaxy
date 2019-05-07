@@ -60,5 +60,5 @@ public interface AdminManager extends BaseManager<Admin> {
      * @param dto
      * @return
      */
-    Admin getAdminInfoByPhoneAndPwd(LoginDTO dto);
+    Admin getAdminInfoByNameAndPwd(LoginDTO dto);
 }

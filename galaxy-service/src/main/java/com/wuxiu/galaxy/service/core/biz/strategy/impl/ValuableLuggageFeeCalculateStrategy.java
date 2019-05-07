@@ -21,8 +21,6 @@ import java.util.Objects;
 @Slf4j
 public class ValuableLuggageFeeCalculateStrategy implements LuggageFeeCalculationStrategy {
 
-    private static final Integer HOUR_PER_DAY = 24;
-
     @Override
     public LuggageChargeCalculationResultDTO calculate(
             Integer calculateHours,
@@ -60,9 +58,8 @@ public class ValuableLuggageFeeCalculateStrategy implements LuggageFeeCalculatio
                 break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
+                desc.append("收费").append(calculateFee).append("元/件/小时,");
                 calculateFee = calculateFee.multiply(new BigDecimal(calculateHours));
-                desc.append("收费").append(valuableLuggageFeeCalculateParamDTO
-                        .getFeePerUnit()).append("元/件/小时,");
                 break;
             default:
                 throw new RuntimeException("Unknown CalculationUnitsId = " +

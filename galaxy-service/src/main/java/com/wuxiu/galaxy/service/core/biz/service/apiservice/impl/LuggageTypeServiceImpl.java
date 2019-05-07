@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
+import com.wuxiu.galaxy.api.dto.LuggageTypeDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageType;
 import com.wuxiu.galaxy.dal.manager.LuggageTypeManager;
@@ -11,6 +12,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
+
+import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
 
 /**
  * 行李类型相关服务
@@ -51,5 +54,38 @@ public class LuggageTypeServiceImpl implements LuggageTypeService {
     @Override
     public LuggageType getLuggageTypeById(Long luggageTypeId) {
         return luggageTypeManager.selectById(luggageTypeId);
+    }
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    @Override
+    public List<LuggageTypeDTO> getLuggageTypes() {
+        List<LuggageType> luggageTypes = luggageTypeManager.getLuggageTypes();
+
+        return buildLuggageTypeDTO(luggageTypes);
+    }
+
+    /**
+     * 构造 LuggageTypeDTO 对象
+     *
+     * @param luggageTypes
+     * @return
+     */
+    private List<LuggageTypeDTO> buildLuggageTypeDTO(List<LuggageType> luggageTypes) {
+
+        List<LuggageTypeDTO> luggageTypeDTOS = newArrayList();
+        luggageTypes.forEach(luggageType -> {
+            LuggageTypeDTO luggageTypeDTO = new LuggageTypeDTO();
+            luggageTypeDTO.setLuggageTypeId(luggageType.getLuggageTypeId());
+            luggageTypeDTO.setLuggageType(luggageType.getLuggageType());
+            luggageTypeDTO.setGmtCreate(luggageType.getGmtCreate().toString());
+            luggageTypeDTO.setGmtModified(luggageType.getGmtModified().toString());
+            luggageTypeDTOS.add(luggageTypeDTO);
+        });
+
+        return luggageTypeDTOS;
     }
 }

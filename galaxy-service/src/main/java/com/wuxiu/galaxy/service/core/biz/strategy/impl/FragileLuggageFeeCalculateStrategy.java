@@ -58,6 +58,7 @@ public class FragileLuggageFeeCalculateStrategy implements LuggageFeeCalculation
                 break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
+                desc.append("收费").append(calculateFee).append("元/件/小时,");
                 calculateFee = calculateFee.multiply(new BigDecimal(calculateHours))
                         .multiply(new BigDecimal(0.9));
                 break;

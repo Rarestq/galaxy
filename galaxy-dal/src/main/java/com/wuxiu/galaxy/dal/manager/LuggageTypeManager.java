@@ -50,4 +50,11 @@ public interface LuggageTypeManager extends BaseManager<LuggageType> {
      * @return
      */
     LuggageType selectByDesc(String luggageTypeDesc);
+
+    /**
+     * 获取行李类型列表
+     *
+     * @return
+     */
+    List<LuggageType> getLuggageTypes();
 }

@@ -53,4 +53,20 @@ public enum LuggageOverdueStatusEnum {
         }
         return null;
     }
+
+    /**
+     * 通过 枚举描述 得到 code
+     *
+     * @param desc
+     * @return
+     */
+    public static Integer getCodeByDesc(String desc) {
+        LuggageOverdueStatusEnum[] arr = values();
+        for (LuggageOverdueStatusEnum statusEnum : arr) {
+            if (statusEnum.getDesc().equals(desc)) {
+                return statusEnum.getCode();
+            }
+        }
+        return null;
+    }
 }
