@@ -63,6 +63,11 @@ public class LuggageStorageRecordVO implements Serializable {
     @ApiModelProperty(value = "管理员电话", required = true)
     private String adminPhone;
     /**
+     * 管理员类型
+     */
+    @ApiModelProperty(value = "管理员类型", required = true)
+    private String adminType;
+    /**
      * 寄存人姓名
      */
     @ApiModelProperty(value = "寄存人姓名", required = true)

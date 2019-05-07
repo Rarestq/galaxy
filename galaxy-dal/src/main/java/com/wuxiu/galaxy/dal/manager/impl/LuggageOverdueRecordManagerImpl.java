@@ -17,13 +17,18 @@ import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageOverdueRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.SaveLuggageOverdueRecordDTO;
+import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.LuggageOverdueRecordDao;
 import com.wuxiu.galaxy.dal.domain.LuggageOverdueRecord;
+import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageOverdueRecordManager;
+import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -38,6 +43,9 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 @Component
 public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOverdueRecordDao, LuggageOverdueRecord> implements LuggageOverdueRecordManager {
+
+    @Autowired
+    private LuggageStorageRecordManager storageRecordManager;
 
     /**
      * 创建行李逾期记录
@@ -83,11 +91,11 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
         // 构造查询参数
         Wrapper<LuggageOverdueRecord> wrapper = new EntityWrapper<>();
         if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.eq("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
+            wrapper.like("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.eq("depositor_name", recordQueryDTO.getDepositorName());
+            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
         }
 
         if (Objects.nonNull(recordQueryDTO.getStatus())) {
@@ -115,23 +123,37 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
 
         List<LuggageOverdueRecordInfoDTO> overdueRecordDTOS = newArrayList();
         List<LuggageOverdueRecord> records = overdueRecordPage.getRecords();
+
+        // 查询行李寄存记录信息
+        List<Long> luggageIds = StreamUtil.convert(records,
+                LuggageOverdueRecord::getLuggageId);
+        List<LuggageStorageRecord> storageRecords =
+                storageRecordManager.selectBatchIds(luggageIds);
+        // 将行李寄存记录按照行李寄存记录主键id进行分组
+        Map<Long, LuggageStorageRecord> storageRecordMap = StreamUtil.toMap(
+                storageRecords, LuggageStorageRecord::getLuggageId);
+
         records.forEach(overdueRecord -> {
-            LuggageOverdueRecordInfoDTO storageInfoDTO = new LuggageOverdueRecordInfoDTO();
+            LuggageOverdueRecordInfoDTO overdueRecordInfoDTO =
+                    new LuggageOverdueRecordInfoDTO();
 
-            storageInfoDTO.setLuggageOverdueRecordId(
+            overdueRecordInfoDTO.setLuggageOverdueRecordId(
                     overdueRecord.getLuggageOverdueRecordId());
-            storageInfoDTO.setLuggageId(overdueRecord.getLuggageId());
-            storageInfoDTO.setLuggageRecordNo(overdueRecord.getLuggageRecordNo());
+            overdueRecordInfoDTO.setOverdueRecordNo(overdueRecord.getOverdueRecordNo());
+            overdueRecordInfoDTO.setLuggageId(overdueRecord.getLuggageId());
+            overdueRecordInfoDTO.setLuggageRecordNo(overdueRecord.getLuggageRecordNo());
+            overdueRecordInfoDTO.setLuggageTypeId(storageRecordMap.get(overdueRecord
+                    .getLuggageId()).getLuggageTypeId());
 
-            storageInfoDTO.setAdminId(overdueRecord.getAdminId());
-            storageInfoDTO.setAdminName(overdueRecord.getAdminName());
-            storageInfoDTO.setDepositorName(overdueRecord.getDepositorName());
-            storageInfoDTO.setDepositorPhone(overdueRecord.getDepositorPhone());
+            overdueRecordInfoDTO.setDepositorName(overdueRecord.getDepositorName());
+            overdueRecordInfoDTO.setDepositorPhone(overdueRecord.getDepositorPhone());
 
-            storageInfoDTO.setRemark(overdueRecord.getRemark());
-            storageInfoDTO.setStatus(overdueRecord.getStatus());
+            overdueRecordInfoDTO.setRemark(overdueRecord.getRemark());
+            overdueRecordInfoDTO.setStatus(overdueRecord.getStatus());
+            overdueRecordInfoDTO.setGmtCreate(overdueRecord.getGmtCreate().toString());
+            overdueRecordInfoDTO.setGmtModified(overdueRecord.getGmtModified().toString());
 
-            overdueRecordDTOS.add(storageInfoDTO);
+            overdueRecordDTOS.add(overdueRecordInfoDTO);
         });
 
         Page<LuggageOverdueRecordInfoDTO> page = new Page<>();

@@ -28,6 +28,7 @@ import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.dal.manager.AdminManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -79,9 +80,9 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             wrapper.in("luggage_id", luggageStorageIds);
         }
 
-        // 根据管理员姓名查询管理员信息
-        Admin admin = adminManager.selectAdminByName(recordQueryDTO.getAdminName());
-        if (Objects.nonNull(admin.getAdminId())) {
+        if (StringUtils.isNotEmpty(recordQueryDTO.getAdminName())) {
+            // 根据管理员姓名查询管理员信息
+            Admin admin = adminManager.selectAdminByName(recordQueryDTO.getAdminName());
             wrapper.eq("admin_id", admin.getAdminId());
         }
 
@@ -192,7 +193,11 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             turnoverRecordDTO.setLuggageId(turnoverRecord.getLuggageId());
             turnoverRecordDTO.setLuggageType(LuggageTypeEnum.getDescByCode(
                     luggageStorageRecord.getLuggageTypeId()));
+            turnoverRecordDTO.setCalculationRuleId(
+                    turnoverRecord.getCalculationRuleId());
             turnoverRecordDTO.setFee(turnoverRecord.getFee());
+            turnoverRecordDTO.setGmtCreate(turnoverRecord.getGmtCreate().toString());
+            turnoverRecordDTO.setGmtModified(turnoverRecord.getGmtModified().toString());
             recordDTOS.add(turnoverRecordDTO);
         });
 
@@ -202,6 +207,5 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
 
         return page;
     }
-
 
 }

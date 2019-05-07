@@ -10,7 +10,6 @@ import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsSender;
 import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -45,7 +44,7 @@ public class LuggageStorageStatusMonitorTask {
      * <p>
      * 每隔五秒更新一次行李寄存记录的状态
      */
-    @Scheduled(cron = "0/5 * * * * ?")
+    //@Scheduled(cron = "0/5 * * * * ?")
     public void refreshLuggageStorageStatus() {
         // 定时检查行李寄存记录的寄存结束时间
 

@@ -31,7 +31,7 @@ public class LuggageTypeController {
 
     @ApiOperation(value = "获取行李类型列表(key-value)", notes = "寄存行李时，需要选择行李类型，是一个下拉框")
     @GetMapping("/pair")
-    public APIResult<List<Pair<Long,String>>> getLuggageTypeListPair() {
+    public APIResult<List<Pair<Long, String>>> getLuggageTypeListPair() {
         return luggageTypeService.getLuggageTypeList();
     }
 

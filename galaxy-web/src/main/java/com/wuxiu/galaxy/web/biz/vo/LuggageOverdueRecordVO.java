@@ -29,16 +29,6 @@ public class LuggageOverdueRecordVO implements Serializable {
     @ApiModelProperty(value = "逾期记录编号", required = true)
     private String overdueRecordNo;
     /**
-     * 管理员主键id
-     */
-    @ApiModelProperty(value = "管理员主键id", required = true)
-    private Long adminId;
-    /**
-     * 管理员姓名
-     */
-    @ApiModelProperty(value = "管理员姓名", required = true)
-    private String adminName;
-    /**
      * 行李寄存主键id
      */
     @ApiModelProperty(value = "行李寄存主键id", required = true)
@@ -48,6 +38,11 @@ public class LuggageOverdueRecordVO implements Serializable {
      */
     @ApiModelProperty(value = "行李寄存记录编号", required = true)
     private String luggageRecordNo;
+    /**
+     * 行李类型
+     */
+    @ApiModelProperty(value = "行李类型", required = true)
+    private String luggageType;
     /**
      * 行李寄存者姓名
      */
@@ -62,10 +57,20 @@ public class LuggageOverdueRecordVO implements Serializable {
      * 行李寄存记录状态(1-已逾期,2-已清理作废)
      */
     @ApiModelProperty(value = "行李寄存记录状态(1-已逾期,2-已清理作废)", required = true)
-    private Integer status;
+    private String status;
     /**
      * 创建行李逾期未取清理记录的备注
      */
     @ApiModelProperty(value = "创建行李逾期未取清理记录的备注", required = true)
     private String remark;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间", required = true)
+    private String gmtCreate;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间", required = true)
+    private String gmtModified;
 }

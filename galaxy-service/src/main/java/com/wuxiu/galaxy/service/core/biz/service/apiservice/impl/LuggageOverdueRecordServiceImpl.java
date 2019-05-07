@@ -109,7 +109,8 @@ public class LuggageOverdueRecordServiceImpl implements LuggageOverdueRecordServ
             return PageInfoUtil.ofEmptyPage(queryDTO);
         }
 
-        List<LuggageOverdueRecordInfoDTO> records = overdueRecordInfoDTOPage.getRecords();
+        List<LuggageOverdueRecordInfoDTO> records =
+                overdueRecordInfoDTOPage.getRecords();
 
         return PageInfoUtil.of(overdueRecordInfoDTOPage, records);
     }

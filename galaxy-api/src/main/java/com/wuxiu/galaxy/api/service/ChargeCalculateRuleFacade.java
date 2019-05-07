@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.api.service;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.dto.ChargeCalculateRuleDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 
 import java.util.List;
@@ -19,4 +20,20 @@ public interface ChargeCalculateRuleFacade {
      * @return
      */
     APIResult<List<PairDTO<Long, String>>> getChargeCalculateRules();
+
+    /**
+     * 根据行李类型联动计费规则
+     *
+     * @param luggageTypeId
+     * @return
+     */
+    APIResult<List<PairDTO<Long, String>>> queryCalculateRulesByLuggageType(
+            Long luggageTypeId);
+
+    /**
+     * 获取计费规则列表
+     *
+     * @return
+     */
+    APIResult<List<ChargeCalculateRuleDTO>> getChargeCalculateRuleList();
 }

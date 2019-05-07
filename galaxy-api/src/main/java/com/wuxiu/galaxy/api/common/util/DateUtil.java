@@ -1,7 +1,12 @@
 package com.wuxiu.galaxy.api.common.util;
 
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.expection.BizException;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * 日期工具类
@@ -43,4 +48,23 @@ public class DateUtil {
         Duration between = Duration.between(storageEndTime, now);
         return between.toDays();
     }
+
+    /**
+     * 日期转换： 字符串 -> LocalDateTime
+     *
+     * @param dateValue
+     * @return
+     */
+    public static LocalDateTime string2LocalDateTime(String dateValue) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(CommonConstant.SECONDS_PATTERN);
+        LocalDateTime ldt;
+        try {
+            ldt = LocalDateTime.parse(dateValue.trim(), df);
+        } catch (DateTimeParseException ex) {
+            throw new BizException(ex.getMessage());
+        }
+
+        return ldt;
+    }
+
 }

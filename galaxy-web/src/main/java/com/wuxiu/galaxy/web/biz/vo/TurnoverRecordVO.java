@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 营业额记录页面展示对象
@@ -59,10 +58,10 @@ public class TurnoverRecordVO implements Serializable {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间", required = false)
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间", required = false)
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 }

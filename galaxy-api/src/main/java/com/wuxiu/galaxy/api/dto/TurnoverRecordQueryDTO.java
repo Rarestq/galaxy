@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 /**
  * 营业额记录查询对象
  *
@@ -33,6 +31,6 @@ public class TurnoverRecordQueryDTO extends PageInfo {
      * 创建时间
      */
     @ApiModelProperty(name = "创建时间", required = false)
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
 
 }

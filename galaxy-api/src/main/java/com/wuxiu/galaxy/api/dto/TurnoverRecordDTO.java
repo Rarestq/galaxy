@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 营业额信息对象
@@ -50,9 +49,9 @@ public class TurnoverRecordDTO implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
     /**
      * 修改时间
      */
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 }

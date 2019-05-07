@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
@@ -76,7 +77,10 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
 
         recordQueryDTO.setLuggageTypeId(queryDTO.getLuggageTypeId());
         recordQueryDTO.setAdminName(queryDTO.getAdminName());
-        recordQueryDTO.setGmtCreate(queryDTO.getGmtCreate());
+        if (StringUtils.isNotEmpty(queryDTO.getGmtCreate())) {
+            recordQueryDTO.setGmtCreate(DateUtil.string2LocalDateTime(queryDTO
+                    .getGmtCreate()));
+        }
 
         // 查询营业额记录列表信息
         Page<TurnoverRecordDTO> recordDTOPage =

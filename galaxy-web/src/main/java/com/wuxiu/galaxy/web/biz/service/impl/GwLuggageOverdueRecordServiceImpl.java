@@ -1,6 +1,8 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
+import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordQueryDTO;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 行李逾期未取清理相关服务
@@ -61,10 +64,24 @@ public class GwLuggageOverdueRecordServiceImpl implements GwLuggageOverdueRecord
         List<LuggageOverdueRecordInfoDTO> overdueRecordInfoDTOS =
                 overdueRecordPageInfo.getRecords();
 
+        Map<Long, LuggageOverdueRecordInfoDTO> overdueRecordInfoDTOMap = StreamUtil.toMap(
+                overdueRecordInfoDTOS,
+                LuggageOverdueRecordInfoDTO::getLuggageOverdueRecordId);
+
         // 将 LuggageOverdueRecordInfoDTO 转化为 LuggageOverdueRecordVO
         List<LuggageOverdueRecordVO> recordVOS =
                 StreamUtil.convertBeanCopy(overdueRecordInfoDTOS,
                         LuggageOverdueRecordVO.class);
+
+        // 将 luggageType 和 status 转化为中文类型
+        recordVOS.forEach(recordVO -> {
+            recordVO.setLuggageType(LuggageTypeEnum.getDescByCode
+                    (overdueRecordInfoDTOMap.get(recordVO
+                            .getLuggageOverdueRecordId()).getLuggageTypeId()));
+            recordVO.setStatus(LuggageOverdueStatusEnum.getDescByCode
+                    (overdueRecordInfoDTOMap.get(recordVO.getLuggageOverdueRecordId())
+                            .getStatus()));
+        });
 
         PageInfo<LuggageOverdueRecordVO> pageInfo =
                 new PageInfo<>(form.getCurrent(), form.getSize());

@@ -16,7 +16,7 @@ public class ObjectConvertUtil {
 
 
     /**
-     * 字符串数组转化为Long数组
+     * 字符串数组转化为Long数组 - 删除管理员信息
      *
      * @param str
      * @param regex
