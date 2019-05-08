@@ -9,6 +9,8 @@ import com.wuxiu.galaxy.api.service.PickupLuggageFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 行李取件相关服务
  *

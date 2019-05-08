@@ -1,4 +1,4 @@
-package com.wuxiu.galaxy.service.core.base.utils;
+package com.wuxiu.galaxy.dal.common.utils;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.page.PageInfo;

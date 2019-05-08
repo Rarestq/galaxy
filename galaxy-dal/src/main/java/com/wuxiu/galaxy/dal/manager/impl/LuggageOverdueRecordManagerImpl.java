@@ -38,6 +38,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * <p>
  * 行李逾期未取记录表
  * </p>
+ *
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
  * @since 2019-04-22
  */
@@ -91,7 +92,8 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
         // 构造查询参数
         Wrapper<LuggageOverdueRecord> wrapper = new EntityWrapper<>();
         if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.like("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
+            wrapper.like("luggage_record_no",
+                    recordQueryDTO.getLuggageRecordNo());
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
@@ -109,7 +111,16 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
         Page<LuggageOverdueRecord> overdueRecordPage =
                 selectPage(recordQueryDTO.getPage(), wrapper);
 
-        return buildLuggageStorageInfoDTO(overdueRecordPage);
+        List<LuggageOverdueRecord> records = overdueRecordPage.getRecords();
+
+        // 查询行李寄存记录信息
+        List<Long> luggageIds = StreamUtil.collectDistinctKeyProperty(records,
+                LuggageOverdueRecord::getLuggageId);
+
+        List<LuggageStorageRecord> storageRecords =
+                storageRecordManager.getStorageRecordsByIds(luggageIds);
+
+        return buildLuggageStorageInfoDTO(overdueRecordPage, storageRecords);
     }
 
     /**
@@ -119,16 +130,12 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
      * @return
      */
     private Page<LuggageOverdueRecordInfoDTO> buildLuggageStorageInfoDTO(
-            Page<LuggageOverdueRecord> overdueRecordPage) {
+            Page<LuggageOverdueRecord> overdueRecordPage,
+            List<LuggageStorageRecord> storageRecords) {
 
         List<LuggageOverdueRecordInfoDTO> overdueRecordDTOS = newArrayList();
         List<LuggageOverdueRecord> records = overdueRecordPage.getRecords();
 
-        // 查询行李寄存记录信息
-        List<Long> luggageIds = StreamUtil.convert(records,
-                LuggageOverdueRecord::getLuggageId);
-        List<LuggageStorageRecord> storageRecords =
-                storageRecordManager.selectBatchIds(luggageIds);
         // 将行李寄存记录按照行李寄存记录主键id进行分组
         Map<Long, LuggageStorageRecord> storageRecordMap = StreamUtil.toMap(
                 storageRecords, LuggageStorageRecord::getLuggageId);

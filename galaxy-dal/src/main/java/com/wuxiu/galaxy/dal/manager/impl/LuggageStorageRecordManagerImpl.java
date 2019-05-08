@@ -27,8 +27,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,7 +138,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     public Page<LuggageStorageInfoDTO> queryStorageRecordList(
             LuggageStorageRecordQueryDTO recordQueryDTO) {
 
-        // 构造查询参数(todo:组合查询->wrapper.setSqlSelect())
+        // 构造查询参数
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
         if (Objects.nonNull(recordQueryDTO.getLuggageId())) {
             wrapper.eq("luggage_id", recordQueryDTO.getLuggageId());
@@ -208,6 +210,24 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     @Override
     public List<LuggageStorageRecord> selectAllStorageRecords() {
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
+
+        return selectList(wrapper);
+    }
+
+    /**
+     * 根据id查询行李寄存记录
+     *
+     * @param luggageIds
+     * @return
+     */
+    @Override
+    public List<LuggageStorageRecord> getStorageRecordsByIds(List<Long> luggageIds) {
+        if (CollectionUtils.isEmpty(luggageIds)) {
+            return Collections.emptyList();
+        }
+
+        Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<LuggageStorageRecord>()
+                .in("luggage_id", luggageIds);
 
         return selectList(wrapper);
     }

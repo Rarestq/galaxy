@@ -8,8 +8,8 @@ import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
+import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
-import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.TurnoverRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -78,8 +78,7 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
         recordQueryDTO.setLuggageTypeId(queryDTO.getLuggageTypeId());
         recordQueryDTO.setAdminName(queryDTO.getAdminName());
         if (StringUtils.isNotEmpty(queryDTO.getGmtCreate())) {
-            recordQueryDTO.setGmtCreate(DateUtil.string2LocalDateTime(queryDTO
-                    .getGmtCreate()));
+            recordQueryDTO.setGmtCreate(DateUtil.string2LocalDateTime(queryDTO.getGmtCreate()));
         }
 
         // 查询营业额记录列表信息

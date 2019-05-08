@@ -102,7 +102,7 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
                 TurnoverRecord::getLuggageId);
         // 查询行李寄存信息
         List<LuggageStorageRecord> luggageStorageRecords =
-                storageRecordManager.selectBatchIds(luggageIds);
+                storageRecordManager.getStorageRecordsByIds(luggageIds);
 
         // 将查询到的 LuggageStorageRecord 信息按照行李寄存主键id进行分组
         Map<Long, LuggageStorageRecord> storageRecordMap =

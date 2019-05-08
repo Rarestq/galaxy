@@ -3,6 +3,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.dto.ChargeCalculateRuleDTO;
 import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.dal.common.utils.StringSpliceUtils;
 import com.wuxiu.galaxy.dal.domain.ChargeCalculationRule;
 import com.wuxiu.galaxy.dal.manager.ChargeCalculationRuleManager;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.ChargeCalculateRuleService;
@@ -98,12 +99,15 @@ public class ChargeCalculateRuleServiceImpl implements ChargeCalculateRuleServic
         List<ChargeCalculateRuleDTO> ruleDTOS = newArrayList();
         calculationRules.forEach(calculationRule -> {
             ChargeCalculateRuleDTO calculateRuleDTO = new ChargeCalculateRuleDTO();
-            calculateRuleDTO.setLuggageTypeId(calculationRule.getLuggageTypeId());
+            Long luggageTypeId = calculationRule.getLuggageTypeId();
+            Integer unitsId = calculationRule.getCalculationUnitsId();
+            calculateRuleDTO.setLuggageTypeId(luggageTypeId);
+            calculateRuleDTO.setCalculateRuleDesc(StringSpliceUtils
+                    .getChargeCalculateRule(luggageTypeId, unitsId));
             calculateRuleDTO.setCalculationRuleId(calculationRule
                     .getCalculationRuleId());
             calculateRuleDTO.setFeePerUnit(calculationRule.getFeePerUnit());
-            calculateRuleDTO.setCalculationUnitsId(calculationRule
-                    .getCalculationUnitsId());
+            calculateRuleDTO.setCalculationUnitsId(unitsId);
             calculateRuleDTO.setGmtCreate(calculationRule.getGmtCreate().toString());
             ruleDTOS.add(calculateRuleDTO);
         });

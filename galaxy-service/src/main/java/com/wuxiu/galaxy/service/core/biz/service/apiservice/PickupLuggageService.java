@@ -5,6 +5,8 @@ import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
 
+import java.util.List;
+
 /**
  * 行李取件相关服务
  *

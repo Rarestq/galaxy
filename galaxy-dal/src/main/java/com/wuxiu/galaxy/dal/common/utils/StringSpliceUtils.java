@@ -3,8 +3,6 @@ package com.wuxiu.galaxy.dal.common.utils;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 /**
  * 字符串拼接工具类
  *
@@ -22,12 +20,22 @@ public class StringSpliceUtils {
      */
     public static String getChargeCalculateRule(Long luggageTypeId) {
         StringBuilder builder = new StringBuilder();
-        String luggageTypeDesc = Objects.requireNonNull(LuggageTypeEnum
-                .valueOf(luggageTypeId)).getDesc();
-        builder.append(luggageTypeId)
+        String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
+        builder.append(luggageTypeDesc)
                 .append("-")
-                .append(luggageTypeDesc)
                 .append("计费规则");
+
+        return builder.toString();
+
+    }
+
+    public static String getChargeCalculateRule(Long luggageTypeId, Integer unitsId) {
+        StringBuilder builder = new StringBuilder();
+        String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
+        builder.append(luggageTypeDesc)
+                .append("-")
+                .append("计费规则")
+                .append(unitsId);
 
         return builder.toString();
 

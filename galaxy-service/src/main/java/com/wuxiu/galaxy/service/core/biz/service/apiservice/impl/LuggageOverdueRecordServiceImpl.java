@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.*;
+import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
+import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordQueryDTO;
+import com.wuxiu.galaxy.api.dto.OperateUserDTO;
+import com.wuxiu.galaxy.api.dto.SaveLuggageOverdueRecordDTO;
+import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageOverdueRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
-import com.wuxiu.galaxy.service.core.base.utils.PageInfoUtil;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
@@ -100,6 +103,7 @@ public class LuggageOverdueRecordServiceImpl implements LuggageOverdueRecordServ
         recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
         recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
+        recordQueryDTO.setStatus(queryDTO.getStatus());
 
         // 查询行李逾期未取清理记录列表
         Page<LuggageOverdueRecordInfoDTO> overdueRecordInfoDTOPage =

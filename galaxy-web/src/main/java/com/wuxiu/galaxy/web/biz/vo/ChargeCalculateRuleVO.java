@@ -24,6 +24,11 @@ public class ChargeCalculateRuleVO implements Serializable {
     @ApiModelProperty(value = "计费规则主键id", required = true)
     private Long calculationRuleId;
     /**
+     * 计费规则描述
+     */
+    @ApiModelProperty(value = "计费规则描述", required = true)
+    private String calculateRuleDesc;
+    /**
      * 行李类型
      */
     @ApiModelProperty(value = "行李类型", required = true)

@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 计费规则相关服务
@@ -119,14 +118,14 @@ public class GwChargeCalculateRuleServiceImpl implements GwChargeCalculateRuleSe
 
         // 将 luggageType 和 calculationUnits 转化为中文类型
         calculateRuleVOS.forEach(recordVO -> {
-            recordVO.setLuggageType(Objects.requireNonNull(
+            recordVO.setLuggageType(
                     LuggageTypeEnum.getDescByCode(ruleDTOMap.get(recordVO
-                            .getCalculationRuleId())
-                            .getLuggageTypeId())));
+                            .getCalculationRuleId()).getLuggageTypeId()));
             recordVO.setCalculationUnits(CalculationUnitsEnum
                     .getDescByCode(ruleDTOMap.get(recordVO
                             .getCalculationRuleId()).getCalculationUnitsId()));
         });
+
 
         return APIResult.ok(calculateRuleVOS);
     }
