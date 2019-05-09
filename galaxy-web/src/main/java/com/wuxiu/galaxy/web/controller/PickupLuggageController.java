@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.PickupLuggageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwPickupLuggageService;
@@ -11,13 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Objects;
 
 /**
  * 行李取件相关接口
@@ -48,31 +46,41 @@ public class PickupLuggageController {
 
     @ApiOperation(value = "正常取件", notes = "正常取件")
     @PostMapping(value = "/common_pickup")
-    public APIResult<Void> pickupLuggage(Long luggageId) {
+    public APIResult<Void> pickupLuggage(@RequestBody String luggageIds,
+                                         HttpServletRequest request) {
 
-        if (Objects.isNull(luggageId)) {
+        if (StringUtils.isEmpty(luggageIds)) {
             return APIResult.error("参数错误，行李寄存记录id不能为空");
         }
-        return pickupLuggageService.pickupLuggage(luggageId);
+
+        AdminInfoDTO adminInfoDTO = (AdminInfoDTO) request.getSession(false)
+                .getAttribute("adminInfoDTO");
+        return pickupLuggageService.pickupLuggage(luggageIds, adminInfoDTO);
     }
 
     @ApiOperation(value = "标记为遗失", notes = "标记为遗失")
     @PostMapping(value = "/mark_as_lost")
-    public APIResult<Void> markLuggageAsLost(Long luggageId) {
+    public APIResult<Void> markLuggageAsLost(@RequestBody String luggageIds,
+                                             HttpServletRequest request) {
 
-        if (Objects.isNull(luggageId)) {
+        if (StringUtils.isEmpty(luggageIds)) {
             return APIResult.error("参数错误，行李寄存记录id不能为空");
         }
-        return pickupLuggageService.markLuggageAsLost(luggageId);
+        AdminInfoDTO adminInfoDTO = (AdminInfoDTO) request.getSession(false)
+                .getAttribute("adminInfoDTO");
+        return pickupLuggageService.markLuggageAsLost(luggageIds, adminInfoDTO);
     }
 
     @ApiOperation(value = "逾期取件", notes = "逾期取件")
     @PostMapping(value = "/overdue_pickup")
-    public APIResult<Void> pickupOverdueLuggage(Long luggageId) {
+    public APIResult<Void> pickupOverdueLuggage(@RequestBody String luggageIds,
+                                                HttpServletRequest request) {
 
-        if (Objects.isNull(luggageId)) {
+        if (StringUtils.isEmpty(luggageIds)) {
             return APIResult.error("参数错误，行李寄存记录id不能为空");
         }
-        return pickupLuggageService.pickupOverdueLuggage(luggageId);
+        AdminInfoDTO adminInfoDTO = (AdminInfoDTO) request.getSession(false)
+                .getAttribute("adminInfoDTO");
+        return pickupLuggageService.pickupOverdueLuggage(luggageIds, adminInfoDTO);
     }
 }

@@ -55,6 +55,11 @@ public class TurnoverRecordVO implements Serializable {
     @ApiModelProperty(value = "费用", required = true)
     private String fee;
     /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注", required = true)
+    private String remark;
+    /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间", required = false)

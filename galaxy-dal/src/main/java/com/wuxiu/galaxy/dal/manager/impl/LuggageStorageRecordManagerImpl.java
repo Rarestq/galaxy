@@ -94,7 +94,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
                 .getCalculateRuleId());
         turnoverRecord.setLuggageId(storageRecord.getLuggageId());
         turnoverRecord.setFee(newLuggageStorageRecordDTO.getFeeValue().toString());
-        turnoverRecord.setRemark(newLuggageStorageRecordDTO.getFeeCalculationProcessDesc());
+        turnoverRecord.setRemark(newLuggageStorageRecordDTO
+                .getFeeCalculationProcessDesc());
 
         return turnoverRecord;
     }
@@ -120,7 +121,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         storageRecord.setLuggageTypeId(newLuggageStorageRecordDTO.getLuggageTypeId());
         storageRecord.setRemark(newLuggageStorageRecordDTO.getRemark());
 
-        storageRecord.setStorageStartTime(newLuggageStorageRecordDTO.getStorageStartTime());
+        storageRecord.setStorageStartTime(newLuggageStorageRecordDTO
+                .getStorageStartTime());
         storageRecord.setStorageEndTime(newLuggageStorageRecordDTO.getStorageEndTime());
         storageRecord.setGmtCreate(LocalDateTime.now());
         storageRecord.setGmtModified(LocalDateTime.now());
@@ -153,15 +155,9 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         }
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.like("luggage_record_no", recordQueryDTO.getLuggageRecordNo());
+            wrapper.like("luggage_record_no",
+                    recordQueryDTO.getLuggageRecordNo());
         }
-
-//        if (Objects.nonNull(recordQueryDTO.getStorageEndTimeFrom())) {
-//            wrapper.between("storage_end_time",
-//                    recordQueryDTO.getStorageEndTimeFrom(),
-//                    Optional.ofNullable(recordQueryDTO.getStorageEndTimeTo())
-//                            .orElse(LocalDateTime.now()));
-//        }
 
         wrapper.orderBy("gmt_create", false)
                 .orderBy("luggage_id", false);
@@ -258,7 +254,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
                     storageRecord.getStatus()));
             storageInfoDTO.setStorageStartTime(storageRecord
                     .getStorageStartTime().toString());
-            storageInfoDTO.setStorageEndTime(storageRecord.getStorageEndTime().toString());
+            storageInfoDTO.setStorageEndTime(storageRecord.getStorageEndTime()
+                    .toString());
 
             storageInfoDTOS.add(storageInfoDTO);
         });

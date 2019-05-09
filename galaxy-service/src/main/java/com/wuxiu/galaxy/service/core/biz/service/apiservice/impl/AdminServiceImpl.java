@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
         }
 
         // 构造 AdminInfoDTO 对象
-        AdminInfoDTO saveAdminInfoDTO = buildAdminDTO(adminInfoDTO);
+        AdminInfoDTO saveAdminInfoDTO = buildAdminInfoDTO(adminInfoDTO);
 
         return adminManager.saveAdminInfo(saveAdminInfoDTO);
     }
@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
      * @param adminInfoDTO
      * @return
      */
-    private AdminInfoDTO buildAdminDTO(AdminInfoDTO adminInfoDTO) {
+    private AdminInfoDTO buildAdminInfoDTO(AdminInfoDTO adminInfoDTO) {
 
         Integer adminType = adminInfoDTO.getAdminType();
 
@@ -182,11 +182,32 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Admin findByName(String adminName) {
-        if (StringUtils.isNotBlank(adminName)) {
+    public AdminDTO findByName(String adminName) {
+        if (StringUtils.isEmpty(adminName)) {
             log.info("管理员姓名不能为空");
             throw new ParamException("管理员姓名不能为空");
         }
-        return adminManager.selectAdminByName(adminName);
+        Admin admin = adminManager.selectAdminByName(adminName);
+
+        return buildAdminDTO(admin);
     }
+
+    /**
+     * 构造 AdminDTO 对象
+     *
+     * @param admin
+     * @return
+     */
+    private AdminDTO buildAdminDTO(Admin admin) {
+        AdminDTO adminDTO = new AdminDTO();
+        adminDTO.setAdminId(admin.getAdminId());
+        adminDTO.setAdminNo(admin.getAdminNo());
+        adminDTO.setAdminName(admin.getAdminName());
+        adminDTO.setAdminPhone(admin.getAdminPhone());
+        adminDTO.setAdminType(admin.getAdminType());
+        adminDTO.setPassword(admin.getPassword());
+
+        return adminDTO;
+    }
+
 }

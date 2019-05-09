@@ -1,13 +1,10 @@
 package com.wuxiu.galaxy.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 新增行李寄存记录对象
@@ -47,9 +44,13 @@ public class NewLuggageStorageRecordDTO implements Serializable {
     @ApiModelProperty(value = "备注", required = false)
     private String remark;
     /**
+     * 寄存开始时间
+     */
+    @ApiModelProperty(value = "寄存开始时间", required = true)
+    private String storageStartTime;
+    /**
      * 寄存结束时间
      */
-    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "寄存结束时间", required = true)
-    private LocalDateTime storageEndTime;
+    private String storageEndTime;
 }

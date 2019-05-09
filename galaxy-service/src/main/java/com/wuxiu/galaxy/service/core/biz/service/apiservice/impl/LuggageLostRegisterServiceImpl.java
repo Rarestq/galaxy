@@ -3,6 +3,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.LuggageLostRegisterRecordDTO;
 import com.wuxiu.galaxy.api.dto.LuggageLostRegisterRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
@@ -53,7 +54,10 @@ public class LuggageLostRegisterServiceImpl implements LuggageLostRegisterServic
         recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
         recordQueryDTO.setDepositorPhone(queryDTO.getDepositorPhone());
-        recordQueryDTO.setLostTime(queryDTO.getLostTime());
+        if (StringUtils.isNotEmpty(queryDTO.getLostTime())) {
+            recordQueryDTO.setLostTime(DateUtil.string2LocalDateTime(queryDTO
+                    .getLostTime()));
+        }
 
         // 查询行李遗失登记记录列表
         Page<LuggageLostRegisterRecordDTO> registerRecordDTOPage =

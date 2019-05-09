@@ -74,7 +74,6 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
         recordQueryDTO.setAdminName(queryDTO.getAdminName());
         recordQueryDTO.setLuggageTypeDesc(queryDTO.getLuggageTypeDesc());
-        recordQueryDTO.setCompensateTime(queryDTO.getCompensateTime());
 
         // 查询行李遗失赔偿登记记录
         Page<LostCompensateRecordInfoDTO> compensateRecordDTOPage =
@@ -147,7 +146,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         // 计算赔偿所需费用
         String compensateFee = calculateCompensateFee(luggageTypeId,
                 registrationRecord.getLuggageId());
-        lostCompensateDTO.setCompensationFee(compensateFee);
+        lostCompensateDTO.setCompensationFee("￥" + compensateFee);
 
         String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
         // 备注，什么行李赔偿了多少钱
@@ -177,7 +176,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
             compensateFee = storageFee.multiply(new BigDecimal(3)).toString();
         } else if (Objects.equals(LuggageTypeEnum.VALUABLE_LUGGAGE_TYPE.getCode(),
                 luggageTypeId)) {
-            compensateFee = storageFee.multiply(new BigDecimal(10)).toString();
+            compensateFee = storageFee.multiply(new BigDecimal(5)).toString();
         }
 
         return compensateFee;

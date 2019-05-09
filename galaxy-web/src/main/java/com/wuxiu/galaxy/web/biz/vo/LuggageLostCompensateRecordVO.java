@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 遗失赔偿记录页面展示对象
@@ -49,7 +48,7 @@ public class LuggageLostCompensateRecordVO implements Serializable {
     /**
      * 行李类型
      */
-    private String luggageTypeDesc;
+    private String luggageType;
     /**
      * 赔偿金额
      */
@@ -61,5 +60,5 @@ public class LuggageLostCompensateRecordVO implements Serializable {
     /**
      * 赔偿时间
      */
-    private LocalDateTime compensateTime;
+    private String compensateTime;
 }

@@ -1,13 +1,10 @@
 package com.wuxiu.galaxy.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 行李取件记录对象
@@ -60,11 +57,10 @@ public class PickupLuggageRecordDTO implements Serializable {
      * 取件类型(0-正常取件，1-行李有遗失，2-逾期取件)
      */
     @ApiModelProperty(value = "取件类型(0-正常取件，1-行李有遗失，2-逾期取件)", required = true)
-    private String pickupType;
+    private Integer pickupType;
     /**
      * 取件时间
      */
-    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "取件时间", required = true)
-    private LocalDateTime pickUpTime;
+    private String pickUpTime;
 }

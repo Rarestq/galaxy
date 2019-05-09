@@ -50,7 +50,8 @@ public class LoginController {
         }
 
         AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
-        request.getSession().setAttribute("adminInfoDTO", adminInfoDTO);
+        request.getSession().setAttribute("adminInfoDTO",
+                adminInfoDTO);
         log.info("login -> 用户 " + adminInfoDTO.getAdminName() + " 已登录 ");
 
         return APIResult.ok(SUCCESS.getMessage());

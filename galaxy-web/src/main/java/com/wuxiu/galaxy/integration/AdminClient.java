@@ -52,4 +52,14 @@ public class AdminClient {
     public APIResult<Void> deleteAdmin(List<Long> adminIds) {
         return adminFacade.deleteAdmin(adminIds);
     }
+
+    /**
+     * 根据管路员姓名查询管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    public APIResult<AdminDTO> getAdminInfoByName(String adminName) {
+        return adminFacade.getAdminInfoByName(adminName);
+    }
 }

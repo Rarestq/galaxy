@@ -4,8 +4,6 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 /**
  * 行李遗失赔偿记录查询参数
  *
@@ -34,8 +32,4 @@ public class LostCompensateRecordQueryDTO extends PageInfo {
      * 行李类型
      */
     private String luggageTypeDesc;
-    /**
-     * 赔偿时间
-     */
-    private LocalDateTime compensateTime;
 }

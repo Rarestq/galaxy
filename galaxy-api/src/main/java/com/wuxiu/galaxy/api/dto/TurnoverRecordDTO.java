@@ -47,6 +47,10 @@ public class TurnoverRecordDTO implements Serializable {
      */
     private String fee;
     /**
+     * 备注
+     */
+    private String remark;
+    /**
      * 创建时间
      */
     private String gmtCreate;

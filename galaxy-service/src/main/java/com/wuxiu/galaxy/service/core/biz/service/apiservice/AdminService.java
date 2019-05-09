@@ -4,7 +4,6 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.AdminInfoQueryDTO;
-import com.wuxiu.galaxy.dal.domain.Admin;
 
 import java.util.List;
 
@@ -46,5 +45,7 @@ public interface AdminService {
      * @param adminName
      * @return
      */
-    Admin findByName(String adminName);
+    AdminDTO findByName(String adminName);
+
+
 }

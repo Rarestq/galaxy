@@ -57,4 +57,15 @@ public class AdminFacadeImpl implements AdminFacade {
         adminService.deleteAdmin(adminIds);
         return APIResult.ok();
     }
+
+    /**
+     * 根据管路员姓名查询管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    @Override
+    public APIResult<AdminDTO> getAdminInfoByName(String adminName) {
+        return APIResult.ok(adminService.findByName(adminName));
+    }
 }

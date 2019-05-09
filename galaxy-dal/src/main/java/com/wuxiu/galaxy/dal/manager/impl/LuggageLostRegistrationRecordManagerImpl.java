@@ -102,6 +102,8 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
             registerRecordDTO.setLuggageRecordNo(record.getLuggageRecordNo());
             registerRecordDTO.setLuggageTypeId(record.getLuggageTypeId());
             registerRecordDTO.setRemark(record.getRemark());
+            registerRecordDTO.setGmtCreate(record.getGmtCreate().toString());
+            registerRecordDTO.setGmtModified(record.getGmtModified().toString());
 
             registrationRecords.add(registerRecordDTO);
         });

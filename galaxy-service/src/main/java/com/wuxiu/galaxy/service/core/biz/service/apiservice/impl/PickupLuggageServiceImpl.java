@@ -8,10 +8,7 @@ import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.common.util.DateUtil;
-import com.wuxiu.galaxy.api.dto.LuggageChargeCalculationResultDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
-import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
-import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
+import com.wuxiu.galaxy.api.dto.*;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
@@ -67,7 +64,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      */
     @Override
     public void pickupLuggage(Long luggageId,
-                              OperateUserDTO operateUserDTO) {
+                              AdminInfoDTO operateUserDTO) {
         log.info("行李取件，行李寄存记录id：{}", luggageId);
 
         if (Objects.isNull(luggageId)) {
@@ -81,7 +78,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         if (Objects.equals(LuggageStorageStatusEnum.DEPOSITING.getCode(),
                 storageRecord.getStatus())) {
 
-            commonPickupLuggageDTO = buildPickupLuggageDTO(operateUserDTO, storageRecord);
+            commonPickupLuggageDTO = buildPickupLuggageDTO(operateUserDTO,
+                    storageRecord);
         }
 
         pickupLuggageRecordManager.pickupLuggage(commonPickupLuggageDTO);
@@ -94,15 +92,15 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      * @param storageRecord
      * @return
      */
-    private CommonPickupLuggageDTO buildPickupLuggageDTO(OperateUserDTO operateUserDTO,
+    private CommonPickupLuggageDTO buildPickupLuggageDTO(AdminInfoDTO operateUserDTO,
                                                          LuggageStorageRecord storageRecord) {
         CommonPickupLuggageDTO commonPickupLuggageDTO = new CommonPickupLuggageDTO();
 
         commonPickupLuggageDTO.setPickupRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.PICKUP_RECORD_NO_PREFIX));
         commonPickupLuggageDTO.setLuggageId(storageRecord.getLuggageId());
-        commonPickupLuggageDTO.setAdminId(operateUserDTO.getOperateUserId());
-        commonPickupLuggageDTO.setAdminName(operateUserDTO.getName());
+        commonPickupLuggageDTO.setAdminId(operateUserDTO.getAdminId());
+        commonPickupLuggageDTO.setAdminName(operateUserDTO.getAdminName());
 
         commonPickupLuggageDTO.setPickerName(storageRecord.getDepositorName());
         commonPickupLuggageDTO.setPickerPhone(storageRecord.getDepositorPhone());
@@ -125,7 +123,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      */
     @Override
     public void pickupOverdueLuggage(Long luggageId,
-                                     OperateUserDTO operateUserDTO) {
+                                     AdminInfoDTO operateUserDTO) {
         log.info("逾期取件，行李寄存记录id：{}", luggageId);
 
         if (Objects.isNull(luggageId)) {
@@ -142,20 +140,20 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
                 .getTurnoverRecordByLuggageId(luggageId);
 
         // 逾期时间
-        long overdueHours = DateUtil.calculateDate2Hours(
-                LocalDateTime.now(), luggageStorageRecord.getStorageEndTime());
+        int overdueHours = (int) DateUtil.calculateDate2Hours(
+                luggageStorageRecord.getStorageEndTime(), LocalDateTime.now());
 
         // 构造计费规则参数
         LuggageFeeCalculationRuleDTO ruleDTO = new LuggageFeeCalculationRuleDTO();
         ruleDTO.setCalculateRuleId(turnoverRecord.getCalculationRuleId());
         ruleDTO.setLuggageTypeId(luggageStorageRecord.getLuggageTypeId());
         ruleDTO.setGmtModified(luggageStorageRecord.getGmtModified());
-        ruleDTO.setLuggageStorageHours((int) overdueHours);
+        ruleDTO.setLuggageStorageHours(overdueHours);
 
         // 计算逾期费用（跟寄存时计算寄存所需费用的规则一样）
         LuggageFeeMeter luggageFeeMeter = meterFactory.getLuggageFeeMeter(ruleDTO);
         LuggageChargeCalculationResultDTO calculationResultDTO =
-                luggageFeeMeter.calculate((int) overdueHours);
+                luggageFeeMeter.calculate(overdueHours);
 
         if (Objects.equals(LuggageStorageStatusEnum.OVERDUE.getCode(),
                 luggageStorageRecord.getStatus())) {
@@ -179,13 +177,15 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      * @return
      */
     private PickupOverdueLuggageDTO buildPickupOverdueLuggageDTO(
-            OperateUserDTO operateUserDTO,
+            AdminInfoDTO operateUserDTO,
             LuggageStorageRecord luggageStorageRecord,
             LuggageChargeCalculationResultDTO calculationResultDTO) {
 
         PickupOverdueLuggageDTO overdueLuggageDTO = new PickupOverdueLuggageDTO();
-        overdueLuggageDTO.setAdminId(operateUserDTO.getOperateUserId());
-        overdueLuggageDTO.setAdminName(operateUserDTO.getName());
+        overdueLuggageDTO.setPickupRecordNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.PICKUP_RECORD_NO_PREFIX));
+        overdueLuggageDTO.setAdminId(operateUserDTO.getAdminId());
+        overdueLuggageDTO.setAdminName(operateUserDTO.getAdminName());
 
         overdueLuggageDTO.setLuggageId(luggageStorageRecord.getLuggageId());
         overdueLuggageDTO.setLuggageRecordNo(luggageStorageRecord.getLuggageRecordNo());
@@ -212,7 +212,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      */
     @Override
     public void markLuggageAsLost(Long luggageId,
-                                  OperateUserDTO operateUserDTO) {
+                                  AdminInfoDTO operateUserDTO) {
         log.info("标记为遗失，行李寄存记录id：{}", luggageId);
 
         if (Objects.isNull(luggageId)) {
@@ -253,14 +253,13 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         // 构造查询参数
         com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO recordQueryDTO =
                 new com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO();
-        // 通过行李寄存编号查询行李寄存信息
-        LuggageStorageRecord luggageStorageRecord = storageRecordManager
-                .selectByLuggageRecordNo(queryDTO.getLuggageRecordNo());
 
         recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
-        recordQueryDTO.setLuggageId(luggageStorageRecord.getLuggageId());
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
-        recordQueryDTO.setPickupTime(queryDTO.getPickupTime());
+        if (StringUtils.isNotEmpty(queryDTO.getPickupTime())) {
+            recordQueryDTO.setPickupTime(DateUtil.string2LocalDateTime(queryDTO
+                    .getPickupTime()));
+        }
 
         // 查询行李取件记录列表信息
         Page<PickupLuggageRecordDTO> recordDTOPage =
@@ -282,7 +281,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
      * @return
      */
     private MarkLuggageAsLostDTO buildMarkLuggageAsLostDTO(
-            LuggageStorageRecord storageRecord, OperateUserDTO operateUserDTO) {
+            LuggageStorageRecord storageRecord, AdminInfoDTO operateUserDTO) {
         MarkLuggageAsLostDTO markLuggageAsLostDTO = new MarkLuggageAsLostDTO();
 
         markLuggageAsLostDTO.setRegisterRecordNo(UUIDGenerateUtil.generateUniqueNo(
@@ -290,8 +289,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         markLuggageAsLostDTO.setLuggageId(storageRecord.getLuggageId());
         markLuggageAsLostDTO.setLuggageRecordNo(storageRecord.getLuggageRecordNo());
 
-        markLuggageAsLostDTO.setAdminId(operateUserDTO.getOperateUserId());
-        markLuggageAsLostDTO.setAdminName(operateUserDTO.getName());
+        markLuggageAsLostDTO.setAdminId(operateUserDTO.getAdminId());
+        markLuggageAsLostDTO.setAdminName(operateUserDTO.getAdminName());
 
         markLuggageAsLostDTO.setDepositorName(storageRecord.getDepositorName());
         markLuggageAsLostDTO.setDepositorPhone(storageRecord.getDepositorPhone());

@@ -26,11 +26,6 @@ public class PickupLuggageRecordQueryDTO implements Serializable {
     Page<PickupLuggageRecord> page;
 
     /**
-     * 行李寄存记录主键id
-     */
-    private Long luggageId;
-
-    /**
      * 行李寄存者姓名
      */
     private String depositorName;

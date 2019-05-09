@@ -65,7 +65,8 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         calculationRuleDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
         calculationRuleDTO.setLuggageTypeId(luggageTypeId);
         int calculateHours = (int) DateUtil.calculateDate2Hours(
-                LocalDateTime.now(), storageRecordDTO.getStorageEndTime());
+                DateUtil.string2LocalDateTime(storageRecordDTO.getStorageStartTime()),
+                DateUtil.string2LocalDateTime(storageRecordDTO.getStorageEndTime()));
         calculationRuleDTO.setLuggageStorageHours(calculateHours);
         calculationRuleDTO.setGmtModified(LocalDateTime.now());
         // 获取计价器
@@ -106,8 +107,10 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         recordDTO.setDepositorName(storageRecordDTO.getDepositorName());
         recordDTO.setDepositorPhone(storageRecordDTO.getDepositorPhone());
 
-        recordDTO.setStorageStartTime(LocalDateTime.now());
-        recordDTO.setStorageEndTime(storageRecordDTO.getStorageEndTime());
+        recordDTO.setStorageStartTime(DateUtil.string2LocalDateTime(storageRecordDTO
+                .getStorageStartTime()));
+        recordDTO.setStorageEndTime(DateUtil.string2LocalDateTime(storageRecordDTO
+                .getStorageEndTime()));
         if (StringUtils.isNotEmpty(storageRecordDTO.getRemark())) {
             recordDTO.setRemark(storageRecordDTO.getRemark());
         }

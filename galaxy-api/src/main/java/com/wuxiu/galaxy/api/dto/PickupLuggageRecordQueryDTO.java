@@ -1,13 +1,9 @@
 package com.wuxiu.galaxy.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * 行李取件记录查询参数对象
@@ -36,7 +32,6 @@ public class PickupLuggageRecordQueryDTO extends PageInfo {
     /**
      * 取件时间
      */
-    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "取件时间", required = false)
-    private LocalDateTime pickupTime;
+    private String pickupTime;
 }

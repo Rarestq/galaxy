@@ -40,7 +40,7 @@ public class LuggageStorageServiceTest extends BaseTest {
         recordDTO.setLuggageTypeId(3L);
         recordDTO.setRemark("贵重行李");
         LocalDateTime time = LocalDateTime.of(2019, 5, 7, 16, 36);
-        recordDTO.setStorageEndTime(time);
+        recordDTO.setStorageEndTime(time.toString());
 
         OperateUserDTO operateUserDTO = new OperateUserDTO();
         operateUserDTO.setOperateUserId(69L);

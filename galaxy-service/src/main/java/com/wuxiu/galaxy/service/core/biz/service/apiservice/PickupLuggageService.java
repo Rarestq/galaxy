@@ -1,11 +1,9 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice;
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
-
-import java.util.List;
 
 /**
  * 行李取件相关服务
@@ -23,7 +21,7 @@ public interface PickupLuggageService {
      * @return
      */
     void pickupLuggage(Long luggageId,
-                       OperateUserDTO operateUserDTO);
+                       AdminInfoDTO operateUserDTO);
 
     /**
      * 标记为遗失
@@ -33,7 +31,7 @@ public interface PickupLuggageService {
      * @return
      */
     void pickupOverdueLuggage(Long luggageId,
-                              OperateUserDTO operateUserDTO);
+                              AdminInfoDTO operateUserDTO);
 
     /**
      * 逾期取件
@@ -43,7 +41,7 @@ public interface PickupLuggageService {
      * @return
      */
     void markLuggageAsLost(Long luggageId,
-                           OperateUserDTO operateUserDTO);
+                           AdminInfoDTO operateUserDTO);
 
 
     /**

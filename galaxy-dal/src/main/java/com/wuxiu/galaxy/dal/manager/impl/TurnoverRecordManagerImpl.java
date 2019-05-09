@@ -196,6 +196,7 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             turnoverRecordDTO.setCalculationRuleId(
                     turnoverRecord.getCalculationRuleId());
             turnoverRecordDTO.setFee(turnoverRecord.getFee());
+            turnoverRecordDTO.setRemark(turnoverRecord.getRemark());
             turnoverRecordDTO.setGmtCreate(turnoverRecord.getGmtCreate().toString());
             turnoverRecordDTO.setGmtModified(turnoverRecord.getGmtModified().toString());
             recordDTOS.add(turnoverRecordDTO);

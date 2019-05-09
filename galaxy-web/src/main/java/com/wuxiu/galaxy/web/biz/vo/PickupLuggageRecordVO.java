@@ -1,13 +1,10 @@
 package com.wuxiu.galaxy.web.biz.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 行李取件记录展示对象
@@ -34,27 +31,27 @@ public class PickupLuggageRecordVO implements Serializable {
     /**
      * 行李寄存主键id
      */
-    @ApiModelProperty(value = "取件时间", required = true)
+    @ApiModelProperty(value = "行李寄存主键id", required = true)
     private Long luggageId;
     /**
      * 管理员id
      */
-    @ApiModelProperty(value = "取件时间", required = true)
+    @ApiModelProperty(value = "管理员id", required = true)
     private Long adminId;
     /**
      * 管理员姓名
      */
-    @ApiModelProperty(value = "取件时间", required = true)
+    @ApiModelProperty(value = "管理员姓名", required = true)
     private String adminName;
     /**
      * 取件人姓名
      */
-    @ApiModelProperty(value = "取件时间", required = true)
+    @ApiModelProperty(value = "取件人姓名", required = true)
     private String pickerName;
     /**
      * 取件人电话
      */
-    @ApiModelProperty(value = "取件时间", required = true)
+    @ApiModelProperty(value = "取件人电话", required = true)
     private String pickerPhone;
     /**
      * 取件类型(0-正常取件，1-行李有遗失，2-逾期取件)
@@ -64,8 +61,7 @@ public class PickupLuggageRecordVO implements Serializable {
     /**
      * 取件时间
      */
-    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
     @ApiModelProperty(value = "取件时间", required = true)
-    private LocalDateTime pickUpTime;
+    private String pickUpTime;
 
 }

@@ -68,5 +68,15 @@ public class LuggageLostRegisterRecordDTO implements Serializable {
      */
     @ApiModelProperty(value = "行李遗失登记备注", required = true)
     private String remark;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间", required = true)
+    private String gmtCreate;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间", required = true)
+    private String gmtModified;
 
 }

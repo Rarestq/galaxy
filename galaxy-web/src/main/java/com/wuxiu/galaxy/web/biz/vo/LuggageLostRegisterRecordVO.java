@@ -52,7 +52,7 @@ public class LuggageLostRegisterRecordVO implements Serializable {
      * 行李类型
      */
     @ApiModelProperty(value = "行李类型", required = true)
-    private String luggageTypeDesc;
+    private String luggageType;
     /**
      * 行李遗失登记者姓名
      */
@@ -68,5 +68,15 @@ public class LuggageLostRegisterRecordVO implements Serializable {
      */
     @ApiModelProperty(value = "行李遗失登记备注", required = true)
     private String remark;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间", required = true)
+    private String gmtCreate;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间", required = true)
+    private String gmtModified;
 
 }

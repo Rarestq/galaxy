@@ -38,7 +38,33 @@ public class ObjectConvertUtil {
             array[i] = Long.valueOf(strs[i]);
         }
 
+        return Arrays.asList(array);
+    }
+
+    /**
+     * 取件操作时，"luggageIds"(String) -> luggageIds(Long)
+     *
+     * @param str
+     * @param regex
+     * @return
+     */
+    public static List<Long> luggageIdFromString2Long(String str, String regex) {
+        String substring;
+        if (str.contains(regex)) {
+            substring = str.substring(15, str.length() - 2);
+        } else {
+            substring = str.substring(14, str.length() - 1);
+        }
+
+        Long[] array;
+
+        String[] strs = substring.split(regex);
+        array = new Long[strs.length];
+        for (int i = 0; i < strs.length; i++) {
+            array[i] = Long.valueOf(strs[i]);
+        }
 
         return Arrays.asList(array);
     }
+
 }

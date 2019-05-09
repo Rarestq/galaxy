@@ -26,8 +26,8 @@ public class LuggageLostRegisterClient {
      * @param queryDTO
      * @return
      */
-    public APIResult<PageInfo<LuggageLostRegisterRecordDTO>> queryLostRegisterRecordList(
-            LuggageLostRegisterRecordQueryDTO queryDTO) {
+    public APIResult<PageInfo<LuggageLostRegisterRecordDTO>>
+    queryLostRegisterRecordList(LuggageLostRegisterRecordQueryDTO queryDTO) {
         return lostRegisterFacade.queryLostRegisterRecordList(queryDTO);
     }
 }

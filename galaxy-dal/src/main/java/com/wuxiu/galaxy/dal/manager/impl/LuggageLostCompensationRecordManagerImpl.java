@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,11 +69,6 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
 
         if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
             wrapper.eq("depositor_name", recordQueryDTO.getDepositorName());
-        }
-
-        if (Objects.nonNull(recordQueryDTO.getCompensateTime())) {
-            wrapper.between("gmt_create", recordQueryDTO.getCompensateTime(),
-                    LocalDateTime.now());
         }
 
         wrapper.orderBy("gmt_create", false)

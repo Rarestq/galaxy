@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -48,7 +49,10 @@ public class LuggageLostCompensateController {
     @ApiOperation(value = "对遗失的行李进行赔偿", notes = "对遗失的行李进行赔偿")
     @PostMapping("/compensate_luggage")
     public APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
-            Long lostRegistrationRecordId) {
+            Long lostRegistrationRecordId,
+            HttpServletRequest request) {
+        //todo:
+
         return compensateService.compensateByLuggageType(lostRegistrationRecordId);
     }
 }

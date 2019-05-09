@@ -88,7 +88,7 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
     public APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
             Long lostRegistrationRecordId) {
 
-        // 获取当前登录操作人的信息
+        // todo:获取当前登录操作人的信息
         OperateUserDTO operateUser = userService.getCurrentOperateUser();
 
         // 遗失行李赔偿

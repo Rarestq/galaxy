@@ -39,4 +39,12 @@ public interface AdminFacade {
      * @return
      */
     APIResult<Void> deleteAdmin(List<Long> adminIds);
+
+    /**
+     * 根据管路员姓名查询管理员信息
+     *
+     * @param adminName
+     * @return
+     */
+    APIResult<AdminDTO> getAdminInfoByName(String adminName);
 }

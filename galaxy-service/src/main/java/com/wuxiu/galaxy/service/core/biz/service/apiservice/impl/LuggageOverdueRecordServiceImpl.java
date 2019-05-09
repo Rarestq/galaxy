@@ -73,7 +73,8 @@ public class LuggageOverdueRecordServiceImpl implements LuggageOverdueRecordServ
                 buildLuggageOverdueRecordDTO(overdueRecordDTO, operateUserDTO,
                         luggageStorageRecord);
 
-        return overdueRecordManager.createLuggageOverdueRecord(saveLuggageOverdueRecordDTO);
+        return overdueRecordManager.createLuggageOverdueRecord
+                (saveLuggageOverdueRecordDTO);
     }
 
     /**

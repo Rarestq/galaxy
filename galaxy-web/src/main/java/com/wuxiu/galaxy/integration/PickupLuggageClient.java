@@ -2,14 +2,12 @@ package com.wuxiu.galaxy.integration;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.api.service.PickupLuggageFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 行李取件相关服务
@@ -27,12 +25,12 @@ public class PickupLuggageClient {
      * 行李取件
      *
      * @param luggageId
-     * @param operateUserDTO
+     * @param adminInfoDTO
      * @return
      */
     public APIResult<Void> pickupLuggage(Long luggageId,
-                                         OperateUserDTO operateUserDTO) {
-        return pickupLuggageFacade.pickupLuggage(luggageId, operateUserDTO);
+                                         AdminInfoDTO adminInfoDTO) {
+        return pickupLuggageFacade.pickupLuggage(luggageId, adminInfoDTO);
     }
 
     /**
@@ -43,7 +41,7 @@ public class PickupLuggageClient {
      * @return
      */
     public APIResult<Void> markLuggageAsLost(Long luggageId,
-                                             OperateUserDTO operateUserDTO) {
+                                             AdminInfoDTO operateUserDTO) {
         return pickupLuggageFacade.markLuggageAsLost(luggageId, operateUserDTO);
     }
 
@@ -55,7 +53,7 @@ public class PickupLuggageClient {
      * @return
      */
     public APIResult<Void> pickupOverdueLuggage(Long luggageId,
-                                                OperateUserDTO operateUserDTO) {
+                                                AdminInfoDTO operateUserDTO) {
         return pickupLuggageFacade.pickupOverdueLuggage(luggageId, operateUserDTO);
     }
 

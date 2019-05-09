@@ -22,6 +22,6 @@ public class SessionConstants {
     /**
      * Session失效时间，2d
      */
-    public static final int SESSION_EXPIRE_SECOND = 2 * 24 * 3600;
+    public static final int SESSION_EXPIRE_SECOND = 2 * 24 * 3600 * 1000;
 
 }

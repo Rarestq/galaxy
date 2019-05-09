@@ -2,8 +2,10 @@ package com.wuxiu.galaxy.service.core.base.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -23,19 +25,47 @@ public class CrosFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+//        HttpServletResponse response = (HttpServletResponse) servletResponse;
+//
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//
+//
+//        //报错：Request header field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
+//        //Access-Control-Allow-Headers没有写全
+//        String allowHeaders = "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With, Authorization, Accept";
+//        response.setHeader("Access-Control-Allow-Headers", allowHeaders);
+//
+//        log.info("**into*********跨域过滤器被使用*************");
+//        filterChain.doFilter(servletRequest, servletResponse);
+//        log.info("**success*********跨域过滤器通过*************");
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
+        String origin = req.getHeader("Origin");
+        if (origin == null) {
+            origin = req.getHeader("Referer");
+        }
+        // 允许指定域访问跨域资源
+        resp.setHeader("Access-Control-Allow-Origin", origin);
+        // 允许客户端携带跨域cookie，此时origin值不能为“*”，只能为指定单一域名
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
 
-        //报错：Request header field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
-        //Access-Control-Allow-Headers没有写全
-        String allowHeaders = "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With, Authorization";
-        response.setHeader("Access-Control-Allow-Headers", allowHeaders);
+        if (RequestMethod.OPTIONS.toString().equals(req.getMethod())) {
+            String allowMethod = req.getHeader("Access-Control-Request-Method");
+            String allowHeaders = req.getHeader("Access-Control-Request-Headers");
+            // 浏览器缓存预检请求结果时间,单位:秒
+            resp.setHeader("Access-Control-Max-Age", "86400");
+            // 允许浏览器在预检请求成功之后发送的实际请求方法名
+            resp.setHeader("Access-Control-Allow-Methods", allowMethod);
+            // 允许浏览器发送的请求消息头
+            resp.setHeader("Access-Control-Allow-Headers", allowHeaders);
+            return;
+        }
 
         log.info("**into*********跨域过滤器被使用*************");
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(req, resp);
         log.info("**success*********跨域过滤器通过*************");
     }
 

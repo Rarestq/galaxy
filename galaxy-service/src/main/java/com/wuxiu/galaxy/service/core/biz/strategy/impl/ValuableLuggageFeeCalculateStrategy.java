@@ -53,12 +53,12 @@ public class ValuableLuggageFeeCalculateStrategy implements LuggageFeeCalculatio
         switch (calculationUnitsEnum) {
             case YUAN_PER_ITEM:
                 // 元/件/次, 不处理
-                desc.append("收费").append(valuableLuggageFeeCalculateParamDTO
+                desc.append("收费 ￥").append(valuableLuggageFeeCalculateParamDTO
                         .getFeePerUnit()).append("元/件/次,");
                 break;
             case YUAN_EACH_HOUR:
                 // 元/件/小时
-                desc.append("收费").append(calculateFee).append("元/件/小时,");
+                desc.append("收费 ￥").append(calculateFee).append("元/件/小时,");
                 calculateFee = calculateFee.multiply(new BigDecimal(calculateHours));
                 break;
             default:

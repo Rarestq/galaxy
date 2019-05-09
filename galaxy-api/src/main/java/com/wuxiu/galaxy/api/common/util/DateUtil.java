@@ -21,14 +21,17 @@ public class DateUtil {
      */
     public static long calculateDate2Hours(LocalDateTime now,
                                            LocalDateTime storageEndTime) {
+
         Duration between = Duration.between(now, storageEndTime);
         return between.toHours();
     }
 
     public static void main(String[] args) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime time = LocalDateTime.of(2019, 5, 2, 15, 21);
+        LocalDateTime now = LocalDateTime.of(2019, 5, 8, 15, 49);
+        LocalDateTime time = LocalDateTime.of(2019, 5, 8, 17, 49);
         long hours = calculateDate2Hours(now, time);
+        System.out.println("当前时间：" + now);
+        System.out.println("当前时间：" + LocalDateTime.now());
         System.out.println("时间差：" + hours);
     }
 

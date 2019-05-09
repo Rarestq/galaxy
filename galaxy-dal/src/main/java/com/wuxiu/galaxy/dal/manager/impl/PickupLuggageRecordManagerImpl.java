@@ -302,12 +302,9 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
             wrapper.like("picker_name", recordQueryDTO.getDepositorName());
         }
 
-        if (Objects.nonNull(recordQueryDTO.getLuggageId())) {
-            wrapper.eq("luggage_id", recordQueryDTO.getLuggageId());
-        }
-
         if (Objects.nonNull(recordQueryDTO.getPickupTime())) {
-            wrapper.eq("pick_up_time", recordQueryDTO.getPickupTime());
+            wrapper.between("pick_up_time", recordQueryDTO.getPickupTime(),
+                    LocalDateTime.now());
         }
 
         wrapper.orderBy("gmt_create", false)
@@ -338,6 +335,8 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
 
             pickupLuggageRecordDTO.setPickupLuggageRecordId(pickupLuggageRecord
                     .getPickupLuggageRecordId());
+            pickupLuggageRecordDTO.setPickupRecordNo(pickupLuggageRecord
+                    .getPickupRecordNo());
             pickupLuggageRecordDTO.setLuggageId(pickupLuggageRecord.getLuggageId());
             pickupLuggageRecordDTO.setAdminId(pickupLuggageRecord.getAdminId());
             pickupLuggageRecordDTO.setAdminName(pickupLuggageRecord.getAdminName());
@@ -345,9 +344,9 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
             pickupLuggageRecordDTO.setPickerName(pickupLuggageRecord.getPickerName());
             pickupLuggageRecordDTO.setPickerPhone(pickupLuggageRecord.getPickerPhone());
 
-            pickupLuggageRecordDTO.setPickupType(PickupLuggageTypeEnum.getDescByCode(
-                    pickupLuggageRecord.getPickupType()));
-            pickupLuggageRecordDTO.setPickUpTime(pickupLuggageRecord.getPickUpTime());
+            pickupLuggageRecordDTO.setPickupType(pickupLuggageRecord.getPickupType());
+            pickupLuggageRecordDTO.setPickUpTime(pickupLuggageRecord.getPickUpTime()
+                    .toString());
             recordDTOS.add(pickupLuggageRecordDTO);
         });
 

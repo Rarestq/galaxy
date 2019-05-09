@@ -78,7 +78,8 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
         recordQueryDTO.setLuggageTypeId(queryDTO.getLuggageTypeId());
         recordQueryDTO.setAdminName(queryDTO.getAdminName());
         if (StringUtils.isNotEmpty(queryDTO.getGmtCreate())) {
-            recordQueryDTO.setGmtCreate(DateUtil.string2LocalDateTime(queryDTO.getGmtCreate()));
+            recordQueryDTO.setGmtCreate(DateUtil.string2LocalDateTime(queryDTO
+                    .getGmtCreate()));
         }
 
         // 查询营业额记录列表信息

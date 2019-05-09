@@ -2,13 +2,12 @@ package com.wuxiu.galaxy.web.biz.service.impl;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
+import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
-import com.wuxiu.galaxy.api.dto.LuggageStorageRecordQueryDTO;
-import com.wuxiu.galaxy.api.dto.NewLuggageStorageRecordDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
+import com.wuxiu.galaxy.api.dto.*;
 import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
+import com.wuxiu.galaxy.integration.AdminClient;
 import com.wuxiu.galaxy.integration.LuggageStorageRecordClient;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
@@ -39,6 +38,9 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
     private LuggageStorageRecordClient storageRecordClient;
 
     @Autowired
+    private AdminClient adminClient;
+
+    @Autowired
     private UserService userService;
 
     /**
@@ -53,8 +55,23 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
         NewLuggageStorageRecordDTO storageRecordDTO =
                 BeanCopierUtil.convert(form, NewLuggageStorageRecordDTO.class);
 
-        // 获取当前登录人的信息
-        OperateUserDTO operateUserDTO = userService.getCurrentOperateUser();
+        // 根据管理员姓名查询管理员信息
+        APIResult<AdminDTO> adminInfoAPIResult = adminClient.getAdminInfoByName(
+                form.getAdminName());
+        if (!adminInfoAPIResult.isSuccess()) {
+            log.warn("查询管理员信息失败，result:{}, form:{}", adminInfoAPIResult, form);
+            return CommonUtil.errorAPIResult(adminInfoAPIResult);
+        }
+        AdminDTO adminDTO = adminInfoAPIResult.getData();
+
+        // 构造 OperateUserDTO 对象
+        OperateUserDTO operateUserDTO = new OperateUserDTO();
+        operateUserDTO.setOperateUserId(adminDTO.getAdminId());
+        operateUserDTO.setOperateUserNo(adminDTO.getAdminNo());
+        operateUserDTO.setName(adminDTO.getAdminName());
+        operateUserDTO.setOperateUserPhone(adminDTO.getAdminPhone());
+        operateUserDTO.setUserTypeEnum(UserTypeEnum.valueOf(adminDTO.getAdminType()));
+
         APIResult<Long> result =
                 storageRecordClient.insertLuggageStorageRecord(storageRecordDTO,
                         operateUserDTO);
