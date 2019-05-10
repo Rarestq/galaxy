@@ -28,7 +28,7 @@ public enum GlobalErrorCodeEnum implements ErrorCode {
     INTERNAL_SERVER_ERROR("500", "Internal Server Error"),
 
 
-    LOGIN_FAILURE("1000", "Login Failure!"),
+    LOGIN_FAILURE("1000", "Login Failure, check account or password!"),
     LOGOUT_FAILURE("1001", "Logout Failure!"),
 
     DATA_ERROR("5000", "数据异常!"),

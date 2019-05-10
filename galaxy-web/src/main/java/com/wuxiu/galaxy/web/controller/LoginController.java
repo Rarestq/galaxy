@@ -44,15 +44,20 @@ public class LoginController {
         if (StringUtils.isNotEmpty(loginCheck)) {
             return APIResult.error(loginCheck);
         }
-        APIResult<AdminInfoDTO> adminInfoDTOAPIResult = loginService.checkLogin(loginForm);
-        if (!adminInfoDTOAPIResult.isSuccess()) {
+
+        try {
+            APIResult<AdminInfoDTO> adminInfoDTOAPIResult = loginService.checkLogin(loginForm);
+            if (!adminInfoDTOAPIResult.isSuccess()) {
+                return APIResult.error(LOGIN_FAILURE.getCode(), LOGIN_FAILURE.getMessage());
+            }
+
+            AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
+            request.getSession().setAttribute("adminInfoDTO",
+                    adminInfoDTO);
+            log.info("login -> 用户 " + adminInfoDTO.getAdminName() + " 已登录 ");
+        } catch (Exception ex) {
             return APIResult.error(LOGIN_FAILURE.getCode(), LOGIN_FAILURE.getMessage());
         }
-
-        AdminInfoDTO adminInfoDTO = adminInfoDTOAPIResult.getData();
-        request.getSession().setAttribute("adminInfoDTO",
-                adminInfoDTO);
-        log.info("login -> 用户 " + adminInfoDTO.getAdminName() + " 已登录 ");
 
         return APIResult.ok(SUCCESS.getMessage());
     }

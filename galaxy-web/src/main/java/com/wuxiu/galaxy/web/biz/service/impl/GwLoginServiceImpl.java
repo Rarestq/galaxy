@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  * 登录相关服务
  *
@@ -35,7 +37,7 @@ public class GwLoginServiceImpl implements GwLoginService {
     public APIResult<AdminInfoDTO> checkLogin(LoginForm loginForm) {
         LoginDTO loginDTO = BeanCopierUtil.convert(loginForm, LoginDTO.class);
         APIResult<AdminInfoDTO> adminInfoAPIResult = loginClient.checkLogin(loginDTO);
-        if (!adminInfoAPIResult.isSuccess()) {
+        if (!adminInfoAPIResult.isSuccess() || !Objects.equals(adminInfoAPIResult.getCode(), "200")) {
             log.warn("登录校验失败, result:{}, form:{}",
                     adminInfoAPIResult, loginForm);
             return CommonUtil.errorAPIResult(adminInfoAPIResult);
