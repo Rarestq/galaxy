@@ -43,6 +43,11 @@ public class PickupOverdueLuggageDTO implements Serializable {
     private String depositorPhone;
 
     /**
+     * 计费规则id
+     */
+    private Long calculateRuleId;
+
+    /**
      * 计费单位Id
      */
     private Integer calculationUnitsId;

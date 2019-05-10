@@ -14,20 +14,17 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.FeeTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
-import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupOverdueLuggageDTO;
 import com.wuxiu.galaxy.dal.dao.PickupLuggageRecordDao;
-import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
-import com.wuxiu.galaxy.dal.domain.LuggageOverdueRecord;
-import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
-import com.wuxiu.galaxy.dal.domain.PickupLuggageRecord;
+import com.wuxiu.galaxy.dal.domain.*;
 import com.wuxiu.galaxy.dal.manager.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +149,8 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
 
             storageRecord.setLuggageId(luggageId);
             storageRecord.setGmtModified(LocalDateTime.now());
-            storageRecord.setStatus(LuggageStorageStatusEnum.OVERDUE_PICKUP.getCode());
+            storageRecord.setStatus(LuggageStorageStatusEnum
+                    .OVERDUE_PICKUP.getCode());
             // 更新行李寄存记录状态为「逾期取件」
             storageRecordManager.updateById(storageRecord);
 
@@ -165,26 +163,52 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
 
             // 构造 LuggageOverdueRecord 对象
             LuggageOverdueRecord overdueRecord = buildLuggageOverdueRecord(
-                    pickupOverdueLuggageDTO, luggageStorageRecord,
-                    luggageOverdueRecord);
+                    pickupOverdueLuggageDTO, luggageOverdueRecord);
 
             // 逾期取件后，更新逾期记录状态为「已清理作废」
             overdueRecordManager.updateById(overdueRecord);
+
+            // 构造 TurnoverRecord 对象
+            TurnoverRecord turnoverRecord =
+                    buildTurnoverRecord(pickupOverdueLuggageDTO);
+            // 添加逾期费用营业额记录
+            turnoverRecordManager.insert(turnoverRecord);
         }
 
+    }
+
+    /**
+     * 构造类型为「逾期费用」的 TurnoverRecord 对象
+     *
+     * @param pickupOverdueLuggageDTO
+     * @return
+     */
+    private TurnoverRecord buildTurnoverRecord(
+            PickupOverdueLuggageDTO pickupOverdueLuggageDTO) {
+
+        TurnoverRecord turnoverRecord = new TurnoverRecord();
+
+        turnoverRecord.setAdminId(pickupOverdueLuggageDTO.getAdminId());
+        turnoverRecord.setCalculationRuleId(pickupOverdueLuggageDTO
+                .getCalculateRuleId());
+        turnoverRecord.setFee(pickupOverdueLuggageDTO.getFeeValue().toString());
+        turnoverRecord.setFeeType(FeeTypeEnum.OVERDUE_FEE.getCode());
+        turnoverRecord.setLuggageId(pickupOverdueLuggageDTO.getLuggageId());
+        turnoverRecord.setRemark(pickupOverdueLuggageDTO
+                .getFeeCalculationProcessDesc());
+
+        return turnoverRecord;
     }
 
     /**
      * 构造 LuggageOverdueRecord 对象
      *
      * @param pickupOverdueLuggageDTO
-     * @param luggageStorageRecord
      * @param luggageOverdueRecord
      * @return
      */
     private LuggageOverdueRecord buildLuggageOverdueRecord(
             PickupOverdueLuggageDTO pickupOverdueLuggageDTO,
-            LuggageStorageRecord luggageStorageRecord,
             LuggageOverdueRecord luggageOverdueRecord) {
 
         LuggageOverdueRecord overdueRecord = new LuggageOverdueRecord();
@@ -205,13 +229,15 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         overdueRecord.setGmtModified(LocalDateTime.now());
 
         //todo:检查时间格式问题
-        long overdueHours = DateUtil.calculateDate2Hours(
-                LocalDateTime.now(), luggageStorageRecord.getStorageEndTime());
+//        long overdueHours = DateUtil.calculateDate2Hours(
+//                LocalDateTime.now(), luggageStorageRecord.getStorageEndTime());
         // 设置逾期补收的费用计算描述（不满一小时按一小时算）
-//        overdueRecord.setRemark(pickupOverdueLuggageDTO.getFeeCalculationProcessDesc());
-        overdueRecord.setRemark("此次寄存共逾期 " + overdueHours + " 小时" +
-                "，额外收取超时费用为 " + pickupOverdueLuggageDTO.getFeeValue()
-                .toString() + " 元");
+        overdueRecord.setRemark(pickupOverdueLuggageDTO
+                .getFeeCalculationProcessDesc());
+
+//        overdueRecord.setRemark("此次寄存共逾期 " + overdueHours + " 小时" +
+//                "，额外收取超时费用为 " + pickupOverdueLuggageDTO.getFeeValue()
+//                .toString() + " 元");
 
         return overdueRecord;
     }

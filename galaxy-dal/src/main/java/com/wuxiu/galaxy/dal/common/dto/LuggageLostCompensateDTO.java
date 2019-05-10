@@ -29,6 +29,11 @@ public class LuggageLostCompensateDTO implements Serializable {
     @ApiModelProperty(value = "遗失赔偿记录编号", required = true)
     private String lostCompensateRecordNo;
     /**
+     * 行李寄存主键id
+     */
+    @ApiModelProperty(value = "行李寄存主键id", required = true)
+    private Long luggageId;
+    /**
      * 管理员id
      */
     @ApiModelProperty(value = "管理员id", required = true)

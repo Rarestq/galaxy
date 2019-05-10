@@ -63,7 +63,7 @@ public class TurnoverRecord extends BaseModel {
      * 费用类型(0-寄存费用,1-逾期费用,2-赔偿费用)
      */
     @TableField("fee_type")
-    private String feeType;
+    private Integer feeType;
     /**
      * 备注
      */

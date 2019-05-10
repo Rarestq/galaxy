@@ -139,9 +139,10 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         TurnoverRecord turnoverRecord = turnoverRecordManager
                 .getTurnoverRecordByLuggageId(luggageId);
 
-        // 逾期时间
-        int overdueHours = (int) DateUtil.calculateDate2Hours(
-                luggageStorageRecord.getStorageEndTime(), LocalDateTime.now());
+        // 逾期时间 (因为通过 convertDateFormat() 方法转完后的格式是 12 小时制的)
+        int overdueHours = 12 + (int) DateUtil.calculateDate2Hours(
+                luggageStorageRecord.getStorageEndTime(), DateUtil
+                        .convertDateFormat(LocalDateTime.now()));
 
         // 构造计费规则参数
         LuggageFeeCalculationRuleDTO ruleDTO = new LuggageFeeCalculationRuleDTO();
@@ -160,7 +161,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
 
             PickupOverdueLuggageDTO pickupOverdueLuggageDTO =
                     buildPickupOverdueLuggageDTO(operateUserDTO, luggageStorageRecord,
-                            calculationResultDTO);
+                            calculationResultDTO, turnoverRecord);
 
             pickupLuggageRecordManager.pickupOverdueLuggage(pickupOverdueLuggageDTO);
         }
@@ -179,7 +180,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
     private PickupOverdueLuggageDTO buildPickupOverdueLuggageDTO(
             AdminInfoDTO operateUserDTO,
             LuggageStorageRecord luggageStorageRecord,
-            LuggageChargeCalculationResultDTO calculationResultDTO) {
+            LuggageChargeCalculationResultDTO calculationResultDTO,
+            TurnoverRecord turnoverRecord) {
 
         PickupOverdueLuggageDTO overdueLuggageDTO = new PickupOverdueLuggageDTO();
         overdueLuggageDTO.setPickupRecordNo(UUIDGenerateUtil.generateUniqueNo(
@@ -193,6 +195,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         overdueLuggageDTO.setDepositorName(luggageStorageRecord.getDepositorName());
         overdueLuggageDTO.setDepositorPhone(luggageStorageRecord.getDepositorPhone());
 
+        overdueLuggageDTO.setCalculateRuleId(turnoverRecord.getCalculationRuleId());
         // 设置逾期费用的计算结果
         overdueLuggageDTO.setCalculationUnitsId(calculationResultDTO
                 .getCalculationUnitsId());

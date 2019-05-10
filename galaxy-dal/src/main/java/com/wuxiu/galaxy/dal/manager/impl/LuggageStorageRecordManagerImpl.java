@@ -18,7 +18,6 @@ import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageStorageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO;
-import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.LuggageStorageRecordDao;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
@@ -33,7 +32,6 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -168,14 +166,13 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         Page<LuggageStorageRecord> storageRecordPage =
                 selectPage(recordQueryDTO.getPage(), wrapper);
 
-        // 将营业额记录按照 行李寄存记录主键id 进行分组
-        List<TurnoverRecord> turnoverRecords = turnoverRecordManager
-                .getTurnoverRecords();
-        Map<Long, TurnoverRecord> turnoverRecordMap = StreamUtil.toMap(
-                turnoverRecords, TurnoverRecord::getLuggageId);
+        // 将营业额记录按照 记录主键id 进行分组
+//        List<TurnoverRecord> turnoverRecords = turnoverRecordManager
+//                .getTurnoverRecords();
+//        Map<Long, TurnoverRecord> turnoverRecordMap = StreamUtil.toMap(
+//                turnoverRecords, TurnoverRecord::getTurnoverRecordId);
 
-        return buildLuggageStorageInfoDTO(storageRecordPage,
-                turnoverRecordMap);
+        return buildLuggageStorageInfoDTO(storageRecordPage);
     }
 
     /**
@@ -245,8 +242,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
      * @return
      */
     private Page<LuggageStorageInfoDTO> buildLuggageStorageInfoDTO(
-            Page<LuggageStorageRecord> storageRecordPage,
-            Map<Long, TurnoverRecord> turnoverRecordMap) {
+            Page<LuggageStorageRecord> storageRecordPage) {
 
         List<LuggageStorageInfoDTO> storageInfoDTOS = newArrayList();
         List<LuggageStorageRecord> storageRecords = storageRecordPage.getRecords();
@@ -263,8 +259,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTO.setDepositorName(storageRecord.getDepositorName());
             storageInfoDTO.setDepositorPhone(storageRecord.getDepositorPhone());
 
-            storageInfoDTO.setStorageFee("￥" + turnoverRecordMap.get(luggageId)
-                    .getFee());
+//            storageInfoDTO.setStorageFee("￥" + turnoverRecordMap.get(luggageId)
+//                    .getFee());
 
             storageInfoDTO.setRemark(storageRecord.getRemark());
             storageInfoDTO.setStatus(LuggageStorageStatusEnum.getDescByCode(

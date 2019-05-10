@@ -64,7 +64,7 @@ public class CommonConstant {
     /**
      * 日期格式 yyyy-MM-dd HH:mm:ss
      */
-    public static final String SECONDS_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String SECONDS_PATTERN = "yyyy-MM-dd hh:mm:ss";
 
     /**
      * 电话号码区号

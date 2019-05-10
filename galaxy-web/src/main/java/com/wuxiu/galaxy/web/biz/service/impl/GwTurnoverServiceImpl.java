@@ -63,8 +63,12 @@ public class GwTurnoverServiceImpl implements GwTurnoverService {
         PageInfo<TurnoverRecordDTO> recordDTOPageInfo =
                 turnoverRecordsAPIResult.getData();
         List<TurnoverRecordDTO> turnoverRecordDTOS = recordDTOPageInfo.getRecords();
+
         List<TurnoverRecordVO> turnoverRecordVOS =
-                StreamUtil.convertBeanCopy(turnoverRecordDTOS, TurnoverRecordVO.class);
+                StreamUtil.convertBeanCopy(turnoverRecordDTOS,
+                        TurnoverRecordVO.class);
+
+
 
         PageInfo<TurnoverRecordVO> pageInfo =
                 new PageInfo<>(form.getCurrent(), form.getSize());

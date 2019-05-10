@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Lists;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.FeeTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.dto.PairDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
@@ -210,6 +211,8 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             turnoverRecordDTO.setCalculationRuleId(
                     turnoverRecord.getCalculationRuleId());
             turnoverRecordDTO.setFee(turnoverRecord.getFee());
+            turnoverRecordDTO.setFeeType(FeeTypeEnum.getDescByCode(turnoverRecord
+                    .getFeeType()));
             turnoverRecordDTO.setRemark(turnoverRecord.getRemark());
             turnoverRecordDTO.setGmtCreate(turnoverRecord.getGmtCreate().toString());
             turnoverRecordDTO.setGmtModified(turnoverRecord.getGmtModified().toString());

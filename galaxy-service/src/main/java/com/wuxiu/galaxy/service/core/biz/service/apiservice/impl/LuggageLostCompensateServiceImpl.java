@@ -146,6 +146,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         lostCompensateDTO.setAdminName(operateUser.getAdminName());
         lostCompensateDTO.setDepositorName(registrationRecord.getDepositorName());
         lostCompensateDTO.setDepositorPhone(registrationRecord.getDepositorPhone());
+        lostCompensateDTO.setLuggageId(registrationRecord.getLuggageId());
         lostCompensateDTO.setLuggageType(luggageTypeId);
         lostCompensateDTO.setLostRegistrationRecordId(registrationRecord
                 .getLostRegistrationRecordId());

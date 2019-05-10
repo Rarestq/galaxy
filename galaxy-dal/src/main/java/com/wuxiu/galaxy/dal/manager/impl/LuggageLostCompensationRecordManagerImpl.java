@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.FeeTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.LostRegisterRecordStatusEnum;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LostCompensateRecordQueryDTO;
@@ -22,8 +23,10 @@ import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.LuggageLostCompensationRecordDao;
 import com.wuxiu.galaxy.dal.domain.LuggageLostCompensationRecord;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
+import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.dal.manager.LuggageLostCompensationRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageLostRegistrationRecordManager;
+import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,6 +53,9 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
 
     @Autowired
     private LuggageLostRegistrationRecordManager registrationRecordManager;
+
+    @Autowired
+    private TurnoverRecordManager turnoverRecordManager;
 
     /**
      * 查询行李遗失赔偿登记记录
@@ -105,6 +111,65 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Long compensateByLuggageType(LuggageLostCompensateDTO lostCompensateDTO) {
+
+        // 构造 LuggageLostCompensationRecord 对象
+        LuggageLostCompensationRecord compensationRecord =
+                buildLuggageLostCompensationRecord(lostCompensateDTO);
+
+        // 构造 LuggageLostRegistrationRecord 对象
+        LuggageLostRegistrationRecord record = new LuggageLostRegistrationRecord();
+        record.setLostRegistrationRecordId(lostCompensateDTO
+                .getLostRegistrationRecordId());
+        record.setStatus(LostRegisterRecordStatusEnum.HAD_COMPENSATE.getCode());
+        record.setGmtModified(LocalDateTime.now());
+
+        // 更新行李丢失记录的状态
+        registrationRecordManager.updateById(record);
+
+        // 创建赔偿记录
+        insert(compensationRecord);
+
+        // 构造 TurnoverRecord 对象
+        TurnoverRecord turnoverRecord =
+                buildTurnoverRecord(lostCompensateDTO, compensationRecord);
+
+        // 新增费用类型为「赔偿费用」的营业额记录
+        turnoverRecordManager.insert(turnoverRecord);
+
+        return compensationRecord.getLuggageLostCompensationRecordId();
+    }
+
+    /**
+     * 构造 TurnoverRecord 对象
+     *
+     * @param lostCompensateDTO
+     * @param compensationRecord
+     * @return
+     */
+    private TurnoverRecord buildTurnoverRecord(
+            LuggageLostCompensateDTO lostCompensateDTO,
+            LuggageLostCompensationRecord compensationRecord) {
+
+        TurnoverRecord turnoverRecord = new TurnoverRecord();
+        turnoverRecord.setLuggageId(lostCompensateDTO.getLuggageId());
+        turnoverRecord.setCalculationRuleId(-1L);
+        turnoverRecord.setFee("-" + compensationRecord.getCompensationFee());
+        turnoverRecord.setFeeType(FeeTypeEnum.COMPENSATE_FEE.getCode());
+        turnoverRecord.setRemark(lostCompensateDTO.getRemark());
+        turnoverRecord.setAdminId(lostCompensateDTO.getAdminId());
+
+        return turnoverRecord;
+    }
+
+    /**
+     * 构造 LuggageLostCompensationRecord 对象
+     *
+     * @param lostCompensateDTO
+     * @return
+     */
+    private LuggageLostCompensationRecord buildLuggageLostCompensationRecord(
+            LuggageLostCompensateDTO lostCompensateDTO) {
+
         LuggageLostCompensationRecord compensationRecord =
                 new LuggageLostCompensationRecord();
 
@@ -120,19 +185,7 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
         compensationRecord.setLuggageTypeId(lostCompensateDTO.getLuggageType());
         compensationRecord.setRemark(lostCompensateDTO.getRemark());
 
-        // 更新行李丢失记录的状态
-        LuggageLostRegistrationRecord record = new LuggageLostRegistrationRecord();
-        record.setLostRegistrationRecordId(lostCompensateDTO
-                .getLostRegistrationRecordId());
-        record.setStatus(LostRegisterRecordStatusEnum.HAD_COMPENSATE.getCode());
-        record.setGmtModified(LocalDateTime.now());
-        registrationRecordManager.updateById(record);
-
-        // 创建赔偿记录
-        insert(compensationRecord);
-
-
-        return compensationRecord.getLuggageLostCompensationRecordId();
+        return compensationRecord;
     }
 
     /**
