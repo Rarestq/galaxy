@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.api.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,6 +27,11 @@ public class TurnoverRecordDTO implements Serializable {
      */
     private Long luggageId;
     /**
+     * 行李寄存记录编号
+     */
+    @ApiModelProperty(value = "行李寄存记录编号", required = true)
+    private String luggageStorageRecordNo;
+    /**
      * 行李类型
      */
     private String luggageType;
@@ -46,6 +52,10 @@ public class TurnoverRecordDTO implements Serializable {
      * 费用
      */
     private String fee;
+    /**
+     * 费用类型(0-寄存费用,1-逾期费用,2-赔偿费用)
+     */
+    private String feeType;
     /**
      * 备注
      */

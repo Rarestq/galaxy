@@ -2,9 +2,9 @@ package com.wuxiu.galaxy.integration;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordQueryDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.service.LuggageLostCompensateFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +36,12 @@ public class LuggageLostCompensateClient {
      * 遗失行李赔偿
      *
      * @param lostRegistrationRecordId
-     * @param operateUser
+     * @param adminInfoDTO
      * @return
      */
     public APIResult<Long> compensateByLuggageType(Long lostRegistrationRecordId,
-                                                   OperateUserDTO operateUser) {
+                                                   AdminInfoDTO adminInfoDTO) {
         return lostCompensateFacade.compensateByLuggageType(
-                lostRegistrationRecordId, operateUser);
+                lostRegistrationRecordId, adminInfoDTO);
     }
 }

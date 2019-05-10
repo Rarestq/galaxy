@@ -31,5 +31,5 @@ public class LostCompensateRecordQueryDTO extends PageInfo {
     /**
      * 行李类型
      */
-    private String luggageTypeDesc;
+    private Integer luggageType;
 }

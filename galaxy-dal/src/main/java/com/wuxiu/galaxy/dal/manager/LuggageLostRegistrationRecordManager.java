@@ -11,10 +11,12 @@
 package com.wuxiu.galaxy.dal.manager;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.wuxiu.galaxy.api.common.base.BaseManager;
 import com.wuxiu.galaxy.api.dto.LuggageLostRegisterRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageLostRegisterRecordQueryDTO;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
-import com.wuxiu.galaxy.api.common.base.BaseManager;
+
+import java.util.List;
 
 /**
  *   
@@ -36,4 +38,11 @@ public interface LuggageLostRegistrationRecordManager extends BaseManager<Luggag
      */
     Page<LuggageLostRegisterRecordDTO> queryLostRegisterRecordList(
             LuggageLostRegisterRecordQueryDTO recordQueryDTO);
+
+    /**
+     * 获取所有行李遗失登记记录
+     *
+     * @return
+     */
+    List<LuggageLostRegistrationRecord> getAllRecords();
 }

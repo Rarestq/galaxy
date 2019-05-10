@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.web.biz.service;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostCompensateRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.vo.LuggageLostCompensateRecordVO;
 
@@ -25,9 +26,10 @@ public interface GwLuggageLostCompensateService {
     /**
      * 对遗失的行李进行赔偿
      *
-     * @param lostRegistrationRecordId
+     * @param lostRegistRecordIds
+     * @param adminInfoDTO
      * @return
      */
     APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
-            Long lostRegistrationRecordId);
+            String lostRegistRecordIds, AdminInfoDTO adminInfoDTO);
 }

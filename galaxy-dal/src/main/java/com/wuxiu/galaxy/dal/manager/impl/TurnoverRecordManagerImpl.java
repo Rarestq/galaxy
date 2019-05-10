@@ -170,6 +170,18 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
     }
 
     /**
+     * 获取所有营业额记录信息
+     *
+     * @return
+     */
+    @Override
+    public List<TurnoverRecord> getTurnoverRecords() {
+        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<>();
+
+        return selectList(wrapper);
+    }
+
+    /**
      * 构造 TurnoverRecordDTO 对象
      *
      * @param turnoverRecordPage
@@ -191,6 +203,8 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             turnoverRecordDTO.setAdminId(turnoverRecord.getAdminId());
             turnoverRecordDTO.setAdminName(luggageStorageRecord.getAdminName());
             turnoverRecordDTO.setLuggageId(turnoverRecord.getLuggageId());
+            turnoverRecordDTO.setLuggageStorageRecordNo(luggageStorageRecord
+                    .getLuggageRecordNo());
             turnoverRecordDTO.setLuggageType(LuggageTypeEnum.getDescByCode(
                     luggageStorageRecord.getLuggageTypeId()));
             turnoverRecordDTO.setCalculationRuleId(

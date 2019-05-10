@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.LostRegisterRecordStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageLostRegisterRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageLostRegisterRecordQueryDTO;
 import com.wuxiu.galaxy.dal.dao.LuggageLostRegistrationRecordDao;
@@ -56,8 +57,12 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
             wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
         }
 
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorPhone())) {
-            wrapper.eq("depositor_phone", recordQueryDTO.getDepositorPhone());
+        if (StringUtils.isNotEmpty(recordQueryDTO.getLostRecordNo())) {
+            wrapper.like("register_record_no", recordQueryDTO.getLostRecordNo());
+        }
+
+        if (Objects.nonNull(recordQueryDTO.getStatus())) {
+            wrapper.eq("status", recordQueryDTO.getStatus());
         }
 
         if (Objects.nonNull(recordQueryDTO.getLostTime())) {
@@ -73,6 +78,18 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
                 selectPage(recordQueryDTO.getPage(), wrapper);
 
         return buildLostRegisterRecordDTO(registrationRecordPage);
+    }
+
+    /**
+     * 获取所有行李遗失登记记录
+     *
+     * @return
+     */
+    @Override
+    public List<LuggageLostRegistrationRecord> getAllRecords() {
+        Wrapper<LuggageLostRegistrationRecord> wrapper = new EntityWrapper<>();
+
+        return selectList(wrapper);
     }
 
     /**
@@ -101,6 +118,8 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
             registerRecordDTO.setLuggageId(record.getLuggageId());
             registerRecordDTO.setLuggageRecordNo(record.getLuggageRecordNo());
             registerRecordDTO.setLuggageTypeId(record.getLuggageTypeId());
+            registerRecordDTO.setStatus(LostRegisterRecordStatusEnum
+                    .getDescByCode(record.getStatus()));
             registerRecordDTO.setRemark(record.getRemark());
             registerRecordDTO.setGmtCreate(record.getGmtCreate().toString());
             registerRecordDTO.setGmtModified(record.getGmtModified().toString());

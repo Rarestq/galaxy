@@ -1,7 +1,5 @@
 package com.wuxiu.galaxy.web.biz.form;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,10 +24,16 @@ public class LuggageLostRegisterRecordQueryForm extends PageInfo {
     private String depositorName;
 
     /**
-     * 行李所属者电话
+     * 遗失登记记录编号
      */
-    @ApiModelProperty(value = "行李所属者电话", required = false)
-    private String depositorPhone;
+    @ApiModelProperty(value = "遗失登记记录编号", required = false)
+    private String lostRecordNo;
+
+    /**
+     * 遗失记录状态(0-遗失，1-已赔偿)
+     */
+    @ApiModelProperty(value = "遗失记录状态(0-遗失，1-已赔偿)", required = true)
+    private Integer status;
 
     /**
      * 行李遗失登记时间

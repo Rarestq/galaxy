@@ -9,14 +9,12 @@ import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
-import com.wuxiu.galaxy.integration.AdminClient;
 import com.wuxiu.galaxy.integration.PickupLuggageClient;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.PickupLuggageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwPickupLuggageService;
-import com.wuxiu.galaxy.web.biz.service.UserService;
 import com.wuxiu.galaxy.web.biz.vo.PickupLuggageRecordVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +35,6 @@ public class GwPickupLuggageServiceImpl implements GwPickupLuggageService {
 
     @Autowired
     private PickupLuggageClient pickupLuggageClient;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AdminClient adminClient;
 
     /**
      * 行李取件

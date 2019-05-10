@@ -53,6 +53,7 @@ public class PickupLuggageController {
             return APIResult.error("参数错误，行李寄存记录id不能为空");
         }
 
+        // 获取当前系统登录用户信息
         AdminInfoDTO adminInfoDTO = (AdminInfoDTO) request.getSession(false)
                 .getAttribute("adminInfoDTO");
         return pickupLuggageService.pickupLuggage(luggageIds, adminInfoDTO);

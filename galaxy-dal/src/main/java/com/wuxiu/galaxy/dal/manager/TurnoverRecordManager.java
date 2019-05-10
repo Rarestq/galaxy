@@ -60,4 +60,11 @@ public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
      * @return
      */
     List<String> statisticsTotalTurnover();
+
+    /**
+     * 获取所有营业额记录信息
+     *
+     * @return
+     */
+    List<TurnoverRecord> getTurnoverRecords();
 }

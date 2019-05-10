@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostCompensateRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageLostCompensateService;
@@ -11,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -49,10 +47,14 @@ public class LuggageLostCompensateController {
     @ApiOperation(value = "对遗失的行李进行赔偿", notes = "对遗失的行李进行赔偿")
     @PostMapping("/compensate_luggage")
     public APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
-            Long lostRegistrationRecordId,
+            @RequestBody String lostRegistRecordIds,
             HttpServletRequest request) {
-        //todo:
 
-        return compensateService.compensateByLuggageType(lostRegistrationRecordId);
+        // 获取当前系统登录人信息
+        AdminInfoDTO adminInfoDTO = (AdminInfoDTO) request.getSession(false)
+                .getAttribute("adminInfoDTO");
+
+        return compensateService.compensateByLuggageType(lostRegistRecordIds,
+                adminInfoDTO);
     }
 }

@@ -128,6 +128,28 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
 
         PageInfo<LuggageStorageInfoDTO> luggageStoragePageInfo =
                 storageInfoAPIResult.getData();
+
+        // 构造 LuggageStorageRecordVO 对象
+        List<LuggageStorageRecordVO> recordVOS =
+                buildLuggageStorageRecordVOS(luggageStoragePageInfo);
+
+        PageInfo<LuggageStorageRecordVO> pageInfo =
+                new PageInfo<>(form.getCurrent(), form.getSize());
+        pageInfo.setRecords(recordVOS);
+        pageInfo.setTotal(luggageStoragePageInfo.getTotal());
+        pageInfo.setPages(luggageStoragePageInfo.getPages());
+
+        return APIResult.ok(pageInfo);
+    }
+
+    /**
+     * 构造 LuggageStorageRecordVO 对象
+     *
+     * @param luggageStoragePageInfo
+     * @return
+     */
+    private List<LuggageStorageRecordVO> buildLuggageStorageRecordVOS(
+            PageInfo<LuggageStorageInfoDTO> luggageStoragePageInfo) {
         List<LuggageStorageInfoDTO> storageInfoDTOS = luggageStoragePageInfo
                 .getRecords();
 
@@ -144,12 +166,6 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
                 LuggageTypeEnum.valueOf(storageInfoDTOMap.get(recordVO.getLuggageId())
                         .getLuggageTypeId())).getDesc()));
 
-        PageInfo<LuggageStorageRecordVO> pageInfo =
-                new PageInfo<>(form.getCurrent(), form.getSize());
-        pageInfo.setRecords(recordVOS);
-        pageInfo.setTotal(luggageStoragePageInfo.getTotal());
-        pageInfo.setPages(luggageStoragePageInfo.getPages());
-
-        return APIResult.ok(pageInfo);
+        return recordVOS;
     }
 }

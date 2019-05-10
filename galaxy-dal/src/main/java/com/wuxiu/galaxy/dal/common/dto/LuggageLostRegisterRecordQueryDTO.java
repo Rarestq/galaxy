@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -28,9 +29,14 @@ public class LuggageLostRegisterRecordQueryDTO implements Serializable {
     private String depositorName;
 
     /**
-     * 行李所属者电话
+     * 遗失登记记录编号
      */
-    private String depositorPhone;
+    private String lostRecordNo;
+
+    /**
+     * 遗失记录状态(0-遗失，1-已赔偿)
+     */
+    private Integer status;
 
     /**
      * 行李遗失登记时间

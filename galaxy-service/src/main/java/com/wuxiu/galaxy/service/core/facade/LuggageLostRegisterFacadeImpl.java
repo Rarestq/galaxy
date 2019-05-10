@@ -28,7 +28,8 @@ public class LuggageLostRegisterFacadeImpl implements LuggageLostRegisterFacade 
      * @return
      */
     @Override
-    public APIResult<PageInfo<LuggageLostRegisterRecordDTO>> queryLostRegisterRecordList(
+    public APIResult<PageInfo<LuggageLostRegisterRecordDTO>>
+    queryLostRegisterRecordList(
             LuggageLostRegisterRecordQueryDTO queryDTO) {
         return APIResult.ok(luggageLostRegisterService
                 .queryLostRegisterRecordList(queryDTO));

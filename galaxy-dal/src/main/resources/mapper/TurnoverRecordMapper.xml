@@ -9,6 +9,7 @@
                     <result column="admin_id" property="adminId"/>
                     <result column="calculation_rule_id" property="calculationRuleId"/>
                     <result column="fee" property="fee"/>
+                    <result column="fee_type" property="feeType"/>
                     <result column="remark" property="remark"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
@@ -16,6 +17,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       turnover_record_id,luggage_id,admin_id,calculation_rule_id,fee,remark,deleted,gmt_create,gmt_modified
+       turnover_record_id,luggage_id,admin_id,calculation_rule_id,fee,fee_type,remark,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

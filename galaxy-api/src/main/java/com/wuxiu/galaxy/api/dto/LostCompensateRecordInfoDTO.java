@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 行李遗失赔偿记录对象
@@ -31,6 +30,10 @@ public class LostCompensateRecordInfoDTO implements Serializable {
      */
     private Long lostRegistrationRecordId;
     /**
+     * 遗失登记记录编号
+     */
+    private String lostRegistRecordNo;
+    /**
      * 管理员id
      */
     private Long adminId;
@@ -49,7 +52,7 @@ public class LostCompensateRecordInfoDTO implements Serializable {
     /**
      * 行李类型
      */
-    private String luggageTypeDesc;
+    private Long luggageType;
     /**
      * 赔偿金额
      */
@@ -61,5 +64,5 @@ public class LostCompensateRecordInfoDTO implements Serializable {
     /**
      * 赔偿时间
      */
-    private LocalDateTime compensateTime;
+    private String compensateTime;
 }

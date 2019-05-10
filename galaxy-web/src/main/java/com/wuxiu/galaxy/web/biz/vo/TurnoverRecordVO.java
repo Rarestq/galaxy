@@ -29,6 +29,11 @@ public class TurnoverRecordVO implements Serializable {
     @ApiModelProperty(value = "行李寄存主键id", required = true)
     private Long luggageId;
     /**
+     * 行李寄存记录编号
+     */
+    @ApiModelProperty(value = "行李寄存记录编号", required = true)
+    private String luggageStorageRecordNo;
+    /**
      * 行李类型
      */
     @ApiModelProperty(value = "行李类型", required = true)

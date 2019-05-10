@@ -43,6 +43,7 @@ public class WebSessionUtil {
             return sessionId;
         }
 
+        // todo:前台并没有将 sessionId 返回给服务器，所以这里是直接自己产生
         return generSession();
     }
 

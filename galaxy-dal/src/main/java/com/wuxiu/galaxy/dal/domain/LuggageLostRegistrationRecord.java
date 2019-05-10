@@ -81,6 +81,10 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     @TableField("depositor_phone")
     private String depositorPhone;
     /**
+     * 遗失记录状态(0-遗失，1-已赔偿)
+     */
+    private Integer status;
+    /**
      * 行李遗失登记备注
      */
     private String remark;

@@ -5,9 +5,9 @@ import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordQueryDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageLostCompensateDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
@@ -73,7 +73,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
                 queryDTO.getLuggageLostCompensationRecordId());
         recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
         recordQueryDTO.setAdminName(queryDTO.getAdminName());
-        recordQueryDTO.setLuggageTypeDesc(queryDTO.getLuggageTypeDesc());
+        recordQueryDTO.setLuggageType(queryDTO.getLuggageType());
 
         // 查询行李遗失赔偿登记记录
         Page<LostCompensateRecordInfoDTO> compensateRecordDTOPage =
@@ -96,7 +96,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
      */
     @Override
     public Long compensateByLuggageType(Long lostRegistrationRecordId,
-                                        OperateUserDTO operateUser) {
+                                        AdminInfoDTO operateUser) {
         log.info("遗失行李赔偿, lostRegistrationRecordId:{}, operateUser:{}",
                 lostRegistrationRecordId, operateUser);
         // 参数校验
@@ -115,9 +115,14 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         LuggageLostRegistrationRecord registrationRecord = registrationRecordManager
                 .selectById(lostRegistrationRecordId);
 
+        // 计算赔偿所需费用
+        String compensateFee = calculateCompensateFee(registrationRecord
+                .getLuggageTypeId(), registrationRecord.getLuggageId());
+
         // 构造 LuggageLostCompensateDTO 对象
         LuggageLostCompensateDTO lostCompensateDTO =
-                buildLuggageLostCompensateDTO(registrationRecord, operateUser);
+                buildLuggageLostCompensateDTO(registrationRecord, operateUser,
+                        compensateFee);
 
         return compensationRecordManager.compensateByLuggageType(lostCompensateDTO);
     }
@@ -131,26 +136,28 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
      */
     private LuggageLostCompensateDTO buildLuggageLostCompensateDTO(
             LuggageLostRegistrationRecord registrationRecord,
-            OperateUserDTO operateUser) {
+            AdminInfoDTO operateUser,
+            String compensateFee) {
 
         Long luggageTypeId = registrationRecord.getLuggageTypeId();
         LuggageLostCompensateDTO lostCompensateDTO = new LuggageLostCompensateDTO();
 
-        lostCompensateDTO.setAdminId(operateUser.getOperateUserId());
-        lostCompensateDTO.setAdminName(operateUser.getName());
+        lostCompensateDTO.setAdminId(operateUser.getAdminId());
+        lostCompensateDTO.setAdminName(operateUser.getAdminName());
         lostCompensateDTO.setDepositorName(registrationRecord.getDepositorName());
         lostCompensateDTO.setDepositorPhone(registrationRecord.getDepositorPhone());
         lostCompensateDTO.setLuggageType(luggageTypeId);
+        lostCompensateDTO.setLostRegistrationRecordId(registrationRecord
+                .getLostRegistrationRecordId());
         lostCompensateDTO.setLostCompensateRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.LUGGAGE_LOST_COMPENSATE_NO_PREFIX));
-        // 计算赔偿所需费用
-        String compensateFee = calculateCompensateFee(luggageTypeId,
-                registrationRecord.getLuggageId());
+
         lostCompensateDTO.setCompensationFee("￥" + compensateFee);
 
         String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
         // 备注，什么行李赔偿了多少钱
-        lostCompensateDTO.setRemark("赔偿的行李类型为：【" + luggageTypeDesc + "】，赔偿金额：【" + compensateFee + "元】");
+        lostCompensateDTO.setRemark("赔偿的行李类型为：" + luggageTypeDesc + "，赔偿金额："
+                + compensateFee + "元");
 
         return lostCompensateDTO;
     }

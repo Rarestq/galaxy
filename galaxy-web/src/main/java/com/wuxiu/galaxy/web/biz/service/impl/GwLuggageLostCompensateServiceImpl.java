@@ -1,14 +1,17 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordQueryDTO;
-import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.integration.LuggageLostCompensateClient;
 import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
+import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostCompensateRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageLostCompensateService;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -44,7 +48,8 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
      * @return
      */
     @Override
-    public APIResult<PageInfo<LuggageLostCompensateRecordVO>> queryLostCompensateRecordList(
+    public APIResult<PageInfo<LuggageLostCompensateRecordVO>>
+    queryLostCompensateRecordList(
             LuggageLostCompensateRecordQueryForm form) {
         LostCompensateRecordQueryDTO queryDTO =
                 BeanCopierUtil.convert(form, LostCompensateRecordQueryDTO.class);
@@ -62,12 +67,10 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
 
         PageInfo<LostCompensateRecordInfoDTO> luggageStoragePageInfo =
                 storageInfoAPIResult.getData();
-        List<LostCompensateRecordInfoDTO> storageInfoDTOS =
-                luggageStoragePageInfo.getRecords();
 
+        // 构造 LuggageLostCompensateRecordVO 对象
         List<LuggageLostCompensateRecordVO> recordVOS =
-                StreamUtil.convertBeanCopy(storageInfoDTOS,
-                        LuggageLostCompensateRecordVO.class);
+                buildLuggageLostCompensateRecordVOS(luggageStoragePageInfo);
 
         PageInfo<LuggageLostCompensateRecordVO> pageInfo =
                 new PageInfo<>(form.getCurrent(), form.getSize());
@@ -79,24 +82,52 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
     }
 
     /**
+     * 构造 LuggageLostCompensateRecordVO 对象
+     *
+     * @param luggageStoragePageInfo
+     * @return
+     */
+    private List<LuggageLostCompensateRecordVO> buildLuggageLostCompensateRecordVOS(
+            PageInfo<LostCompensateRecordInfoDTO> luggageStoragePageInfo) {
+        List<LostCompensateRecordInfoDTO> storageInfoDTOS =
+                luggageStoragePageInfo.getRecords();
+
+        List<LuggageLostCompensateRecordVO> recordVOS =
+                StreamUtil.convertBeanCopy(storageInfoDTOS,
+                        LuggageLostCompensateRecordVO.class);
+
+        // 按照主键id对 registerRecordDTOS 进行分组
+        Map<Long, LostCompensateRecordInfoDTO> compensateRecordInfoDTOMap =
+                StreamUtil.toMap(storageInfoDTOS, LostCompensateRecordInfoDTO::getLuggageLostCompensationRecordId);
+
+        // 将 luggageType 转化为中文类型
+        recordVOS.forEach(recordVO -> recordVO.setLuggageType(
+                LuggageTypeEnum.getDescByCode(compensateRecordInfoDTOMap.get(recordVO
+                        .getLuggageLostCompensationRecordId()).getLuggageType())));
+
+        return recordVOS;
+    }
+
+    /**
      * 对遗失的行李进行赔偿
      *
-     * @param lostRegistrationRecordId
+     * @param lostRegistRecordIds
+     * @param adminInfoDTO
      * @return
      */
     @Override
     public APIResult<LuggageLostCompensateRecordVO> compensateByLuggageType(
-            Long lostRegistrationRecordId) {
-
-        // todo:获取当前登录操作人的信息
-        OperateUserDTO operateUser = userService.getCurrentOperateUser();
+            String lostRegistRecordIds, AdminInfoDTO adminInfoDTO) {
 
         // 遗失行李赔偿
-        APIResult<Long> compensateAPIResult = lostCompensateClient.compensateByLuggageType(
-                lostRegistrationRecordId, operateUser);
+        APIResult<Long> compensateAPIResult = lostCompensateClient
+                .compensateByLuggageType(ObjectConvertUtil
+                        .lostRegisterRecordIdsIdFromString2Long(lostRegistRecordIds,
+                                CommonConstant.COMMA).get(0), adminInfoDTO);
+
         if (!compensateAPIResult.isSuccess()) {
-            log.warn("遗失行李赔偿失败, result:{}, lostRegistrationRecordId:{}",
-                    compensateAPIResult, lostRegistrationRecordId);
+            log.warn("遗失行李赔偿失败, result:{}, lostRegistRecordIds:{}",
+                    compensateAPIResult, lostRegistRecordIds);
             return CommonUtil.errorAPIResult(compensateAPIResult);
         }
 

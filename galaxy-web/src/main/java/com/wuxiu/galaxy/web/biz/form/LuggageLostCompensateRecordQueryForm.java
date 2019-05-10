@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.web.biz.form;
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -17,19 +18,18 @@ public class LuggageLostCompensateRecordQueryForm extends PageInfo {
     private static final long serialVersionUID = -7194370096686614596L;
 
     /**
-     * 赔偿记录主键id
-     */
-    private Long luggageLostCompensationRecordId;
-    /**
      * 管理员姓名
      */
+    @ApiModelProperty(value = "管理员姓名", required = false)
     private String adminName;
     /**
      * 赔偿对象姓名
      */
+    @ApiModelProperty(value = "赔偿对象姓名", required = false)
     private String depositorName;
     /**
      * 行李类型
      */
-    private String luggageTypeDesc;
+    @ApiModelProperty(value = "行李类型", required = false)
+    private Integer luggageTypeId;
 }

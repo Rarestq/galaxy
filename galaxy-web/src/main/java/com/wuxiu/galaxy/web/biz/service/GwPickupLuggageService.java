@@ -36,6 +36,7 @@ public interface GwPickupLuggageService {
      * 逾期取件
      *
      * @param luggageIds
+     * @param adminInfoDTO
      * @return
      */
     APIResult<Void> pickupOverdueLuggage(String luggageIds, AdminInfoDTO adminInfoDTO);

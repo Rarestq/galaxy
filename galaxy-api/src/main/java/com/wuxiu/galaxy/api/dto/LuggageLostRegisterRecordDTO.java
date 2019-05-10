@@ -64,6 +64,11 @@ public class LuggageLostRegisterRecordDTO implements Serializable {
     @ApiModelProperty(value = "行李遗失登记者联系方式", required = true)
     private String depositorPhone;
     /**
+     * 遗失记录状态(0-遗失，1-已赔偿)
+     */
+    @ApiModelProperty(value = "遗失记录状态(0-遗失，1-已赔偿)", required = true)
+    private String status;
+    /**
      * 行李遗失登记备注
      */
     @ApiModelProperty(value = "行李遗失登记备注", required = true)

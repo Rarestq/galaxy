@@ -30,6 +30,10 @@ public class LuggageLostCompensateRecordVO implements Serializable {
      */
     private Long lostRegistrationRecordId;
     /**
+     * 遗失登记记录编号
+     */
+    private String lostRegistRecordNo;
+    /**
      * 管理员id
      */
     private Long adminId;
