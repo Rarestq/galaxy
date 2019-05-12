@@ -29,6 +29,7 @@ public class MPGenerator {
             "galaxy_admin",
             "galaxy_charge_calculation_rule",
             "galaxy_common_calculate_rule_detail",
+            "galaxy_fee_type",
             "galaxy_fragile_calculate_rule_detail",
             "galaxy_luggage_lost_compensation_record",
             "galaxy_luggage_lost_registration_record",

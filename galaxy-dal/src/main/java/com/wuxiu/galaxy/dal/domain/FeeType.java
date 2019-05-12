@@ -21,63 +21,30 @@ import java.time.LocalDateTime;
 
 /**
  *   
- *  * <p>TurnoverRecordDomian实体对象</p>
+ *  * <p>FeeTypeDomian实体对象</p>
  * <p>
- *  营业额记录表
+ *  费用类型表
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-22
+ *  * @since 2019-05-12
  *  
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("galaxy_turnover_record")
-public class TurnoverRecord extends BaseModel {
+@TableName("galaxy_fee_type")
+public class FeeType extends BaseModel {
 
     private static final long serialVersionUID = 1L;
     /**
-     * 营业额记录表主键id
+     * 费用类型主键id
      */
-    @TableId(value = "turnover_record_id", type = IdType.AUTO)
-    private Long turnoverRecordId;
-    /**
-     * 行李寄存主键id
-     */
-    @TableField("luggage_id")
-    private Long luggageId;
-    /**
-     * 管理员主键id(冗余)
-     */
-    @TableField("admin_id")
-    private Long adminId;
-    /**
-     * 管理员姓名
-     */
-    @TableField("admin_name")
-    private String adminName;
-    /**
-     * 计费规则主键id
-     */
-    @TableField("calculation_rule_id")
-    private Long calculationRuleId;
-    /**
-     * 费用
-     */
-    private String fee;
-    /**
-     * 费用类型(0-寄存费用,1-逾期费用,2-赔偿费用)
-     */
-    @TableField("fee_type")
-    private Integer feeType;
+    @TableId(value = "fee_type_id", type = IdType.AUTO)
+    private Integer feeTypeId;
     /**
      * 费用类型描述
      */
     @TableField("fee_type_desc")
     private String feeTypeDesc;
-    /**
-     * 备注
-     */
-    private String remark;
     /**
      * 记录状态(1-删除、0-正常)
      */

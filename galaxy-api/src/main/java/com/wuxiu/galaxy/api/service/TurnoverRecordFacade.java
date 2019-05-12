@@ -2,11 +2,10 @@ package com.wuxiu.galaxy.api.service;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,13 +17,6 @@ import java.util.List;
 public interface TurnoverRecordFacade {
 
     /**
-     * 按照管理员id对查询到的营业额进行分组
-     *
-     * @return
-     */
-    APIResult<List<PairDTO<Long, String>>> getTurnoverRecordPair();
-
-    /**
      * 查询营业额记录信息
      *
      * @param queryDTO
@@ -34,9 +26,16 @@ public interface TurnoverRecordFacade {
             TurnoverRecordQueryDTO queryDTO);
 
     /**
-     * 统计营业总额
+     * 按管理员统计营业额
      *
      * @return
      */
-    APIResult<BigDecimal> statisticsTotalTurnover();
+    APIResult<List<StatisticsResultDTO>> statisticsTurnoverByAdmin();
+
+    /**
+     * 按费用类型统计营业额
+     *
+     * @return
+     */
+    APIResult<List<StatisticsResultDTO>> statisticsTurnoverByFeeType();
 }

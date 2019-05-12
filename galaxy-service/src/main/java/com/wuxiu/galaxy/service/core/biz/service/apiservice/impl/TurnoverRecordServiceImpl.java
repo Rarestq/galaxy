@@ -1,11 +1,10 @@
 package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
-import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.common.util.DateUtil;
-import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
@@ -17,8 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,24 +30,6 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
 
     @Autowired
     private TurnoverRecordManager turnoverRecordManager;
-
-    /**
-     * 按照管理员id对查询到的营业额进行分组
-     *
-     * @return
-     */
-    @Override
-    public List<PairDTO<Long, String>> getTurnoverRecordPair() {
-        log.info("按照管理员id对查询到的营业额进行分组");
-        List<PairDTO<Long, String>> turnoverRecordPair =
-                turnoverRecordManager.getTurnoverRecordPair();
-
-        if (CollectionUtils.isEmpty(turnoverRecordPair)) {
-            return Collections.emptyList();
-        }
-
-        return turnoverRecordPair;
-    }
 
     /**
      * 查询营业额记录信息
@@ -95,20 +74,24 @@ public class TurnoverRecordServiceImpl implements TurnoverRecordService {
     }
 
     /**
-     * todo:统计营业总额(按日期)
+     * 按管理员统计营业额
      *
      * @return
      */
     @Override
-    public BigDecimal statisticsTotalTurnover() {
-        List<String> turnovers = turnoverRecordManager.statisticsTotalTurnover();
-        BigDecimal initValue = BigDecimal.ZERO;
-        BigDecimal totalTurnover = BigDecimal.ZERO;
-        for (String turnover : turnovers) {
-            totalTurnover = initValue.add(new BigDecimal(turnover));
-        }
-
-        return totalTurnover;
+    public List<StatisticsResultDTO> statisticsTurnoverByAdmin() {
+        return turnoverRecordManager.statisticsTurnoverByAdmin();
     }
+
+    /**
+     * 按费用类型统计营业额
+     *
+     * @return
+     */
+    @Override
+    public List<StatisticsResultDTO> statisticsTurnoverByFeeType() {
+        return turnoverRecordManager.statisticsTurnoverByFeeType();
+    }
+
 
 }

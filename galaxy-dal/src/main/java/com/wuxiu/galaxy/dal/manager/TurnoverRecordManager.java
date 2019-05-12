@@ -11,11 +11,11 @@
 package com.wuxiu.galaxy.dal.manager;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.api.common.base.BaseManager;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
-import com.wuxiu.galaxy.api.common.base.BaseManager;
 
 import java.util.List;
 
@@ -40,13 +40,6 @@ public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
     Page<TurnoverRecordDTO> queryTurnoverRecordList(TurnoverRecordQueryDTO recordQueryDTO);
 
     /**
-     * 按照管理员id对查询到的营业额进行分组
-     *
-     * @return
-     */
-    List<PairDTO<Long, String>> getTurnoverRecordPair();
-
-    /**
      * 根据行李寄存id查询对应的营业额记录
      *
      * @param luggageId
@@ -55,16 +48,16 @@ public interface TurnoverRecordManager extends BaseManager<TurnoverRecord> {
     TurnoverRecord getTurnoverRecordByLuggageId(Long luggageId);
 
     /**
-     * 统计营业总额
+     * 按管理员统计营业额
      *
      * @return
      */
-    List<String> statisticsTotalTurnover();
+    List<StatisticsResultDTO> statisticsTurnoverByAdmin();
 
     /**
-     * 获取所有营业额记录信息
+     * 按费用类型统计营业额
      *
      * @return
      */
-    List<TurnoverRecord> getTurnoverRecords();
+    List<StatisticsResultDTO> statisticsTurnoverByFeeType();
 }

@@ -8,8 +8,11 @@
  */
 package com.wuxiu.galaxy.dal.dao;
 
-import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
 import com.wuxiu.galaxy.api.common.base.BaseDao;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
+import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
+
+import java.util.List;
 
 /**  
  * <p>TurnoverRecordDao接口</p>
@@ -19,4 +22,17 @@ import com.wuxiu.galaxy.api.common.base.BaseDao;
  */
 public interface TurnoverRecordDao extends BaseDao<TurnoverRecord> {
 
+    /**
+     * 按管理员统计营业额
+     *
+     * @return
+     */
+    List<StatisticsResultDTO> statisticsTurnoverByAdmin();
+
+    /**
+     * 按费用类型统计营业额
+     *
+     * @return
+     */
+    List<StatisticsResultDTO> statisticsTurnoverByFeeType();
 }

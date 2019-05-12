@@ -10,15 +10,13 @@
  */
 package com.wuxiu.galaxy.dal.manager.impl;
 
-import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.google.common.collect.Lists;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.common.enums.FeeTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
-import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
@@ -113,35 +111,6 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
     }
 
     /**
-     * 按照管理员id对查询到的营业额进行分组
-     *
-     * @return
-     */
-    @Override
-    public List<PairDTO<Long, String>> getTurnoverRecordPair() {
-        // 构造查询条件（因为逻辑删除字段加了 @TableLogic 注解，所以构造条件中不需要加此条件）
-        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<>();
-
-        List<TurnoverRecord> turnoverRecords = baseDao.selectList(wrapper);
-
-        if (CollectionUtils.isEmpty(turnoverRecords)) {
-            return Collections.emptyList();
-        }
-
-        // 将查询出来的 turnoverRecords 转化为 List<PairDTO<Long, String>> 形式
-        List<PairDTO<Long, String>> pairDTOList = Lists.newArrayList();
-        turnoverRecords.forEach(turnoverRecord -> {
-            PairDTO<Long, String> pairDTO = new PairDTO<>();
-            pairDTO.setKey(turnoverRecord.getAdminId());
-            pairDTO.setValue(turnoverRecord.getFee());
-
-            pairDTOList.add(pairDTO);
-        });
-
-        return pairDTOList;
-    }
-
-    /**
      * 根据行李寄存id查询对应的营业额记录
      *
      * @param luggageId
@@ -155,31 +124,15 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         return selectOne(wrapper);
     }
 
-    /**
-     * 统计营业总额
-     *
-     * @return
-     */
     @Override
-    public List<String> statisticsTotalTurnover() {
-        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<>();
+    public List<StatisticsResultDTO> statisticsTurnoverByAdmin() {
 
-        List<TurnoverRecord> turnoverRecords = selectList(wrapper);
-
-        return StreamUtil.collectDistinctKeyProperty(turnoverRecords,
-                TurnoverRecord::getFee);
+        return baseDao.statisticsTurnoverByAdmin();
     }
 
-    /**
-     * 获取所有营业额记录信息
-     *
-     * @return
-     */
     @Override
-    public List<TurnoverRecord> getTurnoverRecords() {
-        Wrapper<TurnoverRecord> wrapper = new EntityWrapper<>();
-
-        return selectList(wrapper);
+    public List<StatisticsResultDTO> statisticsTurnoverByFeeType() {
+        return baseDao.statisticsTurnoverByFeeType();
     }
 
     /**

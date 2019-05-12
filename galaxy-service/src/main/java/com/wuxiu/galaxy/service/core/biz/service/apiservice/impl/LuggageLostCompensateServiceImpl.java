@@ -153,7 +153,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         lostCompensateDTO.setLostCompensateRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.LUGGAGE_LOST_COMPENSATE_NO_PREFIX));
 
-        lostCompensateDTO.setCompensationFee("￥" + compensateFee);
+        lostCompensateDTO.setCompensationFee(compensateFee);
 
         String luggageTypeDesc = LuggageTypeEnum.getDescByCode(luggageTypeId);
         // 备注，什么行李赔偿了多少钱

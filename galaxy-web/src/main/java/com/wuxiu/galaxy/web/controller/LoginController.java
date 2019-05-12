@@ -59,7 +59,7 @@ public class LoginController {
             return APIResult.error(LOGIN_FAILURE.getCode(), LOGIN_FAILURE.getMessage());
         }
 
-        return APIResult.ok(SUCCESS.getMessage());
+        return APIResult.ok(SUCCESS.getCode());
     }
 
     @ApiOperation(value = "登出", notes = "登出")

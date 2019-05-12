@@ -1,9 +1,8 @@
 package com.wuxiu.galaxy.web.biz.service.impl;
 
-import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.api.dto.PairDTO;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordDTO;
 import com.wuxiu.galaxy.api.dto.TurnoverRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
@@ -13,17 +12,12 @@ import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
 import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.TurnoverRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwTurnoverService;
-import com.wuxiu.galaxy.web.biz.vo.Pair;
 import com.wuxiu.galaxy.web.biz.vo.TurnoverRecordVO;
-import com.wuxiu.galaxy.web.utils.ObjectConvertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 营业额记录相关服务
@@ -80,49 +74,23 @@ public class GwTurnoverServiceImpl implements GwTurnoverService {
     }
 
     /**
-     * 按照管理员id对查询到的营业额进行分组
+     * 按管理员统计营业额
      *
      * @return
      */
     @Override
-    public APIResult<List<Pair<Long, String>>> getTurnoverRecordPair() {
-        APIResult<List<PairDTO<Long, String>>> turnoverRecordPair =
-                turnoverRecordClient.getTurnoverRecordPair();
-        if (!turnoverRecordPair.isSuccess()) {
-            log.warn("查询营业额列表失败，result:{}", turnoverRecordPair);
-            return CommonUtil.errorAPIResult(turnoverRecordPair);
-        }
-
-        List<PairDTO<Long, String>> data = turnoverRecordPair.getData();
-        if (CollectionUtils.isEmpty(data)) {
-            return APIResult.ok(Collections.emptyList());
-        }
-        // 将 PairDTO 转化为 Pair
-        List<Pair<Long, String>> turnoverRecords =
-                ObjectConvertUtil.convertDTO2Domain(data);
-
-        return APIResult.ok(turnoverRecords);
+    public APIResult<List<StatisticsResultDTO>> statisticsTurnoverByAdmin() {
+        return turnoverRecordClient.statisticsTurnoverByAdmin();
     }
 
     /**
-     * 统计营业总额
+     * 按费用类型统计营业额
      *
      * @return
      */
     @Override
-    public APIResult<BigDecimal> statisticsTotalTurnover() {
-        APIResult<BigDecimal> totalTurnoverAPIResult =
-                turnoverRecordClient.statisticsTotalTurnover();
-        if (!totalTurnoverAPIResult.isSuccess()) {
-            log.warn("统计营业总额，result:{}", totalTurnoverAPIResult);
-            return CommonUtil.errorAPIResult(totalTurnoverAPIResult);
-        }
-
-        BigDecimal totalTurnover = totalTurnoverAPIResult.getData();
-        if (Objects.isNull(totalTurnover)) {
-            return null;
-        }
-
-        return APIResult.ok(totalTurnover);
+    public APIResult<List<StatisticsResultDTO>> statisticsTurnoverByFeeType() {
+        return turnoverRecordClient.statisticsTurnoverByFeeType();
     }
+
 }

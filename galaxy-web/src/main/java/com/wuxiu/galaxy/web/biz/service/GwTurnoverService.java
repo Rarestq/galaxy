@@ -2,11 +2,10 @@ package com.wuxiu.galaxy.web.biz.service;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.web.biz.form.TurnoverRecordQueryForm;
-import com.wuxiu.galaxy.web.biz.vo.Pair;
 import com.wuxiu.galaxy.web.biz.vo.TurnoverRecordVO;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,16 +26,16 @@ public interface GwTurnoverService {
             TurnoverRecordQueryForm form);
 
     /**
-     * 按照管理员id进行分组的营业额信息
+     * 按管理员统计营业额
      *
      * @return
      */
-    APIResult<List<Pair<Long, String>>> getTurnoverRecordPair();
+    APIResult<List<StatisticsResultDTO>> statisticsTurnoverByAdmin();
 
     /**
-     * 统计营业总额
+     * 按费用类型统计营业额
      *
      * @return
      */
-    APIResult<BigDecimal> statisticsTotalTurnover();
+    APIResult<List<StatisticsResultDTO>> statisticsTurnoverByFeeType();
 }

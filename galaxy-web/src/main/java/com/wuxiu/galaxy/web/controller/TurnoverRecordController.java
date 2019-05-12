@@ -2,10 +2,10 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
+import com.wuxiu.galaxy.api.dto.StatisticsResultDTO;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.TurnoverRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwTurnoverService;
-import com.wuxiu.galaxy.web.biz.vo.Pair;
 import com.wuxiu.galaxy.web.biz.vo.TurnoverRecordVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -47,16 +46,28 @@ public class TurnoverRecordController {
         return turnoverService.queryTurnoverRecordList(form);
     }
 
-    @ApiOperation(value = "按照管理员id对查询到的营业额进行分组",
-            notes = "按照管理员id对查询到的营业额进行分组")
-    @GetMapping("/query")
-    public APIResult<List<Pair<Long, String>>> getTurnoverRecordPair() {
-        return turnoverService.getTurnoverRecordPair();
+    /**
+     * 按管理员统计营业额
+     *
+     * @return
+     */
+    @ApiOperation(value = "按照管理员对查询到的营业额进行分组",
+            notes = "按照管理员对查询到的营业额进行分组")
+    @GetMapping("/statistics_by_admin")
+    public APIResult<List<StatisticsResultDTO>> statisticsTurnoverByAdmin() {
+        return turnoverService.statisticsTurnoverByAdmin();
     }
 
-    @ApiOperation(value = "统计营业总额", notes = "统计营业总额")
-    @GetMapping("/statistics")
-    public APIResult<BigDecimal> statisticsTotalTurnover() {
-        return turnoverService.statisticsTotalTurnover();
+    /**
+     * 按费用类型统计营业额
+     *
+     * @return
+     */
+
+    @ApiOperation(value = "按照费用类型对查询到的营业额进行分组",
+            notes = "按照费用类型对查询到的营业额进行分组")
+    @GetMapping("/statistics_by_fee_type")
+    public APIResult<List<StatisticsResultDTO>> statisticsTurnoverByFeeType() {
+        return turnoverService.statisticsTurnoverByFeeType();
     }
 }
