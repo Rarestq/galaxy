@@ -10,11 +10,10 @@ import com.baomidou.mybatisplus.mapper.SqlHelper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.toolkit.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -27,8 +26,9 @@ import java.util.Map;
  * @author: wuxiu
  * @date: 2019/4/2 14:24
  */
+@Slf4j
 public class BaseManagerImpl<M extends BaseDao<T>, T extends BaseModel> implements BaseManager<T> {
-    protected Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     protected M baseDao;
 

@@ -20,12 +20,12 @@ public class MPGenerator {
     /**
      * 表前缀过滤
      */
-    public static String tablePrefix = "galaxy_";
+    public static final String tablePrefix = "galaxy_";
     public static final String LINK = "jdbc:mysql://localhost:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8";
     public static final String ACCOUNT = "root";
     public static final String PASSWORD = "123123";
 
-    public static String[] tables = {
+    public static final String[] tables = {
             "galaxy_admin",
             "galaxy_charge_calculation_rule",
             "galaxy_common_calculate_rule_detail",

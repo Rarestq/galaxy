@@ -90,31 +90,31 @@ public class DateUtil {
         return LocalDateTime.parse(format, formatter);
     }
 
-    public static void main(String[] args) {
-//        String endTime = "2019-05-07 16:36:23";
-        String endTime = "2019-05-10 15:36:23";
-        LocalDateTime parse = string2LocalDateTime(endTime);
-        LocalDateTime now = LocalDateTime.of(2019, 5, 10, 1, 32);
-        LocalDateTime time = LocalDateTime.of(2019, 5, 8, 17, 49);
-        long hours = calculateDate2Hours(parse, LocalDateTime.now());
-        System.out.println("当前时间：" + parse);
-        System.out.println("当前时间：" + LocalDateTime.now());
-        System.out.println("时间差：" + hours);
-
-
-        System.out.println("================================================");
-
-        String timestamp = convertLocalDateTime2Timestamp(LocalDateTime.now());
-        LocalDateTime localDateTime = string2LocalDateTime(timestamp);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CommonConstant
-                .TIME_PATTERN);
-
-        String format = formatter.format(localDateTime);
-        System.out.println("最终" + format);
-        LocalDateTime dateTime = LocalDateTime.parse(format, formatter);
-
-
-        System.out.println(12 + calculateDate2Hours(parse, dateTime));
-    }
+//    public static void main(String[] args) {
+////        String endTime = "2019-05-07 16:36:23";
+//        String endTime = "2019-05-10 15:36:23";
+//        LocalDateTime parse = string2LocalDateTime(endTime);
+//        LocalDateTime now = LocalDateTime.of(2019, 5, 10, 1, 32);
+//        LocalDateTime time = LocalDateTime.of(2019, 5, 8, 17, 49);
+//        long hours = calculateDate2Hours(parse, LocalDateTime.now());
+//        System.out.println("当前时间：" + parse);
+//        System.out.println("当前时间：" + LocalDateTime.now());
+//        System.out.println("时间差：" + hours);
+//
+//
+//        System.out.println("================================================");
+//
+//        String timestamp = convertLocalDateTime2Timestamp(LocalDateTime.now());
+//        LocalDateTime localDateTime = string2LocalDateTime(timestamp);
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CommonConstant
+//                .TIME_PATTERN);
+//
+//        String format = formatter.format(localDateTime);
+//        System.out.println("最终" + format);
+//        LocalDateTime dateTime = LocalDateTime.parse(format, formatter);
+//
+//
+//        System.out.println(12 + calculateDate2Hours(parse, dateTime));
+//    }
 }

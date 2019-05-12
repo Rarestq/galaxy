@@ -21,17 +21,17 @@ public class UUIDGenerateUtil {
     private static final UUIDGenerateUtil generateUtil = new UUIDGenerateUtil();
 
     /**
-     * 格式化的时间字符串
-     */
-    private static final SimpleDateFormat sdf = new SimpleDateFormat(
-            "yyyyMMddHHmmssS");
-
-    /**
      * 获取当前时间年月日时分秒毫秒字符串
      *
      * @return
      */
     private static String getNowDateStr() {
+        /**
+         * 格式化的时间字符串
+         */
+        final SimpleDateFormat sdf = new SimpleDateFormat(
+                "yyyyMMddHHmmssS");
+
         return sdf.format(new Date());
     }
 
