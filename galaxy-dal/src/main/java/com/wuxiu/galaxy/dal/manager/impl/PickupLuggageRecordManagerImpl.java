@@ -189,10 +189,12 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
         TurnoverRecord turnoverRecord = new TurnoverRecord();
 
         turnoverRecord.setAdminId(pickupOverdueLuggageDTO.getAdminId());
+        turnoverRecord.setAdminName(pickupOverdueLuggageDTO.getAdminName());
         turnoverRecord.setCalculationRuleId(pickupOverdueLuggageDTO
                 .getCalculateRuleId());
         turnoverRecord.setFee(pickupOverdueLuggageDTO.getFeeValue().toString());
         turnoverRecord.setFeeType(FeeTypeEnum.OVERDUE_FEE.getCode());
+        turnoverRecord.setFeeTypeDesc(FeeTypeEnum.OVERDUE_FEE.getDesc());
         turnoverRecord.setLuggageId(pickupOverdueLuggageDTO.getLuggageId());
         turnoverRecord.setRemark(pickupOverdueLuggageDTO
                 .getFeeCalculationProcessDesc());

@@ -56,7 +56,7 @@ public class LuggageOverdueRecordSubscriber {
         operateUserDTO.setOperateUserId(0L);
         operateUserDTO.setName(UserTypeEnum.SYSTEM.getDesc());
         operateUserDTO.setOperateUserNo("SYSTEM");
-        operateUserDTO.setOperateUserPhone("-");
+        operateUserDTO.setOperateUserPhone("15180354187");
         operateUserDTO.setUserTypeEnum(UserTypeEnum.SYSTEM);
 
         luggageOverdueRecordService.createLuggageOverdueRecord(overdueRecordDTO,

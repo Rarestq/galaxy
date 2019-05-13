@@ -60,7 +60,7 @@ public class CommonLuggageFeeCalculateStrategy implements LuggageFeeCalculationS
                 // 元/件/小时
                 desc.append("收费 ￥").append(calculateFee).append("元/件/小时,");
                 calculateFee = calculateFee.multiply(new BigDecimal(calculateHours)
-                        .multiply(new BigDecimal(4/5)));
+                        .multiply(new BigDecimal(0.8)));
                 break;
             default:
                 throw new RuntimeException("Unknown CalculationUnitsId = " +

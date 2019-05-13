@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.service.core.bus.subscriber;
 
 import com.google.common.eventbus.Subscribe;
+import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import com.wuxiu.galaxy.service.core.base.enums.SmsTypeEnum;
 import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsBody;
 import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsSender;
@@ -30,7 +31,7 @@ public class FinishLuggageStorageSubscriber {
         SmsBody smsBody = new SmsBody();
         smsBody.setAdminPhone(event.getAdminPhone());
         smsBody.setDepositorName(event.getDepositorName());
-        smsBody.setDepositorPhone(event.getDepositorPhone());
+        smsBody.setDepositorPhone(CommonConstant.PHONE_AREA_CODE + event.getDepositorPhone());
         smsBody.setStorageRecordNo(event.getLuggageRecordNo());
         smsBody.setStorageEndTime(event.getStorageEndTime());
         smsBody.setFee(event.getStorageFee());

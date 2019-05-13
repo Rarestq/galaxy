@@ -155,8 +155,10 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
         turnoverRecord.setCalculationRuleId(-1L);
         turnoverRecord.setFee("-" + compensationRecord.getCompensationFee());
         turnoverRecord.setFeeType(FeeTypeEnum.COMPENSATE_FEE.getCode());
+        turnoverRecord.setFeeTypeDesc(FeeTypeEnum.COMPENSATE_FEE.getDesc());
         turnoverRecord.setRemark(lostCompensateDTO.getRemark());
         turnoverRecord.setAdminId(lostCompensateDTO.getAdminId());
+        turnoverRecord.setAdminName(lostCompensateDTO.getAdminName());
 
         return turnoverRecord;
     }

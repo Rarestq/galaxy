@@ -12,6 +12,7 @@ import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.FinishStorageEventSmsService;
 import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeter;
 import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeterFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,9 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
     @Autowired
     private LuggageFeeMeterFactory feeMeterFactory;
+
+    @Autowired
+    private FinishStorageEventSmsService finishStorageEventSmsService;
 
     /**
      * 新增行李寄存记录
@@ -79,7 +83,13 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         newLuggageStorageRecordDTO.setFeeCalculationProcessDesc(
                 resultDTO.getFeeCalculationProcessDesc());
 
-        return storageRecordManager.insertLuggageStorageRecord(newLuggageStorageRecordDTO);
+        Long luggageId = storageRecordManager.insertLuggageStorageRecord(
+                newLuggageStorageRecordDTO);
+
+        // 发送寄存完成短信
+        finishStorageEventSmsService.notifyDepositorBySMS(luggageId);
+
+        return luggageId;
     }
 
     /**

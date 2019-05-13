@@ -90,6 +90,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
 
         TurnoverRecord turnoverRecord = new TurnoverRecord();
         turnoverRecord.setAdminId(storageRecord.getAdminId());
+        turnoverRecord.setAdminName(storageRecord.getAdminName());
         turnoverRecord.setCalculationRuleId(newLuggageStorageRecordDTO
                 .getCalculateRuleId());
         turnoverRecord.setLuggageId(storageRecord.getLuggageId());
