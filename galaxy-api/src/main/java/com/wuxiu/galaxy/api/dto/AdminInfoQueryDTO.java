@@ -24,16 +24,10 @@ public class AdminInfoQueryDTO extends PageInfo {
     private Long adminId;
 
     /**
-     * 管理员编号
+     * 查询条件(管理员编号、管理员姓名)
      */
-    @ApiModelProperty(value = "管理员编号", required = false)
-    private String adminNo;
-
-    /**
-     * 管理员姓名
-     */
-    @ApiModelProperty(value = "管理员姓名", required = false)
-    private String adminName;
+    @ApiModelProperty(value = "查询条件(管理员编号、管理员姓名)", required = false)
+    private String queryCondition;
 
     /**
      * 管理员类型(1-普通管理员，2-超级管理员,3-系统)

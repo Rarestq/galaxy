@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.api.dto;
 
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -21,15 +22,13 @@ public class LostCompensateRecordQueryDTO extends PageInfo {
      */
     private Long luggageLostCompensationRecordId;
     /**
-     * 管理员姓名
+     * 查询条件(管理员姓名、赔偿对象姓名)
      */
-    private String adminName;
-    /**
-     * 赔偿对象姓名
-     */
-    private String depositorName;
+    @ApiModelProperty(value = "赔偿对象姓名", required = false)
+    private String queryCondition;
     /**
      * 行李类型
      */
+    @ApiModelProperty(value = "行李类型", required = false)
     private Integer luggageType;
 }

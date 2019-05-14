@@ -101,9 +101,7 @@ public class LuggageOverdueRecordServiceImpl implements LuggageOverdueRecordServ
                 new com.wuxiu.galaxy.dal.common.dto.LuggageOverdueRecordQueryDTO();
         recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
 
-        recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
-        recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
-        recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
+        recordQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
         recordQueryDTO.setStatus(queryDTO.getStatus());
 
         // 查询行李逾期未取清理记录列表

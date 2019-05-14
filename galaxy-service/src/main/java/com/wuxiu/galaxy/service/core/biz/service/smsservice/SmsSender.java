@@ -23,6 +23,7 @@ import static com.wuxiu.galaxy.service.core.base.enums.SmsConstant.*;
 public class SmsSender {
 
     static {
+        // 初始化twilio账号sid和验证token
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     }
 

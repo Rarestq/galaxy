@@ -74,12 +74,10 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
                     recordQueryDTO.getLuggageLostCompensationRecordId());
         }
 
-        if (StringUtils.isNotEmpty(recordQueryDTO.getAdminName())) {
-            wrapper.like("admin_name", recordQueryDTO.getAdminName());
-        }
-
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
+        String queryCondition = recordQueryDTO.getQueryCondition();
+        if (StringUtils.isNotBlank(queryCondition)) {
+            wrapper.like("admin_name", queryCondition)
+            .or().like("depositor_name", queryCondition);
         }
 
         if (Objects.nonNull(recordQueryDTO.getLuggageType())) {

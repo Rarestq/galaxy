@@ -144,8 +144,7 @@ public class AdminServiceImpl implements AdminService {
                 new com.wuxiu.galaxy.dal.common.dto.AdminInfoQueryDTO();
         adminInfoQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
         adminInfoQueryDTO.setAdminId(queryDTO.getAdminId());
-        adminInfoQueryDTO.setAdminName(queryDTO.getAdminName());
-        adminInfoQueryDTO.setAdminNo(queryDTO.getAdminNo());
+        adminInfoQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
         adminInfoQueryDTO.setAdminType(queryDTO.getAdminType());
 
         // 查询管理员信息

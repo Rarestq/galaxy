@@ -147,17 +147,11 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             wrapper.eq("luggage_id", recordQueryDTO.getLuggageId());
         }
 
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
-        }
-
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorPhone())) {
-            wrapper.like("depositor_phone", recordQueryDTO.getDepositorPhone());
-        }
-
-        if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.like("luggage_record_no",
-                    recordQueryDTO.getLuggageRecordNo());
+        String queryCondition = recordQueryDTO.getQueryCondition();
+        if (StringUtils.isNotBlank(queryCondition)) {
+            wrapper.like("depositor_name", queryCondition)
+                    .or().like("depositor_phone", queryCondition)
+                    .or().like("luggage_record_no", queryCondition);
         }
 
         wrapper.orderBy("gmt_create", false)
@@ -166,12 +160,6 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         // 查询 LuggageStorageRecord 信息
         Page<LuggageStorageRecord> storageRecordPage =
                 selectPage(recordQueryDTO.getPage(), wrapper);
-
-        // 将营业额记录按照 记录主键id 进行分组
-//        List<TurnoverRecord> turnoverRecords = turnoverRecordManager
-//                .getTurnoverRecords();
-//        Map<Long, TurnoverRecord> turnoverRecordMap = StreamUtil.toMap(
-//                turnoverRecords, TurnoverRecord::getTurnoverRecordId);
 
         return buildLuggageStorageInfoDTO(storageRecordPage);
     }
@@ -259,9 +247,6 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTO.setAdminPhone(storageRecord.getAdminPhone());
             storageInfoDTO.setDepositorName(storageRecord.getDepositorName());
             storageInfoDTO.setDepositorPhone(storageRecord.getDepositorPhone());
-
-//            storageInfoDTO.setStorageFee("￥" + turnoverRecordMap.get(luggageId)
-//                    .getFee());
 
             storageInfoDTO.setRemark(storageRecord.getRemark());
             storageInfoDTO.setStatus(LuggageStorageStatusEnum.getDescByCode(

@@ -19,6 +19,7 @@ import com.wuxiu.galaxy.dal.common.dto.LoginDTO;
 import com.wuxiu.galaxy.dal.dao.AdminDao;
 import com.wuxiu.galaxy.dal.domain.Admin;
 import com.wuxiu.galaxy.dal.manager.AdminManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -90,14 +91,10 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             wrapper.eq("admin_id", queryDTO.getAdminId());
         }
 
-        if (Objects.nonNull(queryDTO.getAdminNo())) {
-            wrapper.like("admin_no", queryDTO.getAdminNo());
+        if (StringUtils.isNotBlank(queryDTO.getQueryCondition())) {
+            wrapper.like("admin_no", queryDTO.getQueryCondition())
+                    .or().like("admin_name", queryDTO.getQueryCondition());
         }
-
-        if (Objects.nonNull(queryDTO.getAdminName())) {
-            wrapper.like("admin_name", queryDTO.getAdminName());
-        }
-
         if (Objects.nonNull(queryDTO.getAdminType())) {
             wrapper.eq("admin_type", queryDTO.getAdminType());
         }

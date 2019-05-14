@@ -80,6 +80,7 @@ public class LuggageFeeMeterFactory {
 
             List<LuggageFeeBaseCalculationParamDTO> calculationParamDTO = null;
             LuggageFeeCalculationStrategy strategy = null;
+            // 根据不同的行李类型，创建不同的计价参数对象
             switch (luggageTypeEnum) {
                 case COMMON_LUGGAGE_TYPE:
                     calculationParamDTO =

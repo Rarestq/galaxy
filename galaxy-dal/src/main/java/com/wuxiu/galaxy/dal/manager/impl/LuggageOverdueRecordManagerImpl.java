@@ -91,13 +91,11 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
 
         // 构造查询参数
         Wrapper<LuggageOverdueRecord> wrapper = new EntityWrapper<>();
-        if (StringUtils.isNotEmpty(recordQueryDTO.getLuggageRecordNo())) {
-            wrapper.like("luggage_record_no",
-                    recordQueryDTO.getLuggageRecordNo());
-        }
 
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
+        String queryCondition = recordQueryDTO.getQueryCondition();
+        if (StringUtils.isNotBlank(queryCondition)) {
+            wrapper.like("luggage_record_no", queryCondition)
+                    .or().like("depositor_name", queryCondition);
         }
 
         if (Objects.nonNull(recordQueryDTO.getStatus())) {

@@ -28,13 +28,9 @@ public class LostCompensateRecordQueryDTO implements Serializable {
      */
     private Long luggageLostCompensationRecordId;
     /**
-     * 管理员姓名
+     * 查询条件(管理员姓名、赔偿对象姓名)
      */
-    private String adminName;
-    /**
-     * 赔偿对象姓名
-     */
-    private String depositorName;
+    private String queryCondition;
     /**
      * 行李类型
      */

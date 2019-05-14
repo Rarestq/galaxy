@@ -52,8 +52,7 @@ public class LuggageLostRegisterServiceImpl implements LuggageLostRegisterServic
         com.wuxiu.galaxy.dal.common.dto.LuggageLostRegisterRecordQueryDTO recordQueryDTO =
                 new com.wuxiu.galaxy.dal.common.dto.LuggageLostRegisterRecordQueryDTO();
         recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
-        recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
-        recordQueryDTO.setLostRecordNo(queryDTO.getLostRecordNo());
+        recordQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
         recordQueryDTO.setStatus(queryDTO.getStatus());
         if (StringUtils.isNotEmpty(queryDTO.getLostTime())) {
             recordQueryDTO.setLostTime(DateUtil.string2LocalDateTime(queryDTO

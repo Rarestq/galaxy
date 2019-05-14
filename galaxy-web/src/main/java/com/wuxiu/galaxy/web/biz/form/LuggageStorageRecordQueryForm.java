@@ -22,31 +22,11 @@ public class LuggageStorageRecordQueryForm extends PageInfo {
      */
     @ApiModelProperty(value = "行李寄存主键id", required = false)
     private Long luggageId;
-    /**
-     * 行李寄存记录编号
-     */
-    @ApiModelProperty(value = "行李寄存记录编号", required = false)
-    private String luggageRecordNo;
-    /**
-     * 寄存人姓名
-     */
-    @ApiModelProperty(value = "寄存人姓名", required = false)
-    private String depositorName;
-    /**
-     * 寄存人电话
-     */
-    @ApiModelProperty(value = "寄存人电话", required = false)
-    private String depositorPhone;
 
     /**
-     * 寄存开始时间
+     * 查询条件(行李寄存记录编号、寄存人姓名、寄存人电话)
      */
-//    @ApiModelProperty(value = "寄存结束日期范围", required = false)
-//    private String storageTimeRange;
-    /**
-     * 寄存结束时间
-     */
-//    @JsonFormat(pattern = CommonConstant.TIME_PATTERN)
-//    @ApiModelProperty(value = "寄存结束时间", required = false)
-//    private String storageEndTime;
+    @ApiModelProperty(value = "查询条件(行李寄存记录编号、寄存人姓名、寄存人电话)", required = false)
+    private String queryCondition;
+
 }

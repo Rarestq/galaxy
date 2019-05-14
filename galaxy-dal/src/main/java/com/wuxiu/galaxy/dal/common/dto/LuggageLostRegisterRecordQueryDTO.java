@@ -24,14 +24,9 @@ public class LuggageLostRegisterRecordQueryDTO implements Serializable {
     Page<LuggageLostRegistrationRecord> page;
 
     /**
-     * 行李所属者姓名
+     * 查询条件(遗失登记记录编号、寄存人姓名)
      */
-    private String depositorName;
-
-    /**
-     * 遗失登记记录编号
-     */
-    private String lostRecordNo;
+    private String queryCondition;
 
     /**
      * 遗失记录状态(0-遗失，1-已赔偿)

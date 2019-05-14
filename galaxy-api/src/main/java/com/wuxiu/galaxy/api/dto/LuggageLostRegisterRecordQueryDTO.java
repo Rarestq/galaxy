@@ -18,16 +18,10 @@ public class LuggageLostRegisterRecordQueryDTO extends PageInfo {
     private static final long serialVersionUID = 5697799673656389828L;
 
     /**
-     * 行李所属者姓名
+     * 查询条件(遗失登记记录编号、寄存人姓名)
      */
-    @ApiModelProperty(value = "行李所属者姓名", required = false)
-    private String depositorName;
-
-    /**
-     * 遗失登记记录编号
-     */
-    @ApiModelProperty(value = "遗失登记记录编号", required = false)
-    private String lostRecordNo;
+    @ApiModelProperty(value = "查询条件(遗失登记记录编号、寄存人姓名)", required = false)
+    private String queryCondition;
 
     /**
      * 遗失记录状态(0-遗失，1-已赔偿)

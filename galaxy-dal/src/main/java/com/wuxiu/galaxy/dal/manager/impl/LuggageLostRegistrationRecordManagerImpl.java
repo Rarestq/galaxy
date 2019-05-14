@@ -53,12 +53,11 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
 
         // 构造查询条件
         Wrapper<LuggageLostRegistrationRecord> wrapper = new EntityWrapper<>();
-        if (StringUtils.isNotEmpty(recordQueryDTO.getDepositorName())) {
-            wrapper.like("depositor_name", recordQueryDTO.getDepositorName());
-        }
 
-        if (StringUtils.isNotEmpty(recordQueryDTO.getLostRecordNo())) {
-            wrapper.like("register_record_no", recordQueryDTO.getLostRecordNo());
+        String queryCondition = recordQueryDTO.getQueryCondition();
+        if (StringUtils.isNotBlank(queryCondition)) {
+            wrapper.like("depositor_name", queryCondition)
+                    .or().like("register_record_no", queryCondition);
         }
 
         if (Objects.nonNull(recordQueryDTO.getStatus())) {

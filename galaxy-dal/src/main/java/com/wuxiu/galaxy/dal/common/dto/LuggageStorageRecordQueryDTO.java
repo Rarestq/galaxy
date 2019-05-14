@@ -26,23 +26,7 @@ public class LuggageStorageRecordQueryDTO implements Serializable {
      */
     private Long luggageId;
     /**
-     * 行李寄存记录编号
+     * 查询条件(行李寄存记录编号、寄存人姓名、寄存人电话)
      */
-    private String luggageRecordNo;
-    /**
-     * 寄存人姓名
-     */
-    private String depositorName;
-    /**
-     * 寄存人电话
-     */
-    private String depositorPhone;
-    /**
-     * 寄存结束时间(from)
-     */
-//    private LocalDateTime storageEndTimeFrom;
-    /**
-     * 寄存结束时间(to)
-     */
-//    private LocalDateTime storageEndTimeTo;
+    private String queryCondition;
 }

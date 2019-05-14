@@ -71,8 +71,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
 
         recordQueryDTO.setLuggageLostCompensationRecordId(
                 queryDTO.getLuggageLostCompensationRecordId());
-        recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
-        recordQueryDTO.setAdminName(queryDTO.getAdminName());
+        recordQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
         recordQueryDTO.setLuggageType(queryDTO.getLuggageType());
 
         // 查询行李遗失赔偿登记记录

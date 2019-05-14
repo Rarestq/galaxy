@@ -183,17 +183,7 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         recordQueryDTO.setPage(PageInfoUtil.convert(queryDTO));
 
         recordQueryDTO.setLuggageId(queryDTO.getLuggageId());
-        recordQueryDTO.setDepositorName(queryDTO.getDepositorName());
-        recordQueryDTO.setDepositorPhone(queryDTO.getDepositorPhone());
-        recordQueryDTO.setLuggageRecordNo(queryDTO.getLuggageRecordNo());
-//        if (StringUtils.isNotEmpty(queryDTO.getStorageTimeRange().trim())) {
-//            String storageTimeRange = queryDTO.getStorageTimeRange();
-//            String[] timeRange = storageTimeRange.split(CommonConstant.COMMA);
-//            recordQueryDTO.setStorageEndTimeFrom(LocalDateTime.parse(timeRange[0],
-//                    DateTimeFormatter.ofPattern(CommonConstant.TIME_PATTERN)));
-//            recordQueryDTO.setStorageEndTimeTo(LocalDateTime.parse(timeRange[0],
-//                    DateTimeFormatter.ofPattern(CommonConstant.TIME_PATTERN)));
-//        }
+        recordQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
 
         // 查询行李寄存列表信息
         Page<LuggageStorageInfoDTO> storageRecordInfoPage =
@@ -201,9 +191,6 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         if (PageInfoUtil.isEmpty(storageRecordInfoPage)) {
             return PageInfoUtil.ofEmptyPage(queryDTO);
         }
-
-        // 在寄存结束时间前 15 min 发送短信，判断是否已到寄存结束时间，是就发送自动创建逾期记录事件
-        //notifyDepositorBySMS();
 
         List<LuggageStorageInfoDTO> records = storageRecordInfoPage.getRecords();
 

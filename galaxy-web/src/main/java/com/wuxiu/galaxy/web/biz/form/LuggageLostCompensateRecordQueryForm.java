@@ -18,15 +18,10 @@ public class LuggageLostCompensateRecordQueryForm extends PageInfo {
     private static final long serialVersionUID = -7194370096686614596L;
 
     /**
-     * 管理员姓名
-     */
-    @ApiModelProperty(value = "管理员姓名", required = false)
-    private String adminName;
-    /**
-     * 赔偿对象姓名
+     * 查询条件(管理员姓名、赔偿对象姓名)
      */
     @ApiModelProperty(value = "赔偿对象姓名", required = false)
-    private String depositorName;
+    private String queryCondition;
     /**
      * 行李类型
      */

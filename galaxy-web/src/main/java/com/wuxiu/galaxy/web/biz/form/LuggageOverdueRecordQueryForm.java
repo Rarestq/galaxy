@@ -18,16 +18,10 @@ public class LuggageOverdueRecordQueryForm extends PageInfo {
     private static final long serialVersionUID = -4121459890734373015L;
 
     /**
-     * 行李寄存记录编号
+     * 查询条件(行李寄存记录编号、寄存人姓名)
      */
-    @ApiModelProperty(value = "行李寄存记录编号", required = false)
-    private String luggageRecordNo;
-
-    /**
-     * 行李寄存者姓名
-     */
-    @ApiModelProperty(value = "行李寄存者姓名", required = false)
-    private String depositorName;
+    @ApiModelProperty(value = "查询条件(行李寄存记录编号、寄存人姓名)", required = false)
+    private String queryCondition;
 
     /**
      * 逾期清理状态(1-逾期，2-已清理作废)
