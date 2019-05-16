@@ -69,6 +69,8 @@ public class LuggageOverdueRecordSubscriber {
 
         SmsBody smsBody = buildSmsBody(storageRecord);
 
+        // todo:逾期后，将对应的寄存柜的状态改为「逾期占用」
+
         // 发送短信
         smsSender.sendSms(smsBody);
 

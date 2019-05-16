@@ -50,4 +50,17 @@ public class UUIDGenerateUtil {
         return stringBuilder.toString();
     }
 
+    /**
+     * 生成寄存柜编号
+     *
+     * @param prefix
+     * @return
+     */
+    public static String generateCabinetNo(String prefix) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(prefix).append(new Random().nextInt(10000));
+
+        return builder.toString();
+    }
+
 }

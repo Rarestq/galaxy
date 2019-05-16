@@ -2,15 +2,18 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.expection.BizException;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.common.util.DateUtil;
 import com.wuxiu.galaxy.api.dto.*;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
+import com.wuxiu.galaxy.dal.domain.LuggageCabinet;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
+import com.wuxiu.galaxy.service.core.biz.service.apiservice.CabinetService;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageStorageRecordService;
 import com.wuxiu.galaxy.service.core.biz.service.smsservice.FinishStorageEventSmsService;
 import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeter;
@@ -19,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,6 +45,9 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
     @Autowired
     private FinishStorageEventSmsService finishStorageEventSmsService;
+
+    @Autowired
+    private CabinetService cabinetService;
 
     /**
      * 新增行李寄存记录
@@ -82,6 +89,18 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         newLuggageStorageRecordDTO.setFeeValue(resultDTO.getFeeValue());
         newLuggageStorageRecordDTO.setFeeCalculationProcessDesc(
                 resultDTO.getFeeCalculationProcessDesc());
+
+        // todo:新增的寄存行李存放到状态为「空闲」的某个柜子，并将该柜子状态改为「已占用」
+        // 查询所有空闲状态的柜子，随机分配给寄存的行李，若已无空闲柜子，则给出提示
+        List<LuggageCabinet> allCabinets = cabinetService.getAllCabinets();
+
+        if (CollectionUtils.isEmpty(allCabinets)) {
+            log.warn("暂无空闲柜子，请清理出空闲柜子之后再进行寄存");
+            throw new BizException("暂无空闲柜子，请清理出空闲柜子之后再进行寄存");
+        }
+
+        newLuggageStorageRecordDTO.setLuggageCabinetNo(allCabinets.get(0)
+                .getLuggageCabinetNo());
 
         Long luggageId = storageRecordManager.insertLuggageStorageRecord(
                 newLuggageStorageRecordDTO);

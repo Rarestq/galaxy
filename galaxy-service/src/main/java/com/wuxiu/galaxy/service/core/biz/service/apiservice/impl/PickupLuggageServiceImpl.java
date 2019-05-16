@@ -82,6 +82,8 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
                     storageRecord);
         }
 
+        // todo:取件后，将对应的寄存柜的状态改为「空闲」
+
         pickupLuggageRecordManager.pickupLuggage(commonPickupLuggageDTO);
     }
 
@@ -160,10 +162,13 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
                 luggageStorageRecord.getStatus())) {
 
             PickupOverdueLuggageDTO pickupOverdueLuggageDTO =
-                    buildPickupOverdueLuggageDTO(operateUserDTO, luggageStorageRecord,
-                            calculationResultDTO, turnoverRecord);
+                    buildPickupOverdueLuggageDTO(operateUserDTO,
+                            luggageStorageRecord, calculationResultDTO,
+                            turnoverRecord);
 
             pickupLuggageRecordManager.pickupOverdueLuggage(pickupOverdueLuggageDTO);
+
+            // todo:取件后，将对应的寄存柜的状态改为「空闲」
         }
 
         log.warn("当前行李寄存状态有误，不能进行取件， status:{}",

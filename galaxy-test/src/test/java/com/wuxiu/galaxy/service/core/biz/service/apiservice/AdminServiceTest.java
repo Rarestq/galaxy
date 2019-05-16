@@ -9,11 +9,14 @@ import com.wuxiu.galaxy.dal.manager.AdminManager;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.test.base.BaseTest;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -40,19 +43,19 @@ public class AdminServiceTest extends BaseTest {
     /**
      * 初始化数据
      */
-//    @Before
-//    public void setUp() {
-//        this.adminId = saveAdminInfo();
-//        this.admin = adminManager.selectById(adminId);
-//    }
+    @Before
+    public void setUp() {
+        this.adminId = saveAdminInfo();
+        this.admin = adminManager.selectById(adminId);
+    }
 
     /**
      * 删掉该测试类中每一个测试用例产生的数据
      */
-//    @After
-//    public void cleanData() {
-//        adminManager.deleteById(adminId);
-//    }
+    @After
+    public void cleanData() {
+        adminManager.deleteById(adminId);
+    }
 
     /**
      * 新增管理员信息
@@ -82,24 +85,24 @@ public class AdminServiceTest extends BaseTest {
     /**
      * 编辑管理员信息
      */
-//    private void editAdminInfo() {
-//        AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
-//
-//        adminInfoDTO.setAdminId(adminId);
-//        adminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
-//                CommonConstant.ADMIN_NO_PREFIX));
-//        adminInfoDTO.setAdminName("无朽");
-//        adminInfoDTO.setAdminPhone("15180354187");
-//        adminInfoDTO.setAdminType(UserTypeEnum.ADMIN.getCode());
-//        adminInfoDTO.setPassword("admin");
-//        adminInfoDTO.setDeleted(RecordStatusEnum.NORMAL.getCode());
-//        adminInfoDTO.setGmtCreate(LocalDateTime.now());
-//        adminInfoDTO.setGmtModified(LocalDateTime.now());
-//
-//        this.adminInfoDTO = adminInfoDTO;
-//
-//        adminService.saveAdminInfo(adminInfoDTO);
-//    }
+    private void editAdminInfo() {
+        AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
+
+        adminInfoDTO.setAdminId(adminId);
+        adminInfoDTO.setAdminNo(UUIDGenerateUtil.generateUniqueNo(
+                CommonConstant.ADMIN_NO_PREFIX));
+        adminInfoDTO.setAdminName("无朽");
+        adminInfoDTO.setAdminPhone("15180354187");
+        adminInfoDTO.setAdminType(UserTypeEnum.ADMIN.getCode());
+        adminInfoDTO.setPassword("admin");
+        adminInfoDTO.setDeleted(RecordStatusEnum.NORMAL.getCode());
+        adminInfoDTO.setGmtCreate(LocalDateTime.now());
+        adminInfoDTO.setGmtModified(LocalDateTime.now());
+
+        this.adminInfoDTO = adminInfoDTO;
+
+        adminService.saveAdminInfo(adminInfoDTO);
+    }
 
     /**
      * 测试新增管理员
@@ -115,38 +118,13 @@ public class AdminServiceTest extends BaseTest {
     /**
      * 测试编辑管理员信息
      */
-//    @Test
-//    public void testEditAdminInfo() {
-//        editAdminInfo();
-//
-//        String password = admin.getPassword();
-//        String adminInfoDTOPassword = adminInfoDTO.getPassword();
-//        assertNotEquals(password, adminInfoDTOPassword);
-//    }
+    @Test
+    public void testEditAdminInfo() {
+        editAdminInfo();
 
-    /**
-     * 测试查询管理员信息（按照电话和姓名）
-     */
-//    @Test
-//    public void testQueryAdminInfoByNameAndPhone() {
-//
-//    }
+        String password = admin.getPassword();
+        String adminInfoDTOPassword = adminInfoDTO.getPassword();
+        assertNotEquals(password, adminInfoDTOPassword);
+    }
 
-    /**
-     * 测试查询管理员信息
-     */
-//    @Test
-//    public void testQueryAdminInfoList() {
-//
-//    }
-
-    /**
-     * 测试删除管理员信息
-     */
-//    @Test
-//    public void testDeleteAdmin() {
-//        adminManager.deleteById(adminId);
-//        Admin admin = adminManager.selectById(adminId);
-//        assertNull(admin);
-//    }
 }

@@ -52,6 +52,11 @@ public class CommonConstant {
     public static final String LUGGAGE_LOST_COMPENSATE_NO_PREFIX = "YSPC";
 
     /**
+     * 行李寄存柜编号前缀
+     */
+    public static final String LUGGAGE_CABINET_NO_PREFIX = "C";
+
+    /**
      * 逗号分隔符
      */
     public static final String COMMA = ",";

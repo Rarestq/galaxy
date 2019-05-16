@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.dal.common.dto;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
 import lombok.Data;
@@ -31,6 +32,10 @@ public class NewLuggageStorageRecordDTO implements Serializable {
      * 行李寄存记录编号
      */
     private String luggageRecordNo;
+    /**
+     * 行李柜编号
+     */
+    private String luggageCabinetNo;
     /**
      * 管理员id
      */

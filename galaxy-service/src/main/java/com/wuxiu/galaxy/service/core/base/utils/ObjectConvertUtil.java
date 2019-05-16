@@ -16,7 +16,8 @@ public class ObjectConvertUtil {
 
 
     /**
-     * 删除管理员信息时，adminIds -> List<Long> adminId
+     * 删除管理员信息(维修寄存柜)时，
+     * adminIds/cabinets -> List<Long> adminId/List<Long> cabinetIds
      *
      * @param str
      * @param regex
