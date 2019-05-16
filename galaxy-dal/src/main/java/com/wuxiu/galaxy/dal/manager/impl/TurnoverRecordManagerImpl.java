@@ -172,7 +172,7 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
             recordDTOS.add(turnoverRecordDTO);
         });
 
-        Page<TurnoverRecordDTO> page = new Page<>();
+        Page<TurnoverRecordDTO> page = new Page<>(turnoverRecordPage.getCurrent(), turnoverRecordPage.getSize());
         page.setRecords(recordDTOS);
         page.setTotal(turnoverRecordPage.getTotal());
 

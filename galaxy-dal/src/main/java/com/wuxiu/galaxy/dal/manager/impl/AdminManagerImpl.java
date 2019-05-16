@@ -163,7 +163,7 @@ public class AdminManagerImpl extends BaseManagerImpl<AdminDao, Admin> implement
             adminDTOS.add(adminDTO);
         });
 
-        Page<AdminDTO> page = new Page<>();
+        Page<AdminDTO> page = new Page<>(adminPage.getCurrent(), adminPage.getSize());
         page.setRecords(adminDTOS);
         page.setTotal(adminPage.getTotal());
 

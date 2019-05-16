@@ -2,11 +2,11 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
-import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.CabinetInfoQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwCabinetService;
 import com.wuxiu.galaxy.web.biz.vo.CabinetInfoVO;
+import com.wuxiu.galaxy.web.utils.StringConvertUtil;
+import com.wuxiu.galaxy.web.utils.ValidatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class CabinetController {
     @PostMapping("/repair")
     public APIResult<Void> repairCabinets(@RequestBody String cabinets) {
 
-        List<Long> cabinetIds = ObjectConvertUtil.string2Long(cabinets, COMMA);
+        List<Long> cabinetIds = StringConvertUtil.string2Long(cabinets, COMMA);
         if (CollectionUtils.isEmpty(cabinetIds)) {
             return APIResult.error("寄存柜id不能为空");
         }

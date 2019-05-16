@@ -46,7 +46,7 @@ public class ChargeCalculationRuleManagerImpl extends BaseManagerImpl<ChargeCalc
     @Override
     public List<PairDTO<Long, String>> getChargeCalculateRules() {
         // 构造查询条件（因为逻辑删除字段加了 @TableLogic 注解，所以构造条件中不需要加此条件）
-        Wrapper<ChargeCalculationRule> wrapper = new EntityWrapper<>();
+        Wrapper<ChargeCalculationRule> wrapper = new EntityWrapper<ChargeCalculationRule>();
 
         List<ChargeCalculationRule> calculationRules = selectList(wrapper);
 

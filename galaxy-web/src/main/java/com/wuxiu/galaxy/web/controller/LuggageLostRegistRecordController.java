@@ -2,10 +2,10 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostRegisterRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageLostRegisterService;
 import com.wuxiu.galaxy.web.biz.vo.LuggageLostRegisterRecordVO;
+import com.wuxiu.galaxy.web.utils.ValidatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

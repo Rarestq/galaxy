@@ -229,7 +229,7 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
             compensateRecordInfoDTOS.add(recordInfoDTO);
         });
 
-        Page<LostCompensateRecordInfoDTO> page = new Page<>();
+        Page<LostCompensateRecordInfoDTO> page = new Page<>(recordPage.getCurrent(), recordPage.getSize());
         page.setRecords(compensateRecordInfoDTOS);
         page.setTotal(recordPage.getTotal());
 

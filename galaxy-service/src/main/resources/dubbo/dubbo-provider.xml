@@ -24,23 +24,48 @@
                    version="${dubbo.provider.version}"
                    owner="${dubbo.application.owner}"/>
 
-    <!--<dubbo:service interface="com.mhc.dayu.api.service.TaskFacade"-->
-    <!--ref="taskFacade"-->
-    <!--version="${dubbo.provider.version}"-->
-    <!--owner="${dubbo.application.owner}"/>-->
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.CabinetFacade"
+                   ref="cabinetFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
 
-    <!--<dubbo:service interface="com.mhc.dayu.api.service.TaskActionFacade"-->
-    <!--ref="taskActionFacade"-->
-    <!--version="${dubbo.provider.version}"-->
-    <!--owner="${dubbo.application.owner}"/>-->
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.ChargeCalculateRuleFacade"
+                   ref="chargeCalculateRuleFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
 
-    <!--<dubbo:service interface="com.mhc.dayu.api.service.TaskTemplateFacade"-->
-    <!--ref="taskTemplateFacade"-->
-    <!--version="${dubbo.provider.version}"-->
-    <!--owner="${dubbo.application.owner}"/>-->
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.LuggageLostCompensateFacade"
+                   ref="luggageLostCompensateFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
 
-    <!--<dubbo:service interface="com.mhc.dayu.api.service.TaskActionTypeFacade"-->
-    <!--ref="taskActionTypeFacade"-->
-    <!--version="${dubbo.provider.version}"-->
-    <!--owner="${dubbo.application.owner}"/>-->
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.LuggageLostRegisterFacade"
+                   ref="luggageLostRegisterFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
+
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.LuggageOverdueRecordFacade"
+                   ref="luggageOverdueRecordFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
+
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.LuggageStorageRecordFacade"
+                   ref="luggageStorageRecordFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
+
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.LuggageTypeFacade"
+                   ref="luggageTypeFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
+
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.PickupLuggageFacade"
+                   ref="pickupLuggageFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
+
+    <dubbo:service interface="com.wuxiu.galaxy.api.service.TurnoverRecordFacade"
+                   ref="turnoverRecordFacade"
+                   version="${dubbo.provider.version}"
+                   owner="${dubbo.application.owner}"/>
 </beans>

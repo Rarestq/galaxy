@@ -1,11 +1,13 @@
-/** 
- * All rights Reserved, Designed By wuxiu
- *
- * @Package com.wuxiu.galaxy.dal.dao
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @date: 2018-04-16 20:35:12
- * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
- */
+/**
+ *  
+ *  * All rights Reserved, Designed By wuxiu
+ * <p>
+ *  * @Package com.wuxiu.galaxy.dal.dao
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @date: 2018-04-16 20:35:12
+ *  * @Copyright: 2019-2022 https://github.com/Rarestq Inc. All rights reserved.
+ *  
+ */
 package com.wuxiu.galaxy.dal.manager.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -27,7 +29,7 @@ import java.util.List;
  * @since 2019-05-02
  */
 @Component
-public class CommonCalculateRuleDetailManagerImpl extends BaseManagerImpl<CommonCalculateRuleDetailDao, CommonCalculateRuleDetail> implements CommonCalculateRuleDetailManager{
+public class CommonCalculateRuleDetailManagerImpl extends BaseManagerImpl<CommonCalculateRuleDetailDao, CommonCalculateRuleDetail> implements CommonCalculateRuleDetailManager {
 
     /**
      * 根据计费规则id获取普通行李计费规则信息
@@ -40,7 +42,7 @@ public class CommonCalculateRuleDetailManagerImpl extends BaseManagerImpl<Common
             Long calculateRuleId) {
         Wrapper<CommonCalculateRuleDetail> wrapper =
                 new EntityWrapper<CommonCalculateRuleDetail>()
-                .eq("calculation_rule_id", calculateRuleId);
+                        .eq("calculation_rule_id", calculateRuleId);
 
         return selectList(wrapper);
     }

@@ -23,5 +23,50 @@
     <dubbo:reference interface="com.wuxiu.galaxy.api.service.LoginFacade"
                      id="loginFacade"
                      version="${dubbo.consumer.version}"
-                     timeout="${dubbo.consumer.timeout}}"/>
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.CabinetFacade"
+                     id="cabinetFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.ChargeCalculateRuleFacade"
+                     id="chargeCalculateRuleFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.LuggageLostCompensateFacade"
+                     id="luggageLostCompensateFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.LuggageLostRegisterFacade"
+                     id="luggageLostRegisterFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.LuggageOverdueRecordFacade"
+                     id="luggageOverdueRecordFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.LuggageStorageRecordFacade"
+                     id="luggageStorageRecordFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.LuggageTypeFacade"
+                     id="luggageTypeFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.PickupLuggageFacade"
+                     id="pickupLuggageFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
+
+    <dubbo:reference interface="com.wuxiu.galaxy.api.service.TurnoverRecordFacade"
+                     id="turnoverRecordFacade"
+                     version="${dubbo.consumer.version}"
+                     timeout="${dubbo.consumer.timeout}"/>
 </beans>

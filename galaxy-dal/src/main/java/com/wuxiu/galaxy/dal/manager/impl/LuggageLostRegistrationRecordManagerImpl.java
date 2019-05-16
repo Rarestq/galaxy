@@ -126,7 +126,7 @@ public class LuggageLostRegistrationRecordManagerImpl extends BaseManagerImpl<Lu
             registrationRecords.add(registerRecordDTO);
         });
 
-        Page<LuggageLostRegisterRecordDTO> page = new Page<>();
+        Page<LuggageLostRegisterRecordDTO> page = new Page<>(registrationRecordPage.getCurrent(), registrationRecordPage.getSize());
         page.setRecords(registrationRecords);
         page.setTotal(registrationRecordPage.getTotal());
 

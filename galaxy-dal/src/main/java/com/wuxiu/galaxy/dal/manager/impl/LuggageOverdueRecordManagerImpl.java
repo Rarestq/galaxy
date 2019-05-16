@@ -161,7 +161,7 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
             overdueRecordDTOS.add(overdueRecordInfoDTO);
         });
 
-        Page<LuggageOverdueRecordInfoDTO> page = new Page<>();
+        Page<LuggageOverdueRecordInfoDTO> page = new Page<>(overdueRecordPage.getCurrent(), overdueRecordPage.getSize());
         page.setRecords(overdueRecordDTOS);
         page.setTotal(overdueRecordPage.getTotal());
 

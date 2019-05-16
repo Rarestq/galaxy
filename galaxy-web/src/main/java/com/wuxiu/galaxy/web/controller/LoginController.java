@@ -2,9 +2,9 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
-import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.LoginForm;
 import com.wuxiu.galaxy.web.biz.service.GwLoginService;
+import com.wuxiu.galaxy.web.utils.ValidatorUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

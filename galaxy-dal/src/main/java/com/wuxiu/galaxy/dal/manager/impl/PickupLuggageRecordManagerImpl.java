@@ -357,7 +357,7 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
             recordDTOS.add(pickupLuggageRecordDTO);
         });
 
-        Page<PickupLuggageRecordDTO> page = new Page<>();
+        Page<PickupLuggageRecordDTO> page = new Page<>(pickupLuggageRecordPage.getCurrent(), pickupLuggageRecordPage.getSize());
         page.setRecords(recordDTOS);
         page.setTotal(pickupLuggageRecordPage.getTotal());
 

@@ -2,12 +2,12 @@ package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
-import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
-import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoForm;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwAdminService;
 import com.wuxiu.galaxy.web.biz.vo.AdminInfoVO;
+import com.wuxiu.galaxy.web.utils.StringConvertUtil;
+import com.wuxiu.galaxy.web.utils.ValidatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class AdminController {
     @PostMapping("/delete")
     public APIResult<Void> deleteAdmin(@RequestBody String adminIds) {
 
-        List<Long> adminIdList = ObjectConvertUtil.string2Long(adminIds, COMMA);
+        List<Long> adminIdList = StringConvertUtil.string2Long(adminIds, COMMA);
         if (CollectionUtils.isEmpty(adminIdList)) {
             return APIResult.error("管理员id不能为空");
         }

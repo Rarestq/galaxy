@@ -174,7 +174,8 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     public List<LuggageStorageRecord> selectRecordsByLuggageTypeId(
             List<Long> luggageTypeIds) {
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
-        wrapper.in("luggage_type_id", luggageTypeIds);
+        wrapper.in("luggage_type_id", luggageTypeIds)
+                .ne("deleted", 1);
 
         return selectList(wrapper);
     }
@@ -201,6 +202,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     @Override
     public List<LuggageStorageRecord> selectAllStorageRecords() {
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
+        wrapper.ne("deleted", 1);
 
         return selectList(wrapper);
     }
@@ -219,7 +221,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
 
         Wrapper<LuggageStorageRecord> wrapper =
                 new EntityWrapper<LuggageStorageRecord>()
-                .in("luggage_id", luggageIds);
+                        .in("luggage_id", luggageIds);
 
         return selectList(wrapper);
     }
@@ -259,7 +261,7 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTOS.add(storageInfoDTO);
         });
 
-        Page<LuggageStorageInfoDTO> page = new Page<>();
+        Page<LuggageStorageInfoDTO> page = new Page<>(storageRecordPage.getCurrent(), storageRecordPage.getSize());
         page.setRecords(storageInfoDTOS);
         page.setTotal(storageRecordPage.getTotal());
 

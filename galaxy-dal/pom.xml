@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <galaxy-api.version>0.0.2-SNAPSHOT</galaxy-api.version>
     </properties>
 
     <dependencies>
@@ -23,7 +24,7 @@
         <dependency>
             <groupId>com.wuxiu.galaxy</groupId>
             <artifactId>galaxy-api</artifactId>
-            <version>${project.version}</version>
+            <version>${galaxy-api.version}</version>
         </dependency>
         <!-- ===== 一方包 END ===== -->
 

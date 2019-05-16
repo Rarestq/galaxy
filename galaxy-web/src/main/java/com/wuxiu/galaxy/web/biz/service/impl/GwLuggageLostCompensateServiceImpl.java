@@ -7,16 +7,11 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordInfoDTO;
 import com.wuxiu.galaxy.api.dto.LostCompensateRecordQueryDTO;
-import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
-import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.integration.LuggageLostCompensateClient;
-import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
-import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
-import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.LuggageLostCompensateRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageLostCompensateService;
-import com.wuxiu.galaxy.web.biz.service.UserService;
 import com.wuxiu.galaxy.web.biz.vo.LuggageLostCompensateRecordVO;
+import com.wuxiu.galaxy.web.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,9 +32,6 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
 
     @Autowired
     private LuggageLostCompensateClient lostCompensateClient;
-
-    @Autowired
-    private UserService userService;
 
     /**
      * 查询行李遗失赔偿登记记录列表
@@ -121,7 +113,7 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
 
         // 遗失行李赔偿
         APIResult<Long> compensateAPIResult = lostCompensateClient
-                .compensateByLuggageType(ObjectConvertUtil
+                .compensateByLuggageType(StringConvertUtil
                         .lostRegisterRecordIdsIdFromString2Long(lostRegistRecordIds,
                                 CommonConstant.COMMA).get(0), adminInfoDTO);
 

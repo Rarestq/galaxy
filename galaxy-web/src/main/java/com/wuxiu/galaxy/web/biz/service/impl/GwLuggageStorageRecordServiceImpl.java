@@ -5,17 +5,16 @@ import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.*;
-import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
-import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.integration.AdminClient;
 import com.wuxiu.galaxy.integration.LuggageStorageRecordClient;
-import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
-import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.LuggageStorageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.form.NewLuggageStorageRecordForm;
 import com.wuxiu.galaxy.web.biz.service.GwLuggageStorageRecordService;
-import com.wuxiu.galaxy.web.biz.service.UserService;
 import com.wuxiu.galaxy.web.biz.vo.LuggageStorageRecordVO;
+import com.wuxiu.galaxy.web.utils.BeanCopierUtil;
+import com.wuxiu.galaxy.web.utils.CommonUtil;
+import com.wuxiu.galaxy.web.utils.PageInfoUtil;
+import com.wuxiu.galaxy.web.utils.StreamUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +39,6 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
     @Autowired
     private AdminClient adminClient;
 
-    @Autowired
-    private UserService userService;
 
     /**
      * 新增行李寄存记录

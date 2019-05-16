@@ -94,6 +94,7 @@ public class LuggageTypeManagerImpl extends BaseManagerImpl<LuggageTypeDao, Lugg
     @Override
     public List<LuggageType> getLuggageTypes() {
         Wrapper<LuggageType> wrapper = new EntityWrapper<>();
+        wrapper.ne("deleted", 1);
 
         return selectList(wrapper);
     }

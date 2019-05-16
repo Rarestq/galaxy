@@ -7,15 +7,11 @@ import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
-import com.wuxiu.galaxy.dal.common.utils.BeanCopierUtil;
-import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
 import com.wuxiu.galaxy.integration.PickupLuggageClient;
-import com.wuxiu.galaxy.service.core.base.utils.CommonUtil;
-import com.wuxiu.galaxy.service.core.base.utils.ObjectConvertUtil;
-import com.wuxiu.galaxy.service.core.base.utils.StreamUtil;
 import com.wuxiu.galaxy.web.biz.form.PickupLuggageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.service.GwPickupLuggageService;
 import com.wuxiu.galaxy.web.biz.vo.PickupLuggageRecordVO;
+import com.wuxiu.galaxy.web.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +43,7 @@ public class GwPickupLuggageServiceImpl implements GwPickupLuggageService {
                                          AdminInfoDTO adminInfoDTO) {
 
         return pickupLuggageClient.pickupLuggage(
-                ObjectConvertUtil.luggageIdFromString2Long(luggageIds,
+                StringConvertUtil.luggageIdFromString2Long(luggageIds,
                         CommonConstant.COMMA).get(0), adminInfoDTO);
     }
 
@@ -61,7 +57,7 @@ public class GwPickupLuggageServiceImpl implements GwPickupLuggageService {
     public APIResult<Void> markLuggageAsLost(String luggageIds,
                                              AdminInfoDTO adminInfoDTO) {
         return pickupLuggageClient.markLuggageAsLost(
-                ObjectConvertUtil.luggageIdFromString2Long(luggageIds,
+                StringConvertUtil.luggageIdFromString2Long(luggageIds,
                         CommonConstant.COMMA).get(0), adminInfoDTO);
     }
 
@@ -76,7 +72,7 @@ public class GwPickupLuggageServiceImpl implements GwPickupLuggageService {
     public APIResult<Void> pickupOverdueLuggage(String luggageIds,
                                                 AdminInfoDTO adminInfoDTO) {
         return pickupLuggageClient.pickupOverdueLuggage(
-                ObjectConvertUtil.luggageIdFromString2Long(luggageIds,
+                StringConvertUtil.luggageIdFromString2Long(luggageIds,
                         CommonConstant.COMMA).get(0), adminInfoDTO);
     }
 
