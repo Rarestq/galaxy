@@ -64,7 +64,7 @@ mybatis-plus:
     cache-enabled: false
 
 swagger:
-  title: Galaxy-Web 网关应用接口
+  title: Galaxy-Service 应用接口
   version: V1.0.0
   base-package: com.wuxiu
   exclude-path:
@@ -77,16 +77,18 @@ swagger:
 
 dubbo:
   application:
-    name: galaxy-web
+    name: galaxy-service
     owner: wuxiu
   registry:
     address: zookeeper://127.0.0.1:2181
 
   protocol:
     name: dubbo
-    port: 20889
+    port: 20888
     host: 127.0.0.1
 
-  consumer:
+  provider:
     version: 1.0_galaxy
     timeout: 5000
+    filter: exceptionNotifyFilter
+
