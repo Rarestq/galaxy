@@ -129,6 +129,9 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         storageRecord.setAdminName(newLuggageStorageRecordDTO.getAdminName());
         storageRecord.setAdminPhone(newLuggageStorageRecordDTO.getAdminPhone());
 
+        storageRecord.setCabinetId(newLuggageStorageRecordDTO.getCabinetId());
+        storageRecord.setCabinetNo(newLuggageStorageRecordDTO.getLuggageCabinetNo());
+
         storageRecord.setDepositorName(newLuggageStorageRecordDTO.getDepositorName());
         storageRecord.setDepositorPhone(newLuggageStorageRecordDTO.getDepositorPhone());
 
