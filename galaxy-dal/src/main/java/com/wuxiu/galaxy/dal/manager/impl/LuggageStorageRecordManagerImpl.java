@@ -14,13 +14,16 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.LuggageCabinetStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageStorageInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageStorageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.NewLuggageStorageRecordDTO;
 import com.wuxiu.galaxy.dal.dao.LuggageStorageRecordDao;
+import com.wuxiu.galaxy.dal.domain.LuggageCabinet;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageCabinetManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +54,9 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     @Autowired
     private TurnoverRecordManager turnoverRecordManager;
 
+    @Autowired
+    private LuggageCabinetManager cabinetManager;
+
     /**
      * 新增行李寄存记录
      *
@@ -73,6 +79,14 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
         TurnoverRecord turnoverRecord =
                 buildTurnoverRecord(newLuggageStorageRecordDTO, storageRecord);
         turnoverRecordManager.insert(turnoverRecord);
+
+        // 更新对应行李寄存柜的状态
+        LuggageCabinet luggageCabinet = cabinetManager.getCabinetById(
+                newLuggageStorageRecordDTO.getCabinetId());
+        luggageCabinet.setStatus(LuggageCabinetStatusEnum.HAD_OCCUPIED.getCode());
+        luggageCabinet.setGmtModified(LocalDateTime.now());
+
+        cabinetManager.updateById(luggageCabinet);
 
         return storageRecord.getLuggageId();
     }
@@ -249,6 +263,9 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
             storageInfoDTO.setAdminPhone(storageRecord.getAdminPhone());
             storageInfoDTO.setDepositorName(storageRecord.getDepositorName());
             storageInfoDTO.setDepositorPhone(storageRecord.getDepositorPhone());
+
+            storageInfoDTO.setCabinetId(storageRecord.getCabinetId());
+            storageInfoDTO.setLuggageCabinetNo(storageRecord.getCabinetNo());
 
             storageInfoDTO.setRemark(storageRecord.getRemark());
             storageInfoDTO.setStatus(LuggageStorageStatusEnum.getDescByCode(

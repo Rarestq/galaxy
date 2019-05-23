@@ -14,10 +14,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
-import com.wuxiu.galaxy.api.common.enums.FeeTypeEnum;
-import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
-import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
-import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
+import com.wuxiu.galaxy.api.common.enums.*;
 import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
@@ -61,12 +58,16 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
     @Autowired
     private TurnoverRecordManager turnoverRecordManager;
 
+    @Autowired
+    private LuggageCabinetManager cabinetManager;
+
     /**
      * 行李取件
      *
      * @param commonPickupLuggageDTO
      * @return
      */
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void pickupLuggage(CommonPickupLuggageDTO commonPickupLuggageDTO) {
         if (Objects.isNull(commonPickupLuggageDTO)) {
@@ -84,6 +85,10 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
             luggageStorageRecord.setLuggageId(commonPickupLuggageDTO.getLuggageId());
             luggageStorageRecord.setStatus(commonPickupLuggageDTO.getStatus());
             luggageStorageRecord.setGmtModified(commonPickupLuggageDTO.getGmtModified());
+
+            // 取件后，将行李寄存记录对应的寄存柜信息清空
+            luggageStorageRecord.setCabinetId(-1L);
+            luggageStorageRecord.setCabinetNo("-");
         }
 
         // 更新该行李寄存记录状态信息
@@ -167,6 +172,14 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
 
             // 逾期取件后，更新逾期记录状态为「已清理作废」
             overdueRecordManager.updateById(overdueRecord);
+
+            // 更新寄存柜状态为「空闲」
+            LuggageCabinet luggageCabinet = new LuggageCabinet();
+            luggageCabinet.setLuggageCabinetId(luggageStorageRecord.getCabinetId());
+            luggageCabinet.setStatus(LuggageCabinetStatusEnum.OVERDUE_OCCUPIED.getCode());
+            luggageCabinet.setGmtModified(LocalDateTime.now());
+
+            cabinetManager.updateById(luggageCabinet);
 
             // 构造 TurnoverRecord 对象
             TurnoverRecord turnoverRecord =
@@ -266,6 +279,7 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
      * @param markLuggageAsLostDTO
      * @return
      */
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void markLuggageAsLost(MarkLuggageAsLostDTO markLuggageAsLostDTO) {
         if (Objects.isNull(markLuggageAsLostDTO)) {
@@ -290,6 +304,13 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
                     buildLuggageLostRegistrationRecord(markLuggageAsLostDTO, luggageId);
 
             registrationRecordManager.insert(registrationRecord);
+
+            // 将寄存柜状态更新为「空闲」
+            LuggageCabinet luggageCabinet = new LuggageCabinet();
+            luggageCabinet.setLuggageCabinetId(storageRecord.getCabinetId());
+            luggageCabinet.setGmtModified(LocalDateTime.now());
+            luggageCabinet.setStatus(LuggageCabinetStatusEnum.FREE.getCode());
+            cabinetManager.updateById(luggageCabinet);
         }
 
     }

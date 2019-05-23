@@ -51,6 +51,16 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("luggage_type_id")
     private Long luggageTypeId;
     /**
+     * 行李寄存柜主键id
+     */
+    @TableField("cabinet_id")
+    private Long cabinetId;
+    /**
+     * 行李寄存柜编号
+     */
+    @TableField("cabinet_no")
+    private String cabinetNo;
+    /**
      * 管理员id
      */
     @TableField("admin_id")

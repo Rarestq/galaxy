@@ -14,19 +14,24 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
+import com.wuxiu.galaxy.api.common.enums.LuggageCabinetStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageOverdueRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.SaveLuggageOverdueRecordDTO;
 import com.wuxiu.galaxy.dal.common.utils.StreamUtil;
 import com.wuxiu.galaxy.dal.dao.LuggageOverdueRecordDao;
+import com.wuxiu.galaxy.dal.domain.LuggageCabinet;
 import com.wuxiu.galaxy.dal.domain.LuggageOverdueRecord;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageCabinetManager;
 import com.wuxiu.galaxy.dal.manager.LuggageOverdueRecordManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -48,12 +53,16 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
     @Autowired
     private LuggageStorageRecordManager storageRecordManager;
 
+    @Autowired
+    private LuggageCabinetManager cabinetManager;
+
     /**
      * 创建行李逾期记录
      *
      * @param saveLuggageOverdueRecordDTO
      * @return
      */
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Long createLuggageOverdueRecord(
             SaveLuggageOverdueRecordDTO saveLuggageOverdueRecordDTO) {
@@ -75,6 +84,18 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
 
         // 创建行李逾期记录
         insert(overdueRecord);
+
+        // 查询行李寄存记录信息
+        LuggageStorageRecord storageRecord = storageRecordManager.selectById(
+                saveLuggageOverdueRecordDTO.getLuggageId());
+
+        // 行李逾期时，更新寄存柜的状态
+        LuggageCabinet luggageCabinet = new LuggageCabinet();
+        luggageCabinet.setLuggageCabinetId(storageRecord.getCabinetId());
+        luggageCabinet.setStatus(LuggageCabinetStatusEnum.OVERDUE_OCCUPIED.getCode());
+        luggageCabinet.setGmtModified(LocalDateTime.now());
+
+        cabinetManager.updateById(luggageCabinet);
 
         return overdueRecord.getLuggageOverdueRecordId();
     }

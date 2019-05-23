@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.enums.LuggageCabinetStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
@@ -14,8 +15,10 @@ import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
 import com.wuxiu.galaxy.dal.common.dto.PickupOverdueLuggageDTO;
 import com.wuxiu.galaxy.dal.common.utils.PageInfoUtil;
+import com.wuxiu.galaxy.dal.domain.LuggageCabinet;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
 import com.wuxiu.galaxy.dal.domain.TurnoverRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageCabinetManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.dal.manager.PickupLuggageRecordManager;
 import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
@@ -53,6 +56,9 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
     private TurnoverRecordManager turnoverRecordManager;
 
     @Autowired
+    private LuggageCabinetManager cabinetManager;
+
+    @Autowired
     LuggageFeeMeterFactory meterFactory;
 
     /**
@@ -83,6 +89,11 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         }
 
         // todo:取件后，将对应的寄存柜的状态改为「空闲」
+        LuggageCabinet luggageCabinet = new LuggageCabinet();
+        luggageCabinet.setLuggageCabinetId(storageRecord.getCabinetId());
+        luggageCabinet.setGmtModified(LocalDateTime.now());
+        luggageCabinet.setStatus(LuggageCabinetStatusEnum.FREE.getCode());
+        cabinetManager.updateById(luggageCabinet);
 
         pickupLuggageRecordManager.pickupLuggage(commonPickupLuggageDTO);
     }

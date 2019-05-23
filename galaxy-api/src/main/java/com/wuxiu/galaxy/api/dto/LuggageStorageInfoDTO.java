@@ -69,6 +69,16 @@ public class LuggageStorageInfoDTO extends BaseModel {
     @ApiModelProperty(value = "寄存所需费用", required = true)
     private String storageFee;
     /**
+     * 行李寄存柜主键id
+     */
+    @ApiModelProperty(value = "行李寄存柜主键id", required = true)
+    private Long cabinetId;
+    /**
+     * 行李柜编号
+     */
+    @ApiModelProperty(value = "行李柜编号", required = true)
+    private String luggageCabinetNo;
+    /**
      * 备注
      */
     @ApiModelProperty(value = "备注", required = false)

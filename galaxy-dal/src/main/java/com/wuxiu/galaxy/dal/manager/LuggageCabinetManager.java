@@ -53,6 +53,14 @@ public interface LuggageCabinetManager extends BaseManager<LuggageCabinet> {
     List<LuggageCabinet> getAllCabinets();
 
     /**
+     * 根据寄存柜id查找寄存柜信息
+     *
+     * @param cabinetId
+     * @return
+     */
+    LuggageCabinet getCabinetById(Long cabinetId);
+
+    /**
      * 维修寄存柜
      *
      * @param cabinetIds

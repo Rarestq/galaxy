@@ -99,6 +99,7 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
             throw new BizException("暂无空闲柜子，请清理出空闲柜子之后再进行寄存");
         }
 
+        newLuggageStorageRecordDTO.setCabinetId(allCabinets.get(0).getLuggageCabinetId());
         newLuggageStorageRecordDTO.setLuggageCabinetNo(allCabinets.get(0)
                 .getLuggageCabinetNo());
 

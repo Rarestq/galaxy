@@ -38,11 +38,6 @@ public class LuggageStorageRecordVO implements Serializable {
     @ApiModelProperty(value = "行李寄存记录编号", required = true)
     private String luggageRecordNo;
     /**
-     * 计费规则id
-     */
-//    @ApiModelProperty(value = "计费规则id", required = true)
-//    private Long calculateRuleId;
-    /**
      * 行李类型
      */
     @ApiModelProperty(value = "行李类型", required = true)
@@ -82,6 +77,16 @@ public class LuggageStorageRecordVO implements Serializable {
      */
     @ApiModelProperty(value = "寄存所需费用", required = true)
     private String storageFee;
+    /**
+     * 行李寄存柜主键id
+     */
+    @ApiModelProperty(value = "行李寄存柜主键id", required = true)
+    private Long cabinetId;
+    /**
+     * 行李柜编号
+     */
+    @ApiModelProperty(value = "行李柜编号", required = true)
+    private String luggageCabinetNo;
     /**
      * 备注
      */
