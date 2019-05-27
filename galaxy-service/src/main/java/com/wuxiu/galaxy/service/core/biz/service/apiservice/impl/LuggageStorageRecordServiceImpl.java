@@ -2,6 +2,7 @@ package com.wuxiu.galaxy.service.core.biz.service.apiservice.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.enums.LuggageType2CalculateRuleEnum;
 import com.wuxiu.galaxy.api.common.expection.BizException;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
@@ -72,14 +73,18 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         Long luggageTypeId = storageRecordDTO.getLuggageTypeId();
 
         // 构造计费规则参数
-        LuggageFeeCalculationRuleDTO calculationRuleDTO = new LuggageFeeCalculationRuleDTO();
-        calculationRuleDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
+        LuggageFeeCalculationRuleDTO calculationRuleDTO =
+                new LuggageFeeCalculationRuleDTO();
+        Long calculateRuleId = LuggageType2CalculateRuleEnum
+                .getRuleIdByLuggageTypeId(storageRecordDTO.getLuggageTypeId());
+        calculationRuleDTO.setCalculateRuleId(calculateRuleId);
         calculationRuleDTO.setLuggageTypeId(luggageTypeId);
         int calculateHours = (int) DateUtil.calculateDate2Hours(
                 DateUtil.string2LocalDateTime(storageRecordDTO.getStorageStartTime()),
                 DateUtil.string2LocalDateTime(storageRecordDTO.getStorageEndTime()));
         calculationRuleDTO.setLuggageStorageHours(calculateHours);
         calculationRuleDTO.setGmtModified(LocalDateTime.now());
+
         // 获取计价器
         LuggageFeeMeter luggageFeeMeter =
                 feeMeterFactory.getLuggageFeeMeter(calculationRuleDTO);
@@ -89,8 +94,8 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
         newLuggageStorageRecordDTO.setFeeValue(resultDTO.getFeeValue());
         newLuggageStorageRecordDTO.setFeeCalculationProcessDesc(
                 resultDTO.getFeeCalculationProcessDesc());
+        newLuggageStorageRecordDTO.setCalculateRuleId(calculateRuleId);
 
-        // todo:新增的寄存行李存放到状态为「空闲」的某个柜子，并将该柜子状态改为「已占用」
         // 查询所有空闲状态的柜子，随机分配给寄存的行李，若已无空闲柜子，则给出提示
         List<LuggageCabinet> allCabinets = cabinetService.getAllCabinets();
 
@@ -107,7 +112,8 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
                 newLuggageStorageRecordDTO);
 
         // 发送寄存完成短信
-        finishStorageEventSmsService.notifyDepositorBySMS(luggageId);
+        finishStorageEventSmsService.notifyDepositorBySMS(luggageId,
+                resultDTO.getFeeValue().toString());
 
         return luggageId;
     }
@@ -127,7 +133,6 @@ public class LuggageStorageRecordServiceImpl implements LuggageStorageRecordServ
 
         recordDTO.setLuggageRecordNo(UUIDGenerateUtil.generateUniqueNo(
                 CommonConstant.LUGGAGE_STORAGE_RECORD_NO_PREFIX));
-        recordDTO.setCalculateRuleId(storageRecordDTO.getCalculateRuleId());
         recordDTO.setLuggageTypeId(storageRecordDTO.getLuggageTypeId());
 
         recordDTO.setAdminId(operateUserDTO.getOperateUserId());

@@ -20,12 +20,6 @@ public class NewLuggageStorageRecordForm implements Serializable {
     private static final long serialVersionUID = -3681674043002095978L;
 
     /**
-     * 计费规则id
-     */
-    @ApiModelProperty(value = "计费规则id", required = true)
-    @NotNull(message = "计费规则id不能为空")
-    private Long calculateRuleId;
-    /**
      * 行李类型主键id
      */
     @ApiModelProperty(value = "行李类型主键id", required = true)

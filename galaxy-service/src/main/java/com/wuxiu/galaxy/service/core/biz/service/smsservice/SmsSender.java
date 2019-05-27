@@ -25,6 +25,7 @@ public class SmsSender {
     static {
         // 初始化twilio账号sid和验证token
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//        Twilio.init(ACCOUNT_SID1, AUTH_TOKEN1);
     }
 
     public void sendSms(SmsBody smsBody) {
@@ -49,9 +50,9 @@ public class SmsSender {
 //    public static void main(String[] args) {
 //        Message message = Message
 //                // to
-//                .creator(TO_PHONE,
+//                .creator(TO_PHONE1,
 //                        // from
-//                        FROM_PHONE,
+//                        FROM_PHONE1,
 //                        "you are handsome")
 //                .create();
 //        System.out.println(message.getSid());

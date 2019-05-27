@@ -69,9 +69,8 @@ public class GwLuggageStorageRecordServiceImpl implements GwLuggageStorageRecord
         operateUserDTO.setOperateUserPhone(adminDTO.getAdminPhone());
         operateUserDTO.setUserTypeEnum(UserTypeEnum.valueOf(adminDTO.getAdminType()));
 
-        APIResult<Long> result =
-                storageRecordClient.insertLuggageStorageRecord(storageRecordDTO,
-                        operateUserDTO);
+        APIResult<Long> result = storageRecordClient
+                .insertLuggageStorageRecord(storageRecordDTO, operateUserDTO);
         if (!result.isSuccess()) {
             log.warn("新增行李寄存记录失败，result:{}, form:{}", result, form);
             return CommonUtil.errorAPIResult(result);

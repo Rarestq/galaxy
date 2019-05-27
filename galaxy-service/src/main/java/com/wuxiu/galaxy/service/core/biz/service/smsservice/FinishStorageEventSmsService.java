@@ -29,7 +29,7 @@ public class FinishStorageEventSmsService {
      *
      * @param luggageId 前台返回的行李寄存记录主键id
      */
-    public void notifyDepositorBySMS(Long luggageId) {
+    public void notifyDepositorBySMS(Long luggageId, String storageFee) {
 
         // 查询刚完成行李寄存的记录信息
         LuggageStorageRecord storageRecord = storageRecordManager.selectById(luggageId);
@@ -41,6 +41,7 @@ public class FinishStorageEventSmsService {
                 .depositorName(storageRecord.getDepositorName())
                 .depositorPhone(storageRecord.getDepositorPhone())
                 .storageEndTime(storageRecord.getStorageEndTime())
+                .storageFee(storageFee)
                 .build());
     }
 

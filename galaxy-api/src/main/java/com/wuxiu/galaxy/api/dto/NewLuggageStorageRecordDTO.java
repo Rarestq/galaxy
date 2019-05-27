@@ -19,11 +19,6 @@ public class NewLuggageStorageRecordDTO implements Serializable {
     private static final long serialVersionUID = 5771410961612080528L;
 
     /**
-     * 计费规则id
-     */
-    @ApiModelProperty(value = "计费规则id", required = true)
-    private Long calculateRuleId;
-    /**
      * 行李类型主键id
      */
     @ApiModelProperty(value = "行李类型主键id", required = true)

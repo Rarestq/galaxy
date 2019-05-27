@@ -50,6 +50,7 @@ public class SmsTemplateUtils {
                 .append("尊敬的 ").append(smsBody.getDepositorName())
                 .append(" 先生/女士，").append("您的寄存编号为 ")
                 .append(smsBody.getStorageRecordNo()).append(" ,")
+                .append("此次消费金额为：").append(smsBody.getFee()).append("元")
                 .append("请您在 ").append(smsBody.getStorageEndTime())
                 .append(" 前进行取件，").append("以免给您带来不必要的麻烦。详情可联系 ")
                 .append(smsBody.getAdminPhone()).append(", 谢谢您~");

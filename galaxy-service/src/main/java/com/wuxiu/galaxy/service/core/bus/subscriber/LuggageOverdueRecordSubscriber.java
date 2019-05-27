@@ -2,11 +2,14 @@ package com.wuxiu.galaxy.service.core.bus.subscriber;
 
 import com.google.common.eventbus.Subscribe;
 import com.wuxiu.galaxy.api.common.constants.CommonConstant;
+import com.wuxiu.galaxy.api.common.enums.LuggageCabinetStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.LuggageOverdueStatusEnum;
 import com.wuxiu.galaxy.api.common.enums.UserTypeEnum;
 import com.wuxiu.galaxy.api.dto.OperateUserDTO;
 import com.wuxiu.galaxy.api.dto.SaveLuggageOverdueRecordDTO;
+import com.wuxiu.galaxy.dal.domain.LuggageCabinet;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
+import com.wuxiu.galaxy.dal.manager.LuggageCabinetManager;
 import com.wuxiu.galaxy.dal.manager.LuggageStorageRecordManager;
 import com.wuxiu.galaxy.service.core.base.enums.SmsTypeEnum;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.LuggageOverdueRecordService;
@@ -16,6 +19,8 @@ import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 /**
  * 行李逾期记录订阅者
@@ -32,6 +37,9 @@ public class LuggageOverdueRecordSubscriber {
 
     @Autowired
     private LuggageStorageRecordManager storageRecordManager;
+
+    @Autowired
+    private LuggageCabinetManager cabinetManager;
 
     @Autowired
     private SmsSender smsSender;
@@ -69,7 +77,13 @@ public class LuggageOverdueRecordSubscriber {
 
         SmsBody smsBody = buildSmsBody(storageRecord);
 
-        // todo:逾期后，将对应的寄存柜的状态改为「逾期占用」
+        // 逾期后，将对应的寄存柜的状态改为「逾期占用」
+        LuggageCabinet luggageCabinet = new LuggageCabinet();
+        luggageCabinet.setLuggageCabinetId(storageRecord.getCabinetId());
+        luggageCabinet.setStatus(LuggageCabinetStatusEnum.OVERDUE_OCCUPIED.getCode());
+        luggageCabinet.setGmtModified(LocalDateTime.now());
+
+        cabinetManager.updateById(luggageCabinet);
 
         // 发送短信
         smsSender.sendSms(smsBody);
