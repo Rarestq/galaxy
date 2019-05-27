@@ -27,7 +27,7 @@ public class SmsConstant {
     /**
      * who send sms
      */
-    public static final PhoneNumber dFROM_PHONE = new PhoneNumber("+16194576189");
+    public static final PhoneNumber FROM_PHONE = new PhoneNumber("+16194576189");
 
     public static final PhoneNumber FROM_PHONE1 = new PhoneNumber("+19165206371");
 
