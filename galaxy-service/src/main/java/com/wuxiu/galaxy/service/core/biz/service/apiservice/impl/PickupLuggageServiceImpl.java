@@ -9,7 +9,10 @@ import com.wuxiu.galaxy.api.common.enums.PickupLuggageTypeEnum;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.api.common.util.DateUtil;
-import com.wuxiu.galaxy.api.dto.*;
+import com.wuxiu.galaxy.api.dto.AdminInfoDTO;
+import com.wuxiu.galaxy.api.dto.LuggageChargeCalculationResultDTO;
+import com.wuxiu.galaxy.api.dto.PickupLuggageRecordDTO;
+import com.wuxiu.galaxy.api.dto.PickupLuggageRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.CommonPickupLuggageDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageFeeCalculationRuleDTO;
 import com.wuxiu.galaxy.dal.common.dto.MarkLuggageAsLostDTO;
@@ -25,6 +28,7 @@ import com.wuxiu.galaxy.dal.manager.TurnoverRecordManager;
 import com.wuxiu.galaxy.service.core.base.utils.UUIDGenerateUtil;
 import com.wuxiu.galaxy.service.core.base.utils.ValidatorUtil;
 import com.wuxiu.galaxy.service.core.biz.service.apiservice.PickupLuggageService;
+import com.wuxiu.galaxy.service.core.biz.service.smsservice.FinishPickupEventSmsService;
 import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeter;
 import com.wuxiu.galaxy.service.core.biz.strategy.LuggageFeeMeterFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +65,9 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
     @Autowired
     LuggageFeeMeterFactory meterFactory;
 
+    @Autowired
+    private FinishPickupEventSmsService finishPickupEventSmsService;
+
     /**
      * 行李取件
      *
@@ -88,7 +95,7 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
                     storageRecord);
         }
 
-        // todo:取件后，将对应的寄存柜的状态改为「空闲」
+        // 取件后，将对应的寄存柜的状态改为「空闲」
         LuggageCabinet luggageCabinet = new LuggageCabinet();
         luggageCabinet.setLuggageCabinetId(storageRecord.getCabinetId());
         luggageCabinet.setGmtModified(LocalDateTime.now());
@@ -96,6 +103,10 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
         cabinetManager.updateById(luggageCabinet);
 
         pickupLuggageRecordManager.pickupLuggage(commonPickupLuggageDTO);
+
+        // 取件成功后，发送短信
+        finishPickupEventSmsService.sendFinishPickupSms(luggageId);
+
     }
 
     /**
@@ -179,7 +190,15 @@ public class PickupLuggageServiceImpl implements PickupLuggageService {
 
             pickupLuggageRecordManager.pickupOverdueLuggage(pickupOverdueLuggageDTO);
 
-            // todo:取件后，将对应的寄存柜的状态改为「空闲」
+            // 取件成功后，发送短信
+            finishPickupEventSmsService.sendFinishPickupSms(luggageId);
+
+            // 取件后，将对应的寄存柜的状态改为「空闲」
+            LuggageCabinet luggageCabinet = new LuggageCabinet();
+            luggageCabinet.setLuggageCabinetId(luggageStorageRecord.getCabinetId());
+            luggageCabinet.setGmtModified(LocalDateTime.now());
+            luggageCabinet.setStatus(LuggageCabinetStatusEnum.FREE.getCode());
+            cabinetManager.updateById(luggageCabinet);
         }
 
         log.warn("当前行李寄存状态有误，不能进行取件， status:{}",

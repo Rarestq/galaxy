@@ -23,6 +23,8 @@ public enum  SmsTypeEnum {
     BEFORE_OVERDUE_SMS_TYPE(2,"逾期前"),
 
     OVERDUE_SMS_TYPE(3,"逾期"),
+
+    FINISH_PICKUP_SMS_TYPE(4, "取件完成"),
             ;
 
     private Integer code;

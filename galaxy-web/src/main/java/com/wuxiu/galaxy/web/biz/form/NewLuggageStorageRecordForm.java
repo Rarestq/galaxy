@@ -23,7 +23,7 @@ public class NewLuggageStorageRecordForm implements Serializable {
      * 行李类型主键id
      */
     @ApiModelProperty(value = "行李类型主键id", required = true)
-    @NotNull(message = "行李类型主键id不能为空")
+    @NotNull(message = "行李类型不能为空")
     private Long luggageTypeId;
     /**
      * 当前登录的管理员姓名

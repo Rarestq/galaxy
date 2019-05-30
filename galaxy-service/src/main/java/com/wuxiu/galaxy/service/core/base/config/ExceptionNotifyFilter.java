@@ -1,6 +1,8 @@
 package com.wuxiu.galaxy.service.core.base.config;
 
+import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.rpc.*;
+import com.alibaba.dubbo.validation.Validation;
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.expection.BizException;
 import com.wuxiu.galaxy.api.common.expection.ParamException;
@@ -12,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import static com.alibaba.dubbo.common.Constants.CONSUMER;
+import static com.alibaba.dubbo.common.Constants.PROVIDER;
+
 /**
  * META-INF.dubbo 异常通知过滤器
  *
@@ -20,7 +25,19 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
  */
 @Slf4j
 @Component
+@Activate(group = {CONSUMER, PROVIDER})
 public class ExceptionNotifyFilter implements Filter {
+
+    private Validation validation;
+
+    /**
+     * Sets the validation instance for ValidationFilter
+     *
+     * @param validation Validation instance injected by dubbo framework based on "validation" attribute value.
+     */
+    public void setValidation(Validation validation) {
+        this.validation = validation;
+    }
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
@@ -62,7 +79,7 @@ public class ExceptionNotifyFilter implements Filter {
             // 业务异常处理
             if (exception instanceof BizException) {
                 log.info("业务异常：{}", exception.getMessage());
-                return new RpcResult(APIResult.error(exception.getMessage()));
+                return (Result) APIResult.error(exception.getMessage());
             }
 
             // 短信异常处理

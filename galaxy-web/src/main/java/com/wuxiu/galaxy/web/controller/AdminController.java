@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoForm;
 import com.wuxiu.galaxy.web.biz.form.AdminInfoQueryForm;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 import static com.wuxiu.galaxy.api.common.constants.CommonConstant.COMMA;
 
@@ -42,7 +44,14 @@ public class AdminController {
         // 参数校验
         String adminInfoCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(adminInfoCheck)) {
-            return APIResult.error(adminInfoCheck);
+            return APIResult.error(GlobalErrorCodeEnum.INVALID_PARAM.getCode(), adminInfoCheck);
+        }
+
+        if (StringUtils.isBlank(form.getAdminName()) || StringUtils.isBlank(form.getAdminPhone())
+                || StringUtils.isBlank(form.getPassword())
+                || Objects.isNull(form.getAdminType())) {
+            return APIResult.error(GlobalErrorCodeEnum.INVALID_PARAM.getCode(),
+                    GlobalErrorCodeEnum.INVALID_PARAM.getMessage());
         }
         return adminService.saveAdminInfo(form);
     }

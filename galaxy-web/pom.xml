@@ -10,6 +10,7 @@
     </parent>
     <artifactId>galaxy-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>galaxy-web</name>
     <description>Demo project for Spring Boot</description>
 
@@ -101,5 +102,28 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>com.wuxiu.galaxy.web.GalaxyWebApplication</mainClass>
+                    <layout>ZIP</layout>
+                    <!--可以直接使用./app.jar这样类似于启动shell脚本一般的方式启动项目-->
+                    <executable>true</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

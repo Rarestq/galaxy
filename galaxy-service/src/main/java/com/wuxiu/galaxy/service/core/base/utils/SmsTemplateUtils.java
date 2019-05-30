@@ -33,6 +33,9 @@ public class SmsTemplateUtils {
         } else if (Objects.equals(SmsTypeEnum.OVERDUE_SMS_TYPE.getCode(),
                 smsBody.getSmsType())) {
             smsContent = getOverdueSmsContent(smsBody);
+        } else if (Objects.equals(SmsTypeEnum.FINISH_PICKUP_SMS_TYPE.getCode(),
+                smsBody.getSmsType())) {
+            smsContent = getFinishPickupSmsContent(smsBody);
         }
 
         return smsContent;
@@ -92,6 +95,23 @@ public class SmsTemplateUtils {
                 .append("请您及时进行取件，")
                 .append("有任何疑问可以联系 ")
                 .append(smsBody.getAdminPhone()).append(", 谢谢您~");
+
+        return builder.toString();
+    }
+
+    /**
+     * 将 smsBody 中的属性拼接成字符串(取件完成的短信内容)
+     *
+     * @param smsBody
+     * @return
+     */
+    public static String getFinishPickupSmsContent(SmsBody smsBody) {
+        StringBuilder builder = new StringBuilder(70);
+        builder.append(TEMPLATE_PREFIX)
+                .append("尊敬的 ").append(smsBody.getDepositorName())
+                .append(" 先生/女士，").append("您寄存编号为 ")
+                .append(smsBody.getStorageRecordNo()).append(" 的行李取件完成,")
+                .append(", 谢谢您~");
 
         return builder.toString();
     }

@@ -1,6 +1,7 @@
 package com.wuxiu.galaxy.web.controller;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
+import com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum;
 import com.wuxiu.galaxy.api.common.page.PageInfo;
 import com.wuxiu.galaxy.web.biz.form.LuggageStorageRecordQueryForm;
 import com.wuxiu.galaxy.web.biz.form.NewLuggageStorageRecordForm;
@@ -38,8 +39,10 @@ public class LuggageStorageRecordController {
         // 参数校验
         String storageRecordCheck = ValidatorUtil.returnAnyMessageIfError(form);
         if (StringUtils.isNotEmpty(storageRecordCheck)) {
-            return APIResult.error(storageRecordCheck);
+            return APIResult.error(GlobalErrorCodeEnum.INVALID_PARAM.getCode(),
+                    GlobalErrorCodeEnum.INVALID_PARAM.getMessage());
         }
+
         return storageRecordService.insertLuggageStorageRecord(form);
     }
 

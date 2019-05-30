@@ -1,0 +1,1 @@
+exceptionNotifyFilter = com.wuxiu.galaxy.service.core.base.config.ExceptionNotifyFilter

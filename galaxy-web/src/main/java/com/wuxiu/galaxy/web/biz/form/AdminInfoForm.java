@@ -40,7 +40,8 @@ public class AdminInfoForm implements Serializable {
     /**
      * 登录密码
      */
-    @ApiModelProperty(value = "登录密码", required = false)
+    @ApiModelProperty(value = "登录密码", required = true)
+    @NotNull(message = "登录密码不能为空")
     private String password;
 
     /**
