@@ -219,7 +219,6 @@ public class LuggageStorageRecordManagerImpl extends BaseManagerImpl<LuggageStor
     @Override
     public List<LuggageStorageRecord> selectAllStorageRecords() {
         Wrapper<LuggageStorageRecord> wrapper = new EntityWrapper<>();
-        wrapper.ne("deleted", 1);
 
         return selectList(wrapper);
     }

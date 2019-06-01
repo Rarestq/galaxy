@@ -72,7 +72,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
         recordQueryDTO.setLuggageLostCompensationRecordId(
                 queryDTO.getLuggageLostCompensationRecordId());
         recordQueryDTO.setQueryCondition(queryDTO.getQueryCondition());
-        recordQueryDTO.setLuggageType(queryDTO.getLuggageType());
+        recordQueryDTO.setLuggageTypeId(queryDTO.getLuggageTypeId());
 
         // 查询行李遗失赔偿登记记录
         Page<LostCompensateRecordInfoDTO> compensateRecordDTOPage =
@@ -169,7 +169,7 @@ public class LuggageLostCompensateServiceImpl implements LuggageLostCompensateSe
      * @return 赔偿的费用
      */
     private String calculateCompensateFee(long luggageTypeId, Long luggageId) {
-        // compensateFee = storageFee X multiple(depends on luggageType)
+        // compensateFee = storageFee X multiple(depends on luggageTypeId)
         // 根据行李寄存记录id查询其对应的营业额记录信息
         TurnoverRecord turnoverRecord = turnoverRecordManager
                 .getTurnoverRecordByLuggageId(luggageId);

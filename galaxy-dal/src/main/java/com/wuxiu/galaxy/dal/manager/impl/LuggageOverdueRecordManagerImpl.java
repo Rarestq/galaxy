@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wuxiu.galaxy.api.common.base.BaseManagerImpl;
 import com.wuxiu.galaxy.api.common.enums.LuggageCabinetStatusEnum;
+import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.api.dto.LuggageOverdueRecordInfoDTO;
 import com.wuxiu.galaxy.dal.common.dto.LuggageOverdueRecordQueryDTO;
 import com.wuxiu.galaxy.dal.common.dto.SaveLuggageOverdueRecordDTO;
@@ -88,6 +89,13 @@ public class LuggageOverdueRecordManagerImpl extends BaseManagerImpl<LuggageOver
         // 查询行李寄存记录信息
         LuggageStorageRecord storageRecord = storageRecordManager.selectById(
                 saveLuggageOverdueRecordDTO.getLuggageId());
+
+        // 更新行李寄存记录的状态
+        LuggageStorageRecord record = new LuggageStorageRecord();
+        record.setLuggageId(storageRecord.getLuggageId());
+        record.setStatus(LuggageStorageStatusEnum.OVERDUE.getCode());
+        record.setGmtModified(LocalDateTime.now());
+        storageRecordManager.updateById(record);
 
         // 行李逾期时，更新寄存柜的状态
         LuggageCabinet luggageCabinet = new LuggageCabinet();

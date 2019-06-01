@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.service.core.schedules;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.google.common.eventbus.AsyncEventBus;
 import com.wuxiu.galaxy.api.common.enums.LuggageStorageStatusEnum;
 import com.wuxiu.galaxy.dal.domain.LuggageStorageRecord;
@@ -10,6 +11,7 @@ import com.wuxiu.galaxy.service.core.biz.service.smsservice.SmsSender;
 import com.wuxiu.galaxy.service.core.bus.event.CreateOverdueRecordEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
+
+import static org.apache.curator.shaded.com.google.common.collect.Lists.newArrayList;
 
 /**
  * 行李寄存结束日期监控任务
@@ -44,57 +48,72 @@ public class LuggageStorageStatusMonitorTask {
      * <p>
      * 每隔五秒更新一次行李寄存记录的状态
      */
-    //@Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void refreshLuggageStorageStatus() {
-        // 定时检查行李寄存记录的寄存结束时间
 
-        // 查询所有有效的行李寄存记录信息
+        // 获取所有处于「寄存中」状态的行李寄存记录信息
         List<LuggageStorageRecord> storageRecords =
                 storageRecordManager.selectAllStorageRecords();
-        if (hasNoOverdueRecords(storageRecords)) {
+        List<LuggageStorageRecord> depositingStorageRecords =
+                hasNoOverdueRecords(storageRecords);
+
+        if (CollectionUtils.isEmpty(depositingStorageRecords)) {
             // 如果行李寄存记录中没有「寄存中」状态的记录时，直接返回
-            log.info("没有「寄存中」状态的记录");
+            log.info("当前没有「寄存中」状态的记录");
             return;
-        }
+        } else {
+            for (LuggageStorageRecord storageRecord : depositingStorageRecords) {
+                LocalDateTime storageEndTime = storageRecord.getStorageEndTime();
+                // 将行李寄存结束时间转化为当前时区下的毫秒
+                long storageEndTimeMilli =
+                        storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
 
-        for (LuggageStorageRecord storageRecord : storageRecords) {
-            LocalDateTime storageEndTime = storageRecord.getStorageEndTime();
-            // 将行李寄存结束时间转化为当前时区下的毫秒
-            long storageEndTimeMilli =
-                    storageEndTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+                // 根据寄存时长，在其寄存时间到达前半小时发送短信告知用户
+                if (isHalfHourBeforeOverdue(storageEndTime)) {
+                    SmsBody smsBody = buildSmsBody(storageRecord);
 
-            // 根据寄存时长，在其寄存时间到达前半小时发送短信告知用户
-            if (isHalfHourBeforeOverdue(storageEndTime)) {
-                SmsBody smsBody = buildSmsBody(storageRecord);
+                    // 发送逾期前通知提醒短信
+                    //smsSender.sendSms(smsBody);
+                }
 
-                // 发送逾期前通知提醒短信
-                smsSender.sendSms(smsBody);
+                // 已逾期,更新寄存记录状态以及发送创建逾期记录事件
+                if (isTimeExpired(storageEndTimeMilli)) {
+                    // 更新寄存记录状态
+                    LuggageStorageRecord luggageStorageRecord =
+                            buildLuggageStorageRecord(storageRecord);
+                    storageRecordManager.updateById(luggageStorageRecord);
+
+                    // 发送创建逾期记录事件
+                    asyncEventBus.post(CreateOverdueRecordEvent.builder()
+                            .luggageId(storageRecord.getLuggageId())
+                            .status(LuggageStorageStatusEnum.OVERDUE.getDesc())
+                            .remark(storageRecord.getRemark())
+                            .build());
+                    log.info("已发送自动创建逾期行李寄存记录事件：storageRecord:{}" +
+                            storageRecord);
+                }
             }
 
-            // 已逾期,更新寄存记录状态以及发送创建逾期记录事件
-            if (isTimeExpired(storageEndTimeMilli)) {
-                // 更新寄存记录状态
-                LuggageStorageRecord luggageStorageRecord =
-                        new LuggageStorageRecord();
-                luggageStorageRecord.setLuggageId(storageRecord.getLuggageId());
-                luggageStorageRecord.setStatus(LuggageStorageStatusEnum.OVERDUE
-                        .getCode());
-                // 将寄存结束时间改为一个小时后
-                luggageStorageRecord.setStorageEndTime(LocalDateTime.now());
-                luggageStorageRecord.setGmtModified(LocalDateTime.now());
-                storageRecordManager.updateById(luggageStorageRecord);
-
-                // 发送创建逾期记录事件
-                asyncEventBus.post(CreateOverdueRecordEvent.builder()
-                        .luggageId(storageRecord.getLuggageId())
-                        .status(LuggageStorageStatusEnum.OVERDUE.getDesc())
-                        .remark(storageRecord.getRemark())
-                        .build());
-                log.info("已发送自动创建逾期行李寄存记录事件：storageRecord:{}" +
-                        storageRecord);
-            }
         }
+    }
 
+    /**
+     * 构造 LuggageStorageRecord 对象
+     *
+     * @param storageRecord
+     * @return
+     */
+    private LuggageStorageRecord buildLuggageStorageRecord(LuggageStorageRecord storageRecord) {
+        LuggageStorageRecord luggageStorageRecord =
+                new LuggageStorageRecord();
+        luggageStorageRecord.setLuggageId(storageRecord.getLuggageId());
+        luggageStorageRecord.setStatus(LuggageStorageStatusEnum.OVERDUE
+                .getCode());
+        // 将寄存结束时间改为一个小时后（这里有个逻辑问题，之前没注意到，改为一小时后，后面计算费用可能会出现负数）
+        luggageStorageRecord.setStorageEndTime(LocalDateTime.now());
+        luggageStorageRecord.setGmtModified(LocalDateTime.now());
+
+        return luggageStorageRecord;
     }
 
     /**
@@ -140,19 +159,20 @@ public class LuggageStorageStatusMonitorTask {
     }
 
     /**
-     * 判断是否还有逾期的记录，没有返回 true，有返回 false
+     * 判断是否还有逾期的记录，返回处于寄存中状态的记录
      *
      * @param storageRecords
      * @return
      */
-    private boolean hasNoOverdueRecords(List<LuggageStorageRecord> storageRecords) {
-        boolean flag = false;
+    private List<LuggageStorageRecord> hasNoOverdueRecords(List<LuggageStorageRecord>
+                                                                   storageRecords) {
+        List<LuggageStorageRecord> depositingStorageRecords = newArrayList();
         for (LuggageStorageRecord luggageStorageRecord : storageRecords) {
-            if (!Objects.equals(luggageStorageRecord.getStatus(),
+            if (Objects.equals(luggageStorageRecord.getStatus(),
                     LuggageStorageStatusEnum.DEPOSITING.getCode())) {
-                flag = true;
+                depositingStorageRecords.add(luggageStorageRecord);
             }
         }
-        return flag;
+        return depositingStorageRecords;
     }
 }

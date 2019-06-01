@@ -86,7 +86,7 @@ public class LuggageOverdueRecordSubscriber {
         cabinetManager.updateById(luggageCabinet);
 
         // 发送短信
-        smsSender.sendSms(smsBody);
+        //smsSender.sendSms(smsBody);
 
     }
 

@@ -80,8 +80,8 @@ public class LuggageLostCompensationRecordManagerImpl extends BaseManagerImpl<Lu
             .or().like("depositor_name", queryCondition);
         }
 
-        if (Objects.nonNull(recordQueryDTO.getLuggageType())) {
-            wrapper.eq("luggage_type_id", recordQueryDTO.getLuggageType());
+        if (Objects.nonNull(recordQueryDTO.getLuggageTypeId())) {
+            wrapper.eq("luggage_type_id", recordQueryDTO.getLuggageTypeId());
         }
 
         wrapper.orderBy("gmt_create", false)

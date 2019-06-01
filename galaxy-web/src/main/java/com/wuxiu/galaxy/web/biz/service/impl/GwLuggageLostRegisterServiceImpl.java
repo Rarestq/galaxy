@@ -71,7 +71,7 @@ public class GwLuggageLostRegisterServiceImpl implements GwLuggageLostRegisterSe
                 StreamUtil.convertBeanCopy(registerRecordDTOS,
                         LuggageLostRegisterRecordVO.class);
 
-        // 将 luggageType 转化为中文类型
+        // 将 luggageTypeId 转化为中文类型
         recordVOS.forEach(recordVO -> recordVO.setLuggageType(
                 LuggageTypeEnum.getDescByCode(registerRecordDTOMap.get(recordVO
                         .getLostRegistrationRecordId()).getLuggageTypeId())));

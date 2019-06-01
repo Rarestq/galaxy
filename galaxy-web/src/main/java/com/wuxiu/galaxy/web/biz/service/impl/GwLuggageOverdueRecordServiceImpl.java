@@ -73,7 +73,7 @@ public class GwLuggageOverdueRecordServiceImpl implements GwLuggageOverdueRecord
                 StreamUtil.convertBeanCopy(overdueRecordInfoDTOS,
                         LuggageOverdueRecordVO.class);
 
-        // 将 luggageType 和 status 转化为中文类型
+        // 将 luggageTypeId 和 status 转化为中文类型
         recordVOS.forEach(recordVO -> {
             recordVO.setLuggageType(LuggageTypeEnum.getDescByCode
                     (overdueRecordInfoDTOMap.get(recordVO

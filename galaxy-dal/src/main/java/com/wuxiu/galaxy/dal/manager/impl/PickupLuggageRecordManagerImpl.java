@@ -62,7 +62,7 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
     private LuggageCabinetManager cabinetManager;
 
     /**
-     * 行李取件
+     * 行李正常取件
      *
      * @param commonPickupLuggageDTO
      * @return
@@ -153,6 +153,8 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
                 luggageStorageRecord.getStatus())) {
 
             storageRecord.setLuggageId(luggageId);
+            storageRecord.setCabinetId(-1L);
+            storageRecord.setCabinetNo("-");
             storageRecord.setGmtModified(LocalDateTime.now());
             storageRecord.setStatus(LuggageStorageStatusEnum
                     .OVERDUE_PICKUP.getCode());
@@ -172,14 +174,6 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
 
             // 逾期取件后，更新逾期记录状态为「已清理作废」
             overdueRecordManager.updateById(overdueRecord);
-
-            // 更新寄存柜状态为「空闲」
-            LuggageCabinet luggageCabinet = new LuggageCabinet();
-            luggageCabinet.setLuggageCabinetId(luggageStorageRecord.getCabinetId());
-            luggageCabinet.setStatus(LuggageCabinetStatusEnum.OVERDUE_OCCUPIED.getCode());
-            luggageCabinet.setGmtModified(LocalDateTime.now());
-
-            cabinetManager.updateById(luggageCabinet);
 
             // 构造 TurnoverRecord 对象
             TurnoverRecord turnoverRecord =
@@ -293,6 +287,8 @@ public class PickupLuggageRecordManagerImpl extends BaseManagerImpl<PickupLuggag
                 LuggageStorageStatusEnum.DEPOSITING.getCode())) {
             // 只有原先是「寄存中」状态才能被标记为「遗失」状态
             luggageStorageRecord.setLuggageId(luggageId);
+            luggageStorageRecord.setCabinetId(-1L);
+            luggageStorageRecord.setCabinetNo("-");
             luggageStorageRecord.setStatus(LuggageStorageStatusEnum.HAD_LOST.getCode());
             luggageStorageRecord.setGmtModified(LocalDateTime.now());
 

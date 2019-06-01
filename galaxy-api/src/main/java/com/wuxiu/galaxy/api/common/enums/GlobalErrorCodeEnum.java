@@ -19,14 +19,14 @@ public enum GlobalErrorCodeEnum implements ErrorCode {
      */
     SUCCESS("200", "OK"),
     FAILURE("-1", "Operation Failed"),
-    INVALID_PARAM("100", "parameter Error"),
+    INVALID_PARAM("100", "参数错误"),
+    INVALID_BIZ("101", "业务逻辑错误"),
     BAD_REQUEST("400", "Bad Request"),
     UNAUTHORIZED("401", "Unauthorized"),
     FORBIDDEN("403", "Forbidden"),
     NOT_FOUND("404", "Not Found"),
     METHOD_NOT_ALLOWED("405", "Method Not Allowed"),
     INTERNAL_SERVER_ERROR("500", "Internal Server Error"),
-
 
     LOGIN_FAILURE("1000", "Login Failure, check account or password!"),
     LOGOUT_FAILURE("1001", "Logout Failure!"),

@@ -34,6 +34,6 @@ public class LostCompensateRecordQueryDTO implements Serializable {
     /**
      * 行李类型
      */
-    private Integer luggageType;
+    private Integer luggageTypeId;
 
 }

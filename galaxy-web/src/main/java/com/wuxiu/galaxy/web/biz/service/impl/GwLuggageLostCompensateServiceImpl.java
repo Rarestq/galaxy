@@ -92,7 +92,7 @@ public class GwLuggageLostCompensateServiceImpl implements GwLuggageLostCompensa
         Map<Long, LostCompensateRecordInfoDTO> compensateRecordInfoDTOMap =
                 StreamUtil.toMap(storageInfoDTOS, LostCompensateRecordInfoDTO::getLuggageLostCompensationRecordId);
 
-        // 将 luggageType 转化为中文类型
+        // 将 luggageTypeId 转化为中文类型
         recordVOS.forEach(recordVO -> recordVO.setLuggageType(
                 LuggageTypeEnum.getDescByCode(compensateRecordInfoDTOMap.get(recordVO
                         .getLuggageLostCompensationRecordId()).getLuggageType())));

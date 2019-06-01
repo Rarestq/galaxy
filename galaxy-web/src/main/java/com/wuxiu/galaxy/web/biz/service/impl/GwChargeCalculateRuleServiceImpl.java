@@ -116,7 +116,7 @@ public class GwChargeCalculateRuleServiceImpl implements GwChargeCalculateRuleSe
                 StreamUtil.convertBeanCopy(ruleDTOS,
                         ChargeCalculateRuleVO.class);
 
-        // 将 luggageType 和 calculationUnits 转化为中文类型
+        // 将 luggageTypeId 和 calculationUnits 转化为中文类型
         calculateRuleVOS.forEach(recordVO -> {
             recordVO.setLuggageType(
                     LuggageTypeEnum.getDescByCode(ruleDTOMap.get(recordVO

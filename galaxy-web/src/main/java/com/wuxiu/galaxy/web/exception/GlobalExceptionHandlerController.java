@@ -2,6 +2,8 @@ package com.wuxiu.galaxy.web.exception;
 
 import com.wuxiu.galaxy.api.common.entity.APIResult;
 import com.wuxiu.galaxy.api.common.enums.GlobalErrorCodeEnum;
+import com.wuxiu.galaxy.api.common.expection.BizException;
+import com.wuxiu.galaxy.api.common.expection.ParamException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 全局异常捕获
@@ -24,10 +24,26 @@ public class GlobalExceptionHandlerController {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public APIResult handleException(HttpServletResponse res, Exception ex) {
+    public APIResult handleException(Exception ex) {
         log.error("系统异常,ex:", ex);
         return APIResult.error(GlobalErrorCodeEnum.SYSTEM_EXCEPTION.getCode(),
                 "系统异常,请联系管理员");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(ParamException.class)
+    public APIResult handleParamException(ParamException ex) {
+        log.error("参数错误, ex:", ex);
+        return APIResult.error(GlobalErrorCodeEnum.INVALID_PARAM.getCode(),
+                "参数错误");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BizException.class)
+    public APIResult handleBizException(BizException ex) {
+        log.error("业务逻辑异常, ex:", ex);
+        return APIResult.error(GlobalErrorCodeEnum.INVALID_BIZ.getCode(),
+                "业务逻辑异常");
     }
 
     /**

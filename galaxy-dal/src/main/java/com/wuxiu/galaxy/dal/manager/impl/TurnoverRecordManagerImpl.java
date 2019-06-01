@@ -107,7 +107,7 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         Map<Long, LuggageStorageRecord> storageRecordMap =
                 StreamUtil.toMap(luggageStorageRecords, LuggageStorageRecord::getLuggageId);
 
-        return buildTurnoverRecordDTO(turnoverRecordPage, storageRecordMap);
+        return buildTurnoverRecordDTOPage(turnoverRecordPage, storageRecordMap);
     }
 
     /**
@@ -124,12 +124,22 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         return selectOne(wrapper);
     }
 
+    /**
+     * 按管理员统计营业额
+     *
+     * @return
+     */
     @Override
     public List<StatisticsResultDTO> statisticsTurnoverByAdmin() {
 
         return baseDao.statisticsTurnoverByAdmin();
     }
 
+    /**
+     * 按费用类型统计营业额
+     *
+     * @return
+     */
     @Override
     public List<StatisticsResultDTO> statisticsTurnoverByFeeType() {
         return baseDao.statisticsTurnoverByFeeType();
@@ -141,7 +151,7 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
      * @param turnoverRecordPage
      * @return
      */
-    private Page<TurnoverRecordDTO> buildTurnoverRecordDTO(
+    private Page<TurnoverRecordDTO> buildTurnoverRecordDTOPage(
             Page<TurnoverRecord> turnoverRecordPage,
             Map<Long, LuggageStorageRecord> storageRecordMap) {
 
@@ -149,26 +159,8 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         List<TurnoverRecord> turnoverRecords = turnoverRecordPage.getRecords();
 
         turnoverRecords.forEach(turnoverRecord -> {
-            TurnoverRecordDTO turnoverRecordDTO = new TurnoverRecordDTO();
-            LuggageStorageRecord luggageStorageRecord = storageRecordMap.get(
-                    turnoverRecord.getLuggageId());
-
-            turnoverRecordDTO.setTurnoverRecordId(turnoverRecord.getTurnoverRecordId());
-            turnoverRecordDTO.setAdminId(turnoverRecord.getAdminId());
-            turnoverRecordDTO.setAdminName(luggageStorageRecord.getAdminName());
-            turnoverRecordDTO.setLuggageId(turnoverRecord.getLuggageId());
-            turnoverRecordDTO.setLuggageStorageRecordNo(luggageStorageRecord
-                    .getLuggageRecordNo());
-            turnoverRecordDTO.setLuggageType(LuggageTypeEnum.getDescByCode(
-                    luggageStorageRecord.getLuggageTypeId()));
-            turnoverRecordDTO.setCalculationRuleId(
-                    turnoverRecord.getCalculationRuleId());
-            turnoverRecordDTO.setFee(turnoverRecord.getFee());
-            turnoverRecordDTO.setFeeType(FeeTypeEnum.getDescByCode(turnoverRecord
-                    .getFeeType()));
-            turnoverRecordDTO.setRemark(turnoverRecord.getRemark());
-            turnoverRecordDTO.setGmtCreate(turnoverRecord.getGmtCreate().toString());
-            turnoverRecordDTO.setGmtModified(turnoverRecord.getGmtModified().toString());
+            TurnoverRecordDTO turnoverRecordDTO =
+                    buildTurnoverRecordDTO(storageRecordMap, turnoverRecord);
             recordDTOS.add(turnoverRecordDTO);
         });
 
@@ -177,6 +169,41 @@ public class TurnoverRecordManagerImpl extends BaseManagerImpl<TurnoverRecordDao
         page.setTotal(turnoverRecordPage.getTotal());
 
         return page;
+    }
+
+    /**
+     * 构造 TurnoverRecordDTO 对象
+     *
+     * @param storageRecordMap
+     * @param turnoverRecord
+     * @return
+     */
+    private TurnoverRecordDTO buildTurnoverRecordDTO(
+            Map<Long, LuggageStorageRecord> storageRecordMap,
+            TurnoverRecord turnoverRecord) {
+
+        TurnoverRecordDTO turnoverRecordDTO = new TurnoverRecordDTO();
+        LuggageStorageRecord luggageStorageRecord = storageRecordMap.get(
+                turnoverRecord.getLuggageId());
+
+        turnoverRecordDTO.setTurnoverRecordId(turnoverRecord.getTurnoverRecordId());
+        turnoverRecordDTO.setAdminId(turnoverRecord.getAdminId());
+        turnoverRecordDTO.setAdminName(luggageStorageRecord.getAdminName());
+        turnoverRecordDTO.setLuggageId(turnoverRecord.getLuggageId());
+        turnoverRecordDTO.setLuggageStorageRecordNo(luggageStorageRecord
+                .getLuggageRecordNo());
+        turnoverRecordDTO.setLuggageType(LuggageTypeEnum.getDescByCode(
+                luggageStorageRecord.getLuggageTypeId()));
+        turnoverRecordDTO.setCalculationRuleId(
+                turnoverRecord.getCalculationRuleId());
+        turnoverRecordDTO.setFee(turnoverRecord.getFee());
+        turnoverRecordDTO.setFeeType(FeeTypeEnum.getDescByCode(turnoverRecord
+                .getFeeType()));
+        turnoverRecordDTO.setRemark(turnoverRecord.getRemark());
+        turnoverRecordDTO.setGmtCreate(turnoverRecord.getGmtCreate().toString());
+        turnoverRecordDTO.setGmtModified(turnoverRecord.getGmtModified().toString());
+
+        return turnoverRecordDTO;
     }
 
 }

@@ -30,5 +30,5 @@ public class LostCompensateRecordQueryDTO extends PageInfo {
      * 行李类型
      */
     @ApiModelProperty(value = "行李类型", required = false)
-    private Integer luggageType;
+    private Integer luggageTypeId;
 }

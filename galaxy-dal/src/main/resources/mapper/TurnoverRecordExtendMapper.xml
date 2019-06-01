@@ -4,7 +4,7 @@
 
     <select id="statisticsTurnoverByAdmin" parameterType="java.util.List"
             resultType="com.wuxiu.galaxy.api.dto.StatisticsResultDTO">
-        SELECT gtr.admin_name as keyCode, sum(fee) as feeValue
+        SELECT gtr.admin_name as keyCode, round(sum(fee), 2) as feeValue
         FROM galaxy_turnover_record gtr
 
         WHERE gtr.deleted = 0
@@ -15,7 +15,7 @@
 
     <select id="statisticsTurnoverByFeeType" parameterType="java.util.List"
             resultType="com.wuxiu.galaxy.api.dto.StatisticsResultDTO">
-        SELECT gtr.fee_type_desc as keyCode, sum(fee) as feeValue
+        SELECT gtr.fee_type_desc as keyCode, round(sum(fee), 2) as feeValue
         FROM galaxy_turnover_record gtr
 
         WHERE gtr.deleted = 0

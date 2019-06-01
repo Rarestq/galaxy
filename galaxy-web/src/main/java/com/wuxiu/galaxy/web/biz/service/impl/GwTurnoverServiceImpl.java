@@ -62,8 +62,6 @@ public class GwTurnoverServiceImpl implements GwTurnoverService {
                 StreamUtil.convertBeanCopy(turnoverRecordDTOS,
                         TurnoverRecordVO.class);
 
-
-
         PageInfo<TurnoverRecordVO> pageInfo =
                 new PageInfo<>(form.getCurrent(), form.getSize());
         pageInfo.setRecords(turnoverRecordVOS);

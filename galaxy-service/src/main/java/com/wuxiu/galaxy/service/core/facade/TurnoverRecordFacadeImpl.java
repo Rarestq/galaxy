@@ -24,7 +24,6 @@ public class TurnoverRecordFacadeImpl implements TurnoverRecordFacade {
     @Autowired
     private TurnoverRecordService turnoverRecordService;
 
-
     /**
      * 查询营业额记录信息
      *

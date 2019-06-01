@@ -13,7 +13,7 @@ spring:
   # MySQL
   datasource:
     url: jdbc:mysql://47.101.197.171:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
-#    url: jdbc:mysql://47.101.197.171:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
+#    url: jdbc:mysql://127.0.0.1:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
     username: root
     password: Charon!132
 #    password: 123123
@@ -61,6 +61,7 @@ dubbo:
     owner: wuxiu
   registry:
     address: zookeeper://47.101.197.171:2181
+#    address: zookeeper://127.0.0.1:2181
 
   protocol:
     name: dubbo
