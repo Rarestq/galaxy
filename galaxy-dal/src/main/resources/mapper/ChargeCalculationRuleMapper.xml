@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxiu.galaxy.dal.dao.ChargeCalculationRuleDao">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.ChargeCalculationRule">
+                    <id column="calculation_rule_id" property="calculationRuleId"/>
+                    <result column="luggage_type_id" property="luggageTypeId"/>
+                    <result column="calculation_units_id" property="calculationUnitsId"/>
+                    <result column="fee_per_unit" property="feePerUnit"/>
+                    <result column="deleted" property="deleted"/>
+                    <result column="gmt_create" property="gmtCreate"/>
+                    <result column="gmt_modified" property="gmtModified"/>
+        </resultMap>
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+       calculation_rule_id,luggage_type_id,calculation_units_id,fee_per_unit,deleted,gmt_create,gmt_modified
+        </sql>
+</mapper>

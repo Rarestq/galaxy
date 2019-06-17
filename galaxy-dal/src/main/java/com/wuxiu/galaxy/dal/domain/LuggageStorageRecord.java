@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>LuggageStorageRecordDomian实体对象</p>
- *
- * 行李寄存-取件表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>LuggageStorageRecordDomian实体对象</p>
+ * <p>
+ *  行李寄存-取件表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-22
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_storage_record")
@@ -45,10 +41,25 @@ public class LuggageStorageRecord extends BaseModel {
     @TableId(value = "luggage_id", type = IdType.AUTO)
     private Long luggageId;
     /**
+     * 行李寄存记录编号
+     */
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
+    /**
      * 行李类型主键id
      */
     @TableField("luggage_type_id")
-    private Integer luggageTypeId;
+    private Long luggageTypeId;
+    /**
+     * 行李寄存柜主键id
+     */
+    @TableField("cabinet_id")
+    private Long cabinetId;
+    /**
+     * 行李寄存柜编号
+     */
+    @TableField("cabinet_no")
+    private String cabinetNo;
     /**
      * 管理员id
      */
@@ -75,11 +86,6 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("depositor_phone")
     private String depositorPhone;
     /**
-     * 寄存人性别(0-男，1-女)
-     */
-    @TableField("depositor_gender")
-    private Integer depositorGender;
-    /**
      * 备注
      */
     private String remark;
@@ -94,13 +100,7 @@ public class LuggageStorageRecord extends BaseModel {
     @TableField("storage_end_time")
     private LocalDateTime storageEndTime;
     /**
-     * 行李取件时间
-     */
-    @TableField("luggage_pick_up_time")
-    private LocalDateTime luggagePickUpTime;
-    /**
-     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期，3-已作废）
-，3-已逾期，4-已作废)
+     * 行李寄存状态(0-寄存中，1-已取件，2-已逾期)
      */
     private Integer status;
     /**

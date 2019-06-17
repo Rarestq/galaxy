@@ -1,5 +1,6 @@
 package com.wuxiu.galaxy.service.core.base.utils;
 
+import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -7,10 +8,8 @@ import org.springframework.util.ObjectUtils;
  *
  * @author wuxiu
  */
+@NoArgsConstructor
 public class AlphabeticNumericUtil {
-
-    private AlphabeticNumericUtil() {
-    }
 
     /**
      * 判断是否是纯字母、数字组成的字符串

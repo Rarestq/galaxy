@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>LuggageTypeDomian实体对象</p>
- *
- * 行李类型表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>LuggageTypeDomian实体对象</p>
+ * <p>
+ *  行李类型表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-16
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_type")
@@ -43,12 +39,12 @@ public class LuggageType extends BaseModel {
      * 行李类型主键id
      */
     @TableId(value = "luggage_type_id", type = IdType.AUTO)
-    private Integer luggageTypeId;
+    private Long luggageTypeId;
     /**
-     * 行李类型(0-、1-、2、)
+     * 行李类型(1-普通物件、2-易碎物件、3-贵重物件)
      */
     @TableField("luggage_type")
-    private Integer luggageType;
+    private String luggageType;
     /**
      * 记录状态(1-删除、0-正常)
      */

@@ -2,8 +2,12 @@ package com.wuxiu.galaxy.service.core.base.utils;
 
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
 /**
- * 唯一 No 生成器 TODO: 分布式id ？？？
+ * 唯一 No 生成器（单例模式）
  *
  * @author: wuxiu
  * @date: 2019/4/14 21:02
@@ -12,47 +16,51 @@ import lombok.NoArgsConstructor;
 public class UUIDGenerateUtil {
 
     /**
-     * 任务实例编号前缀
+     * 创建一个空实例对象，类需要用的时候才赋值
      */
-    private static final String TASK_INSTANCE_PREFIX = "RW";
+    private static final UUIDGenerateUtil generateUtil = new UUIDGenerateUtil();
 
     /**
-     * 行为类型编号前缀
+     * 获取当前时间年月日时分秒毫秒字符串
+     *
+     * @return
      */
-    private static final String ACTION_TYPE_PREFIX = "XWLX";
+    private static String getNowDateStr() {
+        /**
+         * 格式化的时间字符串
+         */
+        final SimpleDateFormat sdf = new SimpleDateFormat(
+                "yyyyMMddHHmmssS");
+
+        return sdf.format(new Date());
+    }
 
     /**
-     * 任务模板编号前缀
+     * 生成唯一编号
+     *
+     * @param prefix
+     * @return
      */
-    private static final String TASK_TEMPLATE_NO_PREFIX = "RWMB";
+    public static String generateUniqueNo(String prefix) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String dateStr = getNowDateStr();
+        stringBuilder.append(prefix).append(dateStr).append(
+                new Random().nextInt(10000));
+
+        return stringBuilder.toString();
+    }
 
     /**
-     * 任务类别编号前缀
+     * 生成寄存柜编号
+     *
+     * @param prefix
+     * @return
      */
-    private static final String TASK_CATEGORY_NO_PREFIX = "RWLB";
+    public static String generateCabinetNo(String prefix) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(prefix).append(new Random().nextInt(10000));
 
-    /**
-     * 任务异常编号前缀
-     */
-    private static final String TASK_EXCEPTION_NO_PREFIX = "RWYC";
-
-    public static String genTaskInstanceNo(){
-        return null;
+        return builder.toString();
     }
 
-    public static String generateActionTypeNo() {
-        return null;
-    }
-
-    public static String generateTaskTemplateNo() {
-        return null;
-    }
-
-    public static String generateTaskCategoryCode() {
-        return null;
-    }
-
-    public static String generateTaskExceptionNo() {
-        return null;
-    }
 }

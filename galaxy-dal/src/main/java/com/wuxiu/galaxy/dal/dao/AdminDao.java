@@ -9,14 +9,13 @@
 package com.wuxiu.galaxy.dal.dao;
 
 import com.wuxiu.galaxy.dal.domain.Admin;
-import com.wuxiu.galaxy.common.base.BaseDao;
+import com.wuxiu.galaxy.api.common.base.BaseDao;
 
 /**  
  * <p>AdminDao接口</p>
  * 管理员表 - 按照编号前缀的不同具有不同权限
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
+ * @since 2019-04-16
  */
 public interface AdminDao extends BaseDao<Admin> {
-
 }

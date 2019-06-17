@@ -9,13 +9,13 @@
 package com.wuxiu.galaxy.dal.dao;
 
 import com.wuxiu.galaxy.dal.domain.LuggageLostRegistrationRecord;
-import com.wuxiu.galaxy.common.base.BaseDao;
+import com.wuxiu.galaxy.api.common.base.BaseDao;
 
 /**  
  * <p>LuggageLostRegistrationRecordDao接口</p>
  * 行李遗失登记记录表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
+ * @since 2019-04-22
  */
 public interface LuggageLostRegistrationRecordDao extends BaseDao<LuggageLostRegistrationRecord> {
 

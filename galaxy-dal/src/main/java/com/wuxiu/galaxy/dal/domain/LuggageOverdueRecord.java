@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>LuggageOverdueRecordDomian实体对象</p>
- *
- * 行李逾期未取记录表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>LuggageOverdueRecordDomian实体对象</p>
+ * <p>
+ *  行李逾期未取记录表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-22
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_overdue_record")
@@ -45,20 +41,30 @@ public class LuggageOverdueRecord extends BaseModel {
     @TableId(value = "luggage_overdue_record_id", type = IdType.AUTO)
     private Long luggageOverdueRecordId;
     /**
+     * 逾期记录编号
+     */
+    @TableField(value = "overdue_record_no")
+    private String overdueRecordNo;
+    /**
      * 管理员主键id
      */
     @TableField("admin_id")
-    private Integer adminId;
+    private Long adminId;
+    /**
+     * 管理员姓名
+     */
+    @TableField("admin_name")
+    private String adminName;
     /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")
     private Long luggageId;
     /**
-     * 管理员姓名(冗余)
+     * 行李寄存记录编号(冗余)
      */
-    @TableField("admin_name")
-    private String adminName;
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
     /**
      * 行李寄存者姓名(冗余)
      */
@@ -73,6 +79,10 @@ public class LuggageOverdueRecord extends BaseModel {
      * 行李逾期未取备注
      */
     private String remark;
+    /**
+     * 逾期清理状态(1-逾期，2-已清理作废)
+     */
+    private Integer status;
     /**
      * 记录状态(1-删除、0-正常)
      */

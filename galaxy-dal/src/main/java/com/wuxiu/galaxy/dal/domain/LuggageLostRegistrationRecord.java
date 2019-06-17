@@ -10,29 +10,25 @@ package com.wuxiu.galaxy.dal.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
-import com.baomidou.mybatisplus.annotations.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-/**  
- * <p>LuggageLostRegistrationRecordDomian实体对象</p>
- *
- * 行李遗失登记记录表
- *
- * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
- */
-
-import com.baomidou.mybatisplus.annotations.Version;
-
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ *   
+ *  * <p>LuggageLostRegistrationRecordDomian实体对象</p>
+ * <p>
+ *  行李遗失登记记录表
+ * <p>
+ *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
+ *  * @since 2019-04-22
+ *  
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("galaxy_luggage_lost_registration_record")
@@ -45,25 +41,35 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     @TableId(value = "lost_registration_record_id", type = IdType.AUTO)
     private Long lostRegistrationRecordId;
     /**
+     * 行李遗失登记记录编号
+     */
+    @TableField(value = "register_record_no")
+    private String registerRecordNo;
+    /**
      * 管理员id
      */
     @TableField("admin_id")
     private Long adminId;
+    /**
+     * 管理员姓名
+     */
+    @TableField("admin_name")
+    private String adminName;
     /**
      * 行李寄存主键id
      */
     @TableField("luggage_id")
     private Long luggageId;
     /**
+     * 行李寄存记录编号(冗余)
+     */
+    @TableField("luggage_record_no")
+    private String luggageRecordNo;
+    /**
      * 行李类型主键id(冗余)
      */
     @TableField("luggage_type_id")
-    private Integer luggageTypeId;
-    /**
-     * 管理员姓名(冗余)
-     */
-    @TableField("admin_name")
-    private String adminName;
+    private Long luggageTypeId;
     /**
      * 行李遗失登记者姓名(冗余)
      */
@@ -75,14 +81,13 @@ public class LuggageLostRegistrationRecord extends BaseModel {
     @TableField("depositor_phone")
     private String depositorPhone;
     /**
+     * 遗失记录状态(0-遗失，1-已赔偿)
+     */
+    private Integer status;
+    /**
      * 行李遗失登记备注
      */
     private String remark;
-    /**
-     * 登记时间
-     */
-    @TableField("registration_time")
-    private LocalDateTime registrationTime;
     /**
      * 记录状态(1-删除、0-正常)
      */

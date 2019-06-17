@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  *  管理员表 - 按照编号前缀的不同具有不同权限
  * <p>
  *  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- *  * @since 2019-04-15
+ *  * @since 2019-04-16
  *  
  */
 @Data
@@ -56,9 +56,14 @@ public class Admin extends BaseModel {
     @TableField("admin_phone")
     private String adminPhone;
     /**
-     * 管理员性别(0-男，1-女)
+     * 管理员类型(1-普通管理员，2-超级管理员,3-系统)
      */
-    private Integer gender;
+    @TableField("admin_type")
+    private Integer adminType;
+    /**
+     * 登录密码
+     */
+    private String password;
     /**
      * 记录状态(1-删除、0-正常)
      */

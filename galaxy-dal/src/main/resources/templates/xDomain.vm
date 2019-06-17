@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.wuxiu.galaxy.common.base.BaseModel;
+import com.wuxiu.galaxy.api.common.base.BaseModel;
 import com.baomidou.mybatisplus.annotations.*;
 
 import java.math.BigDecimal;

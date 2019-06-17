@@ -5,8 +5,14 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.wuxiu.galaxy.dal.domain.LuggageLostCompensationRecord">
                     <id column="luggage_lost_compensation_record_id" property="luggageLostCompensationRecordId"/>
-                    <result column="compensation_method" property="compensationMethod"/>
-                    <result column="compensation_amount" property="compensationAmount"/>
+                    <result column="lost_compensate_record_no" property="lostCompensateRecordNo"/>
+                    <result column="lost_registration_record_id" property="lostRegistrationRecordId"/>
+                    <result column="admin_id" property="adminId"/>
+                    <result column="admin_name" property="adminName"/>
+                    <result column="depositor_name" property="depositorName"/>
+                    <result column="depositor_phone" property="depositorPhone"/>
+                    <result column="luggage_type_id" property="luggageTypeId"/>
+                    <result column="compensation_fee" property="compensationFee"/>
                     <result column="remark" property="remark"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
@@ -14,6 +20,6 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       luggage_lost_compensation_record_id,compensation_method,compensation_amount,remark,deleted,gmt_create,gmt_modified
+       luggage_lost_compensation_record_id,lost_compensate_record_no,lost_registration_record_id,admin_id,admin_name,depositor_name,depositor_phone,luggage_type_id,compensation_fee,remark,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

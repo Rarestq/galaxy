@@ -7,7 +7,7 @@
         <groupId>com.wuxiu</groupId>
         <artifactId>galaxy</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>galaxy-dal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -16,14 +16,41 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <galaxy-api.version>0.0.2-SNAPSHOT</galaxy-api.version>
     </properties>
 
     <dependencies>
         <!-- ===== 一方包 BEGIN ===== -->
         <dependency>
-            <groupId>com.wuxiu</groupId>
-            <artifactId>galaxy-common</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.wuxiu.galaxy</groupId>
+            <artifactId>galaxy-api</artifactId>
+            <version>${galaxy-api.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-annotations</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-core</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>gson</artifactId>
+                    <groupId>com.google.code.gson</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>mysql</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>aspectjweaver</artifactId>
+                    <groupId>org.aspectj</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lombok</artifactId>
+                    <groupId>org.projectlombok</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- ===== 一方包 END ===== -->
 
@@ -63,14 +90,5 @@
 
         <!-- ===== 三方包 END ===== -->
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

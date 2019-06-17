@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://code.alibabatech.com/schema/dubbo
+	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-autowire="byName">
+
+
+    <dubbo:registry address="${dubbo.registry.address}"/>
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" host="${dubbo.protocol.host}"/>
+
+    <!--从注册中心发现监控中心地址，否则用address直连监控中心-->
+    <!--暂时关闭监控中心，防止控制台过多的日志打印-->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+    <!--消费服务-->
+    <import resource="classpath*:dubbo/dubbo-consumer-*.xml"/>
+</beans>

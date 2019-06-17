@@ -8,13 +8,14 @@
                     <result column="admin_no" property="adminNo"/>
                     <result column="admin_name" property="adminName"/>
                     <result column="admin_phone" property="adminPhone"/>
-                    <result column="gender" property="gender"/>
+                    <result column="admin_type" property="adminPhone"/>
+                    <result column="password" property="password"/>
                     <result column="deleted" property="deleted"/>
                     <result column="gmt_create" property="gmtCreate"/>
                     <result column="gmt_modified" property="gmtModified"/>
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-       admin_id,admin_no,admin_name,admin_phone,gender,deleted,gmt_create,gmt_modified
+       admin_id,admin_no,admin_name,admin_phone,admin_type,password,deleted,gmt_create,gmt_modified
         </sql>
 </mapper>

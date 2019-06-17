@@ -1,0 +1,75 @@
+#port
+server:
+  port: 8099
+
+#spring
+spring:
+  application:
+    name: galaxy-service
+
+  session:
+    store-type: none
+
+  # MySQL
+  datasource:
+    url: jdbc:mysql://47.101.197.171:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
+#    url: jdbc:mysql://127.0.0.1:3306/db_luggage_storage?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Charon!132
+#    password: 123123
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 5
+      max-active: 20
+
+#Mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.wuxiu.galaxy.dal.domain
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: false
+    #逻辑删除配置
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+swagger:
+  title: Galaxy-Service 应用接口
+  version: V1.0.0
+  base-package: com.wuxiu
+  exclude-path:
+  - /META-INF.dubbo/*
+  - /online/*
+  - /offline/*
+  contact:
+    name: charon-wuxiu
+    email: rarestzhou@gmail.com
+
+dubbo:
+  application:
+    name: galaxy-service
+    owner: wuxiu
+  registry:
+    address: zookeeper://47.101.197.171:2181
+#    address: zookeeper://127.0.0.1:2181
+
+  protocol:
+    name: dubbo
+    port: 20888
+    host: 127.0.0.1
+
+  provider:
+    version: 1.0_galaxy_wuxiu
+    timeout: 5000
+#    filter: exceptionNotifyFilter
+

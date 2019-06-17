@@ -9,13 +9,13 @@
 package com.wuxiu.galaxy.dal.dao;
 
 import com.wuxiu.galaxy.dal.domain.LuggageType;
-import com.wuxiu.galaxy.common.base.BaseDao;
+import com.wuxiu.galaxy.api.common.base.BaseDao;
 
 /**  
  * <p>LuggageTypeDao接口</p>
  * 行李类型表
  * @author: Baomidou_Generater（rarestzhou@gmail.com）
- * @since 2019-04-15
+ * @since 2019-04-16
  */
 public interface LuggageTypeDao extends BaseDao<LuggageType> {
 
